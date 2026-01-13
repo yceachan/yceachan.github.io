@@ -1,0 +1,59 @@
+name: Deploy WikiExplorer to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]  # 监听的分支，根据实际情况修改（如 master）
+  workflow_dispatch:    # 允许手动触发
+
+# 设置 GITHUB_TOKEN 的权限，允许部署到 Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 允许并发部署，但在新部署开始时取消正在进行的旧部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        # with:
+        #   submodules: true  # 如果使用了 git 子模块
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: WikiExplorer/package-lock.json
+
+      - name: Install Dependencies
+        run: |
+          cd WikiExplorer
+          npm install
+
+      - name: Build
+        # 执行 npm run build (包含 sync 和 vite build)
+        run: |
+          cd WikiExplorer
+          npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: WikiExplorer/dist # 指定构建产出目录
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
