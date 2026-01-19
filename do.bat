@@ -1,9 +1,10 @@
 @echo off
-setlocal
+setlocal EnableDelayedExpansion
 
 :: Default values
-set COMMIT_MSG="Update site and notes: %date% %time%"
-set PUSH=true
+set "COMMIT_MSG=Update site and notes: !date! !time!"
+set "PUSH=true"
+set "SKIP_BUILD=false"
 
 :: Parse Arguments
 :parse
@@ -17,7 +18,13 @@ if /i "%~1"=="-m" (
 )
 
 if /i "%~1"=="--nopush" (
-    set PUSH=false
+    set "PUSH=false"
+    shift
+    goto :parse
+)
+
+if /i "%~1"=="--nobuild" (
+    set "SKIP_BUILD=true"
     shift
     goto :parse
 )
@@ -37,6 +44,9 @@ echo Options:
 echo   -m "message"   Specify a custom commit message.
 echo                  Default: "Update site and notes: <date> <time>"
 echo.
+echo   --nobuild      Skip the 'npm run build' step. 
+echo                  Uses existing 'dist/' folder for deployment.
+echo.
 echo   --nopush       Skip the 'git push' step.
 echo.
 echo   --help         Show this help message and workflow details.
@@ -53,20 +63,30 @@ exit /b 0
 
 :main
 
-echo 🚀 Starting Build, Sync, and Deployment to 'page' branch...
+echo 🚀 Starting Deployment Workflow...
 
 :: 1. Sync and Build locally
-echo 📦 Building project (including sync)...
-call npm run build
+if "!SKIP_BUILD!"=="false" (
+    echo 📦 Building project (including sync)...
+    call npm run build
 
-:: Check build success
-if %errorlevel% neq 0 (
-    echo ❌ Build failed. Aborting.
-    exit /b %errorlevel%
+    :: Check build success
+    if !errorlevel! neq 0 (
+        echo ❌ Build failed. Aborting.
+        exit /b !errorlevel!
+    )
+) else (
+    echo ⏩ Build skipped (--nobuild option used).
+    echo    Using existing 'dist/' directory.
+    
+    if not exist "dist\" (
+        echo ❌ Error: 'dist' directory not found! Cannot deploy without build.
+        exit /b 1
+    )
 )
 
 :: 2. Deploy and Push (Page Branch only)
-if "%PUSH%"=="true" (
+if "!PUSH!"=="true" (
     echo 🚀 Deploying 'dist' artifact to 'page' branch...
     
     :: Copy GitHub Workflows to dist so the 'page' branch can trigger Actions
@@ -80,8 +100,8 @@ if "%PUSH%"=="true" (
     git add -A
     
     :: Use the provided commit message for the deployment record
-    echo 📝 Committing deployment: %COMMIT_MSG%
-    git commit -m %COMMIT_MSG%
+    echo 📝 Committing deployment...
+    git commit -m "!COMMIT_MSG!"
     
     :: Force push to remote 'page' branch
     echo 📤 Pushing Dist to origin/page (SSH)...
@@ -96,7 +116,7 @@ if "%PUSH%"=="true" (
 
 echo.
 echo ℹ️  Reminder: 'main' branch was NOT pushed. 
-echo    If you have source code changes, please push them manually.
+    echo    If you have source code changes, please push them manually.
 
 pause
 endlocal
