@@ -1,0 +1,658 @@
+{
+  "name": "WikiExplorer",
+  "type": "directory",
+  "children": [
+    {
+      "name": "MCUthings",
+      "type": "directory",
+      "path": "MCUthings",
+      "mtime": "2025-12-20T15:36:33.809Z",
+      "children": [
+        {
+          "name": "uartDevice.md",
+          "type": "file",
+          "path": "MCUthings/uartDevice.md",
+          "mtime": "2024-08-13T17:00:43.043Z"
+        }
+      ]
+    },
+    {
+      "name": "MPUthings",
+      "type": "directory",
+      "path": "MPUthings",
+      "mtime": "2025-12-25T06:13:04.557Z",
+      "children": [
+        {
+          "name": "notes-imx6ull",
+          "type": "directory",
+          "path": "MPUthings/notes-imx6ull",
+          "mtime": "2025-12-25T15:27:02.131Z",
+          "children": [
+            {
+              "name": "DTS设备树.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/DTS设备树.md",
+              "mtime": "2025-12-25T00:58:01.844Z"
+            },
+            {
+              "name": "GPIO子系统.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/GPIO子系统.md",
+              "mtime": "2025-08-06T12:36:39.425Z"
+            },
+            {
+              "name": "LCD设备.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/LCD设备.md",
+              "mtime": "2025-08-08T08:08:30.100Z"
+            },
+            {
+              "name": "Linux镜像构建与驱动开发环境部署",
+              "type": "directory",
+              "path": "MPUthings/notes-imx6ull/Linux镜像构建与驱动开发环境部署",
+              "mtime": "2025-12-25T16:03:13.025Z",
+              "children": [
+                {
+                  "name": "Buildroot编译根文件系统.md",
+                  "type": "file",
+                  "path": "MPUthings/notes-imx6ull/Linux镜像构建与驱动开发环境部署/Buildroot编译根文件系统.md",
+                  "mtime": "2025-12-25T04:38:02.183Z"
+                },
+                {
+                  "name": "kernel zimage与dtb 的编译和安装.md",
+                  "type": "file",
+                  "path": "MPUthings/notes-imx6ull/Linux镜像构建与驱动开发环境部署/kernel zimage与dtb 的编译和安装.md",
+                  "mtime": "2025-12-25T16:03:13.005Z"
+                },
+                {
+                  "name": "uboot编译.md",
+                  "type": "file",
+                  "path": "MPUthings/notes-imx6ull/Linux镜像构建与驱动开发环境部署/uboot编译.md",
+                  "mtime": "2025-12-25T04:39:56.167Z"
+                },
+                {
+                  "name": "开发SDK环境部署.md",
+                  "type": "file",
+                  "path": "MPUthings/notes-imx6ull/Linux镜像构建与驱动开发环境部署/开发SDK环境部署.md",
+                  "mtime": "2025-12-25T15:55:28.892Z"
+                },
+                {
+                  "name": "开发网络环境部署.md",
+                  "type": "file",
+                  "path": "MPUthings/notes-imx6ull/Linux镜像构建与驱动开发环境部署/开发网络环境部署.md",
+                  "mtime": "2025-12-25T15:40:58.756Z"
+                },
+                {
+                  "name": "烧写整个系统或部分更新系统.md",
+                  "type": "file",
+                  "path": "MPUthings/notes-imx6ull/Linux镜像构建与驱动开发环境部署/烧写整个系统或部分更新系统.md",
+                  "mtime": "2025-12-25T04:35:40.766Z"
+                }
+              ]
+            },
+            {
+              "name": "Platform平台总线.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/Platform平台总线.md",
+              "mtime": "2025-08-05T16:43:21.488Z"
+            },
+            {
+              "name": "UserKey驱动设计.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/UserKey驱动设计.md",
+              "mtime": "2025-08-06T16:12:10.785Z"
+            },
+            {
+              "name": "中断子系统.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/中断子系统.md",
+              "mtime": "2025-08-04T08:05:09.602Z"
+            },
+            {
+              "name": "交叉编译.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/交叉编译.md",
+              "mtime": "2025-08-06T11:59:22.236Z"
+            },
+            {
+              "name": "杂项设备misc.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/杂项设备misc.md",
+              "mtime": "2025-08-03T06:11:08.802Z"
+            },
+            {
+              "name": "虚拟字符设备.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/虚拟字符设备.md",
+              "mtime": "2025-08-06T15:41:17.921Z"
+            },
+            {
+              "name": "高级字符设备.md",
+              "type": "file",
+              "path": "MPUthings/notes-imx6ull/高级字符设备.md",
+              "mtime": "2025-08-06T11:59:24.230Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Offerthings",
+      "type": "directory",
+      "path": "Offerthings",
+      "mtime": "2025-12-26T12:06:47.628Z",
+      "children": [
+        {
+          "name": "A4x积加科技 面试准备稿.md",
+          "type": "file",
+          "path": "Offerthings/A4x积加科技 面试准备稿.md",
+          "mtime": "2025-12-25T11:14:19.646Z"
+        },
+        {
+          "name": "GEMINI.md",
+          "type": "file",
+          "path": "Offerthings/GEMINI.md",
+          "mtime": "2025-12-24T13:10:24.207Z"
+        },
+        {
+          "name": "八股文库",
+          "type": "directory",
+          "path": "Offerthings/八股文库",
+          "mtime": "2025-12-27T15:54:23.295Z",
+          "children": [
+            {
+              "name": "GEMINI.md",
+              "type": "file",
+              "path": "Offerthings/八股文库/GEMINI.md",
+              "mtime": "2025-12-27T09:53:50.343Z"
+            },
+            {
+              "name": "Https API.md",
+              "type": "file",
+              "path": "Offerthings/八股文库/Https API.md",
+              "mtime": "2025-12-24T13:05:39.407Z"
+            },
+            {
+              "name": "MQTT.md",
+              "type": "file",
+              "path": "Offerthings/八股文库/MQTT.md",
+              "mtime": "2025-12-25T11:50:48.800Z"
+            },
+            {
+              "name": "TCP.md",
+              "type": "file",
+              "path": "Offerthings/八股文库/TCP.md",
+              "mtime": "2025-12-25T11:37:12.166Z"
+            },
+            {
+              "name": "freeRTOS.md",
+              "type": "file",
+              "path": "Offerthings/八股文库/freeRTOS.md",
+              "mtime": "2025-12-26T10:46:27.460Z"
+            },
+            {
+              "name": "拉普拉斯变换1 e^st在微分方程的应用.md",
+              "type": "file",
+              "path": "Offerthings/八股文库/拉普拉斯变换1 e^st在微分方程的应用.md",
+              "mtime": "2025-12-27T09:52:10.079Z"
+            },
+            {
+              "name": "拉普拉斯变换2.md",
+              "type": "file",
+              "path": "Offerthings/八股文库/拉普拉斯变换2.md",
+              "mtime": "2025-12-27T15:54:23.293Z"
+            }
+          ]
+        },
+        {
+          "name": "技术问题准备.md",
+          "type": "file",
+          "path": "Offerthings/技术问题准备.md",
+          "mtime": "2025-12-25T08:00:21.555Z"
+        },
+        {
+          "name": "易兆微电子 offer.md",
+          "type": "file",
+          "path": "Offerthings/易兆微电子 offer.md",
+          "mtime": "2025-12-26T10:45:27.666Z"
+        },
+        {
+          "name": "易兆微电子 面试准备稿.md",
+          "type": "file",
+          "path": "Offerthings/易兆微电子 面试准备稿.md",
+          "mtime": "2025-12-23T15:33:49.190Z"
+        },
+        {
+          "name": "积加 offer.md",
+          "type": "file",
+          "path": "Offerthings/积加 offer.md",
+          "mtime": "2025-12-26T12:06:47.626Z"
+        },
+        {
+          "name": "积加面试邀请函.md",
+          "type": "file",
+          "path": "Offerthings/积加面试邀请函.md",
+          "mtime": "2025-12-26T10:43:54.177Z"
+        },
+        {
+          "name": "项目准备.md",
+          "type": "file",
+          "path": "Offerthings/项目准备.md",
+          "mtime": "2025-12-25T11:14:09.103Z"
+        }
+      ]
+    },
+    {
+      "name": "OsCookBook",
+      "type": "directory",
+      "path": "OsCookBook",
+      "mtime": "2026-01-10T11:29:20.032Z",
+      "children": [
+        {
+          "name": "AI",
+          "type": "directory",
+          "path": "OsCookBook/AI",
+          "mtime": "2026-01-14T14:56:34.258Z",
+          "children": [
+            {
+              "name": "VPN相关工具.md",
+              "type": "file",
+              "path": "OsCookBook/AI/VPN相关工具.md",
+              "mtime": "2026-01-14T14:56:34.256Z"
+            },
+            {
+              "name": "大型文档的RAG索引增强输入策略.md",
+              "type": "file",
+              "path": "OsCookBook/AI/大型文档的RAG索引增强输入策略.md",
+              "mtime": "2026-01-14T14:09:25.436Z"
+            },
+            {
+              "name": "文档先行模式下的 Agent 知识库配置策略.md",
+              "type": "file",
+              "path": "OsCookBook/AI/文档先行模式下的 Agent 知识库配置策略.md",
+              "mtime": "2026-01-14T14:53:57.832Z"
+            }
+          ]
+        },
+        {
+          "name": "Better Linux",
+          "type": "directory",
+          "path": "OsCookBook/Better Linux",
+          "mtime": "2026-01-10T11:29:20.031Z",
+          "children": [
+            {
+              "name": "Linux 系统常用指令.md",
+              "type": "file",
+              "path": "OsCookBook/Better Linux/Linux 系统常用指令.md",
+              "mtime": "2025-12-22T13:58:21.614Z"
+            },
+            {
+              "name": "SHELL",
+              "type": "directory",
+              "path": "OsCookBook/Better Linux/SHELL",
+              "mtime": "2025-12-24T07:34:00.259Z",
+              "children": [
+                {
+                  "name": "SHELL.md",
+                  "type": "file",
+                  "path": "OsCookBook/Better Linux/SHELL/SHELL.md",
+                  "mtime": "2025-03-06T13:36:48.788Z"
+                },
+                {
+                  "name": "git.md",
+                  "type": "file",
+                  "path": "OsCookBook/Better Linux/SHELL/git.md",
+                  "mtime": "2025-08-07T17:31:48.458Z"
+                },
+                {
+                  "name": "容器技术札记docker.md",
+                  "type": "file",
+                  "path": "OsCookBook/Better Linux/SHELL/容器技术札记docker.md",
+                  "mtime": "2024-08-12T23:04:43.560Z"
+                },
+                {
+                  "name": "文件io.md",
+                  "type": "file",
+                  "path": "OsCookBook/Better Linux/SHELL/文件io.md",
+                  "mtime": "2025-12-22T13:35:43.979Z"
+                }
+              ]
+            },
+            {
+              "name": "ubnutu22配置清华软件源.md",
+              "type": "file",
+              "path": "OsCookBook/Better Linux/ubnutu22配置清华软件源.md",
+              "mtime": "2025-12-22T14:02:40.030Z"
+            },
+            {
+              "name": "ubuntu双网卡优先级设置.md",
+              "type": "file",
+              "path": "OsCookBook/Better Linux/ubuntu双网卡优先级设置.md",
+              "mtime": "2025-12-22T13:30:59.897Z"
+            },
+            {
+              "name": "xxx_config文件与xxx_config.d目录的关系.md",
+              "type": "file",
+              "path": "OsCookBook/Better Linux/xxx_config文件与xxx_config.d目录的关系.md",
+              "mtime": "2025-12-22T14:10:17.796Z"
+            },
+            {
+              "name": "解决sudo执行相应时间过长.md",
+              "type": "file",
+              "path": "OsCookBook/Better Linux/解决sudo执行相应时间过长.md",
+              "mtime": "2025-12-21T15:38:47.781Z"
+            },
+            {
+              "name": "软件包管理apt.md",
+              "type": "file",
+              "path": "OsCookBook/Better Linux/软件包管理apt.md",
+              "mtime": "2025-12-22T14:05:05.911Z"
+            }
+          ]
+        },
+        {
+          "name": "Better Wins",
+          "type": "directory",
+          "path": "OsCookBook/Better Wins",
+          "mtime": "2026-01-19T14:35:22.587Z",
+          "children": [
+            {
+              "name": "WSL suite.md",
+              "type": "file",
+              "path": "OsCookBook/Better Wins/WSL suite.md",
+              "mtime": "2024-10-25T16:58:17.289Z"
+            },
+            {
+              "name": "Win Trick.md",
+              "type": "file",
+              "path": "OsCookBook/Better Wins/Win Trick.md",
+              "mtime": "2026-01-19T13:22:52.752Z"
+            },
+            {
+              "name": "pwsh实用PROFILE.md",
+              "type": "file",
+              "path": "OsCookBook/Better Wins/pwsh实用PROFILE.md",
+              "mtime": "2026-01-19T14:35:22.586Z"
+            },
+            {
+              "name": "右键菜单治理",
+              "type": "directory",
+              "path": "OsCookBook/Better Wins/右键菜单治理",
+              "mtime": "2026-01-19T14:33:23.411Z",
+              "children": [
+                {
+                  "name": "右键菜单治理工具集.md",
+                  "type": "file",
+                  "path": "OsCookBook/Better Wins/右键菜单治理/右键菜单治理工具集.md",
+                  "mtime": "2026-01-19T14:33:23.410Z"
+                },
+                {
+                  "name": "目录右键菜单卡顿解决方案-禁用AMD Software Edition amd核显.md",
+                  "type": "file",
+                  "path": "OsCookBook/Better Wins/右键菜单治理/目录右键菜单卡顿解决方案-禁用AMD Software Edition amd核显.md",
+                  "mtime": "2026-01-19T14:30:50.620Z"
+                }
+              ]
+            },
+            {
+              "name": "腾讯的dns.md",
+              "type": "file",
+              "path": "OsCookBook/Better Wins/腾讯的dns.md",
+              "mtime": "2025-02-26T12:51:00.010Z"
+            },
+            {
+              "name": "输入法词库资源",
+              "type": "directory",
+              "path": "OsCookBook/Better Wins/输入法词库资源",
+              "mtime": "2025-12-21T14:09:27.230Z",
+              "children": [
+                {
+                  "name": "GEMINI.md",
+                  "type": "file",
+                  "path": "OsCookBook/Better Wins/输入法词库资源/GEMINI.md",
+                  "mtime": "2025-12-21T13:59:46.810Z"
+                },
+                {
+                  "name": "rime-frost-schemas",
+                  "type": "directory",
+                  "path": "OsCookBook/Better Wins/输入法词库资源/rime-frost-schemas",
+                  "mtime": "2025-12-21T13:36:44.808Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "OsCookBook/Better Wins/输入法词库资源/rime-frost-schemas/README.md",
+                      "mtime": "2025-08-02T00:26:40.000Z"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Markdown",
+          "type": "directory",
+          "path": "OsCookBook/Markdown",
+          "mtime": "2026-01-10T11:29:20.032Z",
+          "children": [
+            {
+              "name": "阿里云picgo图床配置.md",
+              "type": "file",
+              "path": "OsCookBook/Markdown/阿里云picgo图床配置.md",
+              "mtime": "2026-01-10T11:32:52.778Z"
+            }
+          ]
+        },
+        {
+          "name": "SSH和远程开发",
+          "type": "directory",
+          "path": "OsCookBook/SSH和远程开发",
+          "mtime": "2026-01-10T11:29:20.036Z",
+          "children": [
+            {
+              "name": "SSH反向隧道全面介绍.md",
+              "type": "file",
+              "path": "OsCookBook/SSH和远程开发/SSH反向隧道全面介绍.md",
+              "mtime": "2026-01-10T11:29:20.034Z"
+            },
+            {
+              "name": "sshd_config配置文件详解.md",
+              "type": "file",
+              "path": "OsCookBook/SSH和远程开发/sshd_config配置文件详解.md",
+              "mtime": "2026-01-10T11:29:20.036Z"
+            },
+            {
+              "name": "ssh调试札记.md",
+              "type": "file",
+              "path": "OsCookBook/SSH和远程开发/ssh调试札记.md",
+              "mtime": "2026-01-10T11:29:20.036Z"
+            }
+          ]
+        },
+        {
+          "name": "交叉编译技术",
+          "type": "directory",
+          "path": "OsCookBook/交叉编译技术",
+          "mtime": "2025-12-22T13:41:14.076Z",
+          "children": [
+            {
+              "name": "交叉编译.md",
+              "type": "file",
+              "path": "OsCookBook/交叉编译技术/交叉编译.md",
+              "mtime": "2025-08-02T05:47:03.509Z"
+            }
+          ]
+        },
+        {
+          "name": "操作系统理论",
+          "type": "directory",
+          "path": "OsCookBook/操作系统理论",
+          "mtime": "2025-12-22T13:41:51.750Z",
+          "children": [
+            {
+              "name": "Linux 并发竞争.md",
+              "type": "file",
+              "path": "OsCookBook/操作系统理论/Linux 并发竞争.md",
+              "mtime": "2025-08-02T06:20:24.067Z"
+            },
+            {
+              "name": "Linux 驱动.md",
+              "type": "file",
+              "path": "OsCookBook/操作系统理论/Linux 驱动.md",
+              "mtime": "2025-03-06T22:54:43.596Z"
+            }
+          ]
+        },
+        {
+          "name": "版本控制 git svn",
+          "type": "directory",
+          "path": "OsCookBook/版本控制 git svn",
+          "mtime": "2026-01-10T11:28:50.863Z",
+          "children": [
+            {
+              "name": "SVN核心知识与Git对比笔记.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/SVN核心知识与Git对比笔记.md",
+              "mtime": "2026-01-04T09:49:41.559Z"
+            },
+            {
+              "name": "git rebase -i 合并提交操作手册及最佳实践.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/git rebase -i 合并提交操作手册及最佳实践.md",
+              "mtime": "2026-01-09T12:17:37.348Z"
+            },
+            {
+              "name": "git stash与vscode-git-存储.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/git stash与vscode-git-存储.md",
+              "mtime": "2026-01-04T10:06:18.509Z"
+            },
+            {
+              "name": "git submodule与复杂版本控制 最佳实践.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/git submodule与复杂版本控制 最佳实践.md",
+              "mtime": "2026-01-06T16:42:30.366Z"
+            },
+            {
+              "name": "git 命令札记.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/git 命令札记.md",
+              "mtime": "2026-01-10T11:26:19.943Z"
+            },
+            {
+              "name": "git 实用config.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/git 实用config.md",
+              "mtime": "2026-01-07T12:36:24.116Z"
+            },
+            {
+              "name": "大型协作项目快速迭代规范.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/大型协作项目快速迭代规范.md",
+              "mtime": "2026-01-07T18:06:50.853Z"
+            },
+            {
+              "name": "私人多地接力办公和远程WIP推送处理.md",
+              "type": "file",
+              "path": "OsCookBook/版本控制 git svn/私人多地接力办公和远程WIP推送处理.md",
+              "mtime": "2026-01-09T12:17:37.349Z"
+            }
+          ]
+        },
+        {
+          "name": "网络技术",
+          "type": "directory",
+          "path": "OsCookBook/网络技术",
+          "mtime": "2025-12-24T09:19:43.765Z",
+          "children": [
+            {
+              "name": "网络层概念详解.md",
+              "type": "file",
+              "path": "OsCookBook/网络技术/网络层概念详解.md",
+              "mtime": "2025-12-22T14:23:47.840Z"
+            },
+            {
+              "name": "虚拟机网络配置",
+              "type": "directory",
+              "path": "OsCookBook/网络技术/虚拟机网络配置",
+              "mtime": "2025-12-24T09:25:25.255Z",
+              "children": [
+                {
+                  "name": "虚拟机NAT网络，共享宿主机TUN模式VPN.md",
+                  "type": "file",
+                  "path": "OsCookBook/网络技术/虚拟机网络配置/虚拟机NAT网络，共享宿主机TUN模式VPN.md",
+                  "mtime": "2025-12-24T09:25:25.237Z"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "README.md",
+      "type": "file",
+      "path": "README.md",
+      "mtime": "2026-01-13T17:15:36.066Z"
+    },
+    {
+      "name": "WikiExplorer",
+      "type": "directory",
+      "path": "WikiExplorer",
+      "mtime": "2026-01-19T15:29:39.886Z",
+      "children": [
+        {
+          "name": "README.md",
+          "type": "file",
+          "path": "WikiExplorer/README.md",
+          "mtime": "2026-01-19T15:54:37.919Z"
+        },
+        {
+          "name": "notebook",
+          "type": "directory",
+          "path": "WikiExplorer/notebook",
+          "mtime": "2026-01-19T15:46:03.828Z",
+          "children": [
+            {
+              "name": "SPA原理与dist结构解析.md",
+              "type": "file",
+              "path": "WikiExplorer/notebook/SPA原理与dist结构解析.md",
+              "mtime": "2026-01-13T18:24:23.237Z"
+            },
+            {
+              "name": "WikiExplorer构建与部署架构详解.md",
+              "type": "file",
+              "path": "WikiExplorer/notebook/WikiExplorer构建与部署架构详解.md",
+              "mtime": "2026-01-19T15:30:17.129Z"
+            },
+            {
+              "name": "latexTest.md",
+              "type": "file",
+              "path": "WikiExplorer/notebook/latexTest.md",
+              "mtime": "2026-01-19T15:41:57.326Z"
+            },
+            {
+              "name": "npm run指令.md",
+              "type": "file",
+              "path": "WikiExplorer/notebook/npm run指令.md",
+              "mtime": "2026-01-13T16:27:38.302Z"
+            },
+            {
+              "name": "tech-stackj技术栈选型.md",
+              "type": "file",
+              "path": "WikiExplorer/notebook/tech-stackj技术栈选型.md",
+              "mtime": "2026-01-13T16:57:13.153Z"
+            },
+            {
+              "name": "vibeCode实现过程.md",
+              "type": "file",
+              "path": "WikiExplorer/notebook/vibeCode实现过程.md",
+              "mtime": "2026-01-19T15:53:27.707Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
