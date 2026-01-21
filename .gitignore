@@ -24,6 +24,6 @@ Thumbs.db
 
 # WikiExplorer specific
 # Ensure config files are tracked
-!public/directory-tree.json
+public/directory-tree.json
 !public/profile.json
 # !public/profile-photo.jpg (Uncomment if you have this file)
