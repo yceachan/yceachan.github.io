@@ -1013,6 +1013,888 @@
           ]
         }
       ]
+    },
+    {
+      "name": "蓝牙协议栈",
+      "type": "directory",
+      "path": "蓝牙协议栈",
+      "mtime": "2026-01-22T17:31:31.180Z",
+      "children": [
+        {
+          "name": ".gemini",
+          "type": "directory",
+          "path": "蓝牙协议栈/.gemini",
+          "mtime": "2026-01-22T14:05:52.646Z",
+          "children": [
+            {
+              "name": "skills",
+              "type": "directory",
+              "path": "蓝牙协议栈/.gemini/skills",
+              "mtime": "2026-01-22T13:06:50.566Z",
+              "children": [
+                {
+                  "name": "pdf",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/.gemini/skills/pdf",
+                  "mtime": "2026-01-22T13:06:50.571Z",
+                  "children": [
+                    {
+                      "name": "SKILL.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/.gemini/skills/pdf/SKILL.md",
+                      "mtime": "2026-01-22T13:06:50.568Z"
+                    },
+                    {
+                      "name": "forms.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/.gemini/skills/pdf/forms.md",
+                      "mtime": "2026-01-22T13:06:50.570Z"
+                    },
+                    {
+                      "name": "reference.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/.gemini/skills/pdf/reference.md",
+                      "mtime": "2026-01-22T13:06:50.571Z"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Bluetooth_Core_v6.2_Index.md",
+          "type": "file",
+          "path": "蓝牙协议栈/Bluetooth_Core_v6.2_Index.md",
+          "mtime": "2026-01-22T14:01:07.876Z"
+        },
+        {
+          "name": "Bluetooth_Knowledge_Base",
+          "type": "directory",
+          "path": "蓝牙协议栈/Bluetooth_Knowledge_Base",
+          "mtime": "2026-01-22T14:03:26.509Z",
+          "children": [
+            {
+              "name": "Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations",
+              "mtime": "2026-01-22T14:03:26.406Z",
+              "children": [
+                {
+                  "name": "Part A Consolidated Table of Contents",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part A Consolidated Table of Contents",
+                  "mtime": "2026-01-22T14:42:41.605Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part A Consolidated Table of Contents/README.md",
+                      "mtime": "2026-01-22T14:03:26.402Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part B [This Part Is No Longer Used]",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part B [This Part Is No Longer Used]",
+                  "mtime": "2026-01-22T14:13:07.480Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part B [This Part Is No Longer Used]/README.md",
+                      "mtime": "2026-01-22T14:03:26.404Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part C Version History and Acknowledgments",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part C Version History and Acknowledgments",
+                  "mtime": "2026-01-22T14:13:15.815Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part C Version History and Acknowledgments/README.md",
+                      "mtime": "2026-01-22T14:03:26.405Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part D Core Configurations",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part D Core Configurations",
+                  "mtime": "2026-01-22T14:14:42.834Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/Part D Core Configurations/README.md",
+                      "mtime": "2026-01-22T14:03:26.407Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 0 Consolidated Table of Contents, Acknowledgments, & Core Configurations/README.md",
+                  "mtime": "2026-01-22T14:03:26.408Z"
+                }
+              ]
+            },
+            {
+              "name": "Vol 1 Architecture, Change History, and Conventions",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions",
+              "mtime": "2026-01-22T14:03:26.420Z",
+              "children": [
+                {
+                  "name": "Part A Architecture",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part A Architecture",
+                  "mtime": "2026-01-22T14:15:35.405Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part A Architecture/README.md",
+                      "mtime": "2026-01-22T14:03:26.411Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part B Acronyms & Abbreviations",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part B Acronyms & Abbreviations",
+                  "mtime": "2026-01-22T14:18:35.950Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part B Acronyms & Abbreviations/README.md",
+                      "mtime": "2026-01-22T14:03:26.414Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part C Core Specification Change History",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part C Core Specification Change History",
+                  "mtime": "2026-01-22T14:42:38.054Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part C Core Specification Change History/README.md",
+                      "mtime": "2026-01-22T14:03:26.415Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part D [This Part Is No Longer Used]",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part D [This Part Is No Longer Used]",
+                  "mtime": "2026-01-22T14:23:06.945Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part D [This Part Is No Longer Used]/README.md",
+                      "mtime": "2026-01-22T14:03:26.417Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part E General Terminology and Interpretation",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part E General Terminology and Interpretation",
+                  "mtime": "2026-01-22T14:42:37.995Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part E General Terminology and Interpretation/README.md",
+                      "mtime": "2026-01-22T14:03:26.419Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part F Controller Error Codes",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part F Controller Error Codes",
+                  "mtime": "2026-01-22T14:42:38.091Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/Part F Controller Error Codes/README.md",
+                      "mtime": "2026-01-22T14:03:26.421Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 1 Architecture, Change History, and Conventions/README.md",
+                  "mtime": "2026-01-22T14:03:26.421Z"
+                }
+              ]
+            },
+            {
+              "name": "Vol 2 BREDR Controller",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller",
+              "mtime": "2026-01-22T14:03:26.436Z",
+              "children": [
+                {
+                  "name": "Part A Radio Physical Layer Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part A Radio Physical Layer Specification",
+                  "mtime": "2026-01-22T14:42:38.127Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part A Radio Physical Layer Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.424Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part B Baseband Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part B Baseband Specification",
+                  "mtime": "2026-01-22T14:42:39.100Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part B Baseband Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.426Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part C Link Manager Protocol Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part C Link Manager Protocol Specification",
+                  "mtime": "2026-01-22T14:42:38.630Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part C Link Manager Protocol Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.428Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part D [This Part Is No Longer Used]",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part D [This Part Is No Longer Used]",
+                  "mtime": "2026-01-22T14:23:09.133Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part D [This Part Is No Longer Used]/README.md",
+                      "mtime": "2026-01-22T14:03:26.429Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part E [This Part Is No Longer Used]",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part E [This Part Is No Longer Used]",
+                  "mtime": "2026-01-22T14:23:16.107Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part E [This Part Is No Longer Used]/README.md",
+                      "mtime": "2026-01-22T14:03:26.431Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part F Message Sequence Charts",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part F Message Sequence Charts",
+                  "mtime": "2026-01-22T14:42:38.574Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part F Message Sequence Charts/README.md",
+                      "mtime": "2026-01-22T14:03:26.432Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part G Sample Data",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part G Sample Data",
+                  "mtime": "2026-01-22T14:42:38.176Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part G Sample Data/README.md",
+                      "mtime": "2026-01-22T14:03:26.435Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part H Security Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part H Security Specification",
+                  "mtime": "2026-01-22T14:42:38.510Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/Part H Security Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.436Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 2 BREDR Controller/README.md",
+                  "mtime": "2026-01-22T14:03:26.437Z"
+                }
+              ]
+            },
+            {
+              "name": "Vol 3 Host",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host",
+              "mtime": "2026-01-22T14:03:26.452Z",
+              "children": [
+                {
+                  "name": "Part A Logical Link Control and Adaptation Protocol Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part A Logical Link Control and Adaptation Protocol Specification",
+                  "mtime": "2026-01-22T14:42:39.142Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part A Logical Link Control and Adaptation Protocol Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.439Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part B Service Discovery Protocol (SDP) Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part B Service Discovery Protocol (SDP) Specification",
+                  "mtime": "2026-01-22T14:42:38.210Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part B Service Discovery Protocol (SDP) Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.441Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part C Generic Access Profile",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part C Generic Access Profile",
+                  "mtime": "2026-01-22T14:43:54.925Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part C Generic Access Profile/README.md",
+                      "mtime": "2026-01-22T14:03:26.444Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part D Test Support",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part D Test Support",
+                  "mtime": "2026-01-22T14:44:33.061Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part D Test Support/README.md",
+                      "mtime": "2026-01-22T14:03:26.445Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part E [This Part Is No Longer Used]",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part E [This Part Is No Longer Used]",
+                  "mtime": "2026-01-22T14:29:30.165Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part E [This Part Is No Longer Used]/README.md",
+                      "mtime": "2026-01-22T14:03:26.447Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part F Attribute Protocol (ATT)",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part F Attribute Protocol (ATT)",
+                  "mtime": "2026-01-22T14:44:34.565Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part F Attribute Protocol (ATT)/README.md",
+                      "mtime": "2026-01-22T14:03:26.448Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part G Generic Attribute Profile (GATT)",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part G Generic Attribute Profile (GATT)",
+                  "mtime": "2026-01-22T14:44:34.827Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part G Generic Attribute Profile (GATT)/README.md",
+                      "mtime": "2026-01-22T14:03:26.450Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part H Security Manager Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part H Security Manager Specification",
+                  "mtime": "2026-01-22T14:44:40.975Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/Part H Security Manager Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.452Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 3 Host/README.md",
+                  "mtime": "2026-01-22T14:03:26.453Z"
+                }
+              ]
+            },
+            {
+              "name": "Vol 4 Host Controller Interface",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface",
+              "mtime": "2026-01-22T14:03:26.461Z",
+              "children": [
+                {
+                  "name": "Part A UART Transport Layer",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part A UART Transport Layer",
+                  "mtime": "2026-01-22T14:29:30.220Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part A UART Transport Layer/README.md",
+                      "mtime": "2026-01-22T14:03:26.455Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part B USB Transport Layer",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part B USB Transport Layer",
+                  "mtime": "2026-01-22T14:29:30.213Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part B USB Transport Layer/README.md",
+                      "mtime": "2026-01-22T14:03:26.456Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part C Secure Digital (SD) Transport Layer",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part C Secure Digital (SD) Transport Layer",
+                  "mtime": "2026-01-22T14:29:31.777Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part C Secure Digital (SD) Transport Layer/README.md",
+                      "mtime": "2026-01-22T14:03:26.458Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part D Three-wire UART Transport Layer",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part D Three-wire UART Transport Layer",
+                  "mtime": "2026-01-22T14:44:55.289Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part D Three-wire UART Transport Layer/README.md",
+                      "mtime": "2026-01-22T14:03:26.460Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part E Host Controller Interface Functional Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part E Host Controller Interface Functional Specification",
+                  "mtime": "2026-01-22T14:45:19.725Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/Part E Host Controller Interface Functional Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.462Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 4 Host Controller Interface/README.md",
+                  "mtime": "2026-01-22T14:03:26.462Z"
+                }
+              ]
+            },
+            {
+              "name": "Vol 5 [This Volume Is No Longer Used]",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 5 [This Volume Is No Longer Used]",
+              "mtime": "2026-01-22T14:03:26.463Z",
+              "children": [
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 5 [This Volume Is No Longer Used]/README.md",
+                  "mtime": "2026-01-22T14:03:26.464Z"
+                }
+              ]
+            },
+            {
+              "name": "Vol 6 Low Energy Controller",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller",
+              "mtime": "2026-01-22T14:03:26.507Z",
+              "children": [
+                {
+                  "name": "Part A Radio Physical Layer Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part A Radio Physical Layer Specification",
+                  "mtime": "2026-01-22T14:45:20.841Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part A Radio Physical Layer Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.466Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part B Link Layer Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part B Link Layer Specification",
+                  "mtime": "2026-01-22T14:45:29.504Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part B Link Layer Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.497Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part C Sample Data",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part C Sample Data",
+                  "mtime": "2026-01-22T14:46:47.188Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part C Sample Data/README.md",
+                      "mtime": "2026-01-22T14:03:26.499Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part D Message Sequence Charts",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part D Message Sequence Charts",
+                  "mtime": "2026-01-22T14:46:50.996Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part D Message Sequence Charts/README.md",
+                      "mtime": "2026-01-22T14:03:26.501Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part E Low Energy Link Layer Security",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part E Low Energy Link Layer Security",
+                  "mtime": "2026-01-22T14:47:19.945Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part E Low Energy Link Layer Security/README.md",
+                      "mtime": "2026-01-22T14:03:26.503Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part F RFPHY Test Modes",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part F RFPHY Test Modes",
+                  "mtime": "2026-01-22T14:47:56.580Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part F RFPHY Test Modes/README.md",
+                      "mtime": "2026-01-22T14:03:26.504Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part G Isochronous Adaptation Layer",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part G Isochronous Adaptation Layer",
+                  "mtime": "2026-01-22T14:48:48.672Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part G Isochronous Adaptation Layer/README.md",
+                      "mtime": "2026-01-22T14:03:26.506Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part H Channel Sounding",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part H Channel Sounding",
+                  "mtime": "2026-01-22T14:48:57.713Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/Part H Channel Sounding/README.md",
+                      "mtime": "2026-01-22T14:03:26.507Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 6 Low Energy Controller/README.md",
+                  "mtime": "2026-01-22T14:03:26.508Z"
+                }
+              ]
+            },
+            {
+              "name": "Vol 7 Wireless Coexistence Signaling and Interfaces",
+              "type": "directory",
+              "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces",
+              "mtime": "2026-01-22T14:03:26.513Z",
+              "children": [
+                {
+                  "name": "Part A MWS Coexistence Logical Signaling Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces/Part A MWS Coexistence Logical Signaling Specification",
+                  "mtime": "2026-01-22T14:49:02.417Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces/Part A MWS Coexistence Logical Signaling Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.511Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part B Wireless Coexistence Interface 1 (WCI-1) Transport Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces/Part B Wireless Coexistence Interface 1 (WCI-1) Transport Specification",
+                  "mtime": "2026-01-22T14:49:32.629Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces/Part B Wireless Coexistence Interface 1 (WCI-1) Transport Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.513Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "Part C Wireless Coexistence Interface 2 (WCI-2) Transport Specification",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces/Part C Wireless Coexistence Interface 2 (WCI-2) Transport Specification",
+                  "mtime": "2026-01-22T14:49:37.735Z",
+                  "children": [
+                    {
+                      "name": "README.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces/Part C Wireless Coexistence Interface 2 (WCI-2) Transport Specification/README.md",
+                      "mtime": "2026-01-22T14:03:26.514Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/Bluetooth_Knowledge_Base/Vol 7 Wireless Coexistence Signaling and Interfaces/README.md",
+                  "mtime": "2026-01-22T14:03:26.515Z"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "GEMINI.md",
+          "type": "file",
+          "path": "蓝牙协议栈/GEMINI.md",
+          "mtime": "2026-01-22T17:11:01.140Z"
+        },
+        {
+          "name": "README.md",
+          "type": "file",
+          "path": "蓝牙协议栈/README.md",
+          "mtime": "2026-01-22T17:31:31.179Z"
+        },
+        {
+          "name": "notebook",
+          "type": "directory",
+          "path": "蓝牙协议栈/notebook",
+          "mtime": "2026-01-22T16:56:35.590Z",
+          "children": [
+            {
+              "name": "Overview",
+              "type": "directory",
+              "path": "蓝牙协议栈/notebook/Overview",
+              "mtime": "2026-01-22T16:52:49.150Z",
+              "children": [
+                {
+                  "name": "README.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/Overview/README.md",
+                  "mtime": "2026-01-22T16:52:49.149Z"
+                }
+              ]
+            },
+            {
+              "name": "vol1_architecture",
+              "type": "directory",
+              "path": "蓝牙协议栈/notebook/vol1_architecture",
+              "mtime": "2026-01-22T16:13:53.476Z",
+              "children": [
+                {
+                  "name": "transport_hierarchy.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol1_architecture/transport_hierarchy.md",
+                  "mtime": "2026-01-22T16:14:20.291Z"
+                }
+              ]
+            },
+            {
+              "name": "vol3_host",
+              "type": "directory",
+              "path": "蓝牙协议栈/notebook/vol3_host",
+              "mtime": "2026-01-22T17:07:04.644Z",
+              "children": [
+                {
+                  "name": "gatt_hierarchy.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/gatt_hierarchy.md",
+                  "mtime": "2026-01-22T17:07:02.211Z"
+                },
+                {
+                  "name": "gatt_overview.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/gatt_overview.md",
+                  "mtime": "2026-01-22T17:07:20.673Z"
+                },
+                {
+                  "name": "gatt_procedures.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/gatt_procedures.md",
+                  "mtime": "2026-01-22T17:07:34.753Z"
+                },
+                {
+                  "name": "l2cap_general_operation.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/l2cap_general_operation.md",
+                  "mtime": "2026-01-22T16:57:49.516Z"
+                },
+                {
+                  "name": "l2cap_packet_formats.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/l2cap_packet_formats.md",
+                  "mtime": "2026-01-22T16:58:11.816Z"
+                }
+              ]
+            },
+            {
+              "name": "vol6_controller",
+              "type": "directory",
+              "path": "蓝牙协议栈/notebook/vol6_controller",
+              "mtime": "2026-01-22T16:30:33.380Z",
+              "children": [
+                {
+                  "name": "air_interface_packets.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol6_controller/air_interface_packets.md",
+                  "mtime": "2026-01-22T16:26:00.717Z"
+                },
+                {
+                  "name": "connection_establishment.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol6_controller/connection_establishment.md",
+                  "mtime": "2026-01-22T16:30:33.382Z"
+                },
+                {
+                  "name": "link_layer_states.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol6_controller/link_layer_states.md",
+                  "mtime": "2026-01-22T16:25:28.592Z"
+                },
+                {
+                  "name": "msc_raw_text.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol6_controller/msc_raw_text.md",
+                  "mtime": "2026-01-22T16:30:00.659Z"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

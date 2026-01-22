@@ -1,0 +1,35 @@
+# Part B: USB Transport Layer
+
+**Start Page:** 1743
+
+## Table of Contents
+
+- 1 Overview (Page 1745)
+  - 1.1 Requirements (Page 1746)
+- 2 USB endpoint expectations (Page 1748)
+  - 2.1 Descriptor overview (Page 1748)
+    - 2.1.1 Controller descriptors (Page 1748)
+    - 2.1.2 [This section is no longer used] (Page 1754)
+  - 2.2 Control endpoint expectations (Page 1754)
+    - 2.2.1 Single function Controller (Page 1754)
+    - 2.2.2 Controller function in a composite device (Page 1754)
+    - 2.2.3 [This section is no longer used] (Page 1755)
+  - 2.3 Bulk endpoints expectations (Page 1755)
+  - 2.4 Interrupt endpoint expectations (Page 1755)
+  - 2.5 Isochronous endpoints expectations (Page 1755)
+- 3 Class code (Page 1757)
+  - 3.1 Bluetooth codes (Page 1757)
+    - 3.1.1 [This section is no longer used] (Page 1757)
+    - 3.1.2 [This section is no longer used] (Page 1757)
+    - 3.1.3 [This section is no longer used] (Page 1757)
+    - 3.1.4 [This section is no longer used] (Page 1757)
+- 4 Device firmware upgrade (Page 1758)
+- 5 Limitations (Page 1759)
+  - 5.1 Power specific limitations (Page 1759)
+  - 5.2 Other limitations (Page 1759)
+- 6 Bluetooth Composite Device implementation (Page 1760)
+  - 6.1 Configurations (Page 1760)
+  - 6.2 Using USB Interface Association Descriptors for a Controller function (Page 1760)
+  - 6.3 [This section is no longer used] (Page 1761)
+- 7 USB Bulk Serialization mode (Page 1762)
+- 8 References (Page 1763)
