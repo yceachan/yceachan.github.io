@@ -12,9 +12,12 @@ export default {
 
         /^MCUthings\/.*$/,
         
-        /^MPUthings\/.*$/,
+        // 只扫描 MPUthings 下 imx-wsl 的 note 目录
+        /^MPUthings\/imx-wsl\/note\/.*$/,
 
-  
+        /^蓝牙协议栈\/.*$/,
+
+     
         // 示例：匹配 WikiExplorer 自身的一些文档 (排除 dist/node_modules 在硬编码逻辑中处理)
         /^WikiExplorer\/.*\.md$/,
 
@@ -30,6 +33,8 @@ export default {
         /^WikiExplorer\/dist/,
         /^WikiExplorer\/public/,
         /^WikiExplorer\/build/,
-        /\.DS_Store/
+        /\.DS_Store/,
+        // 排除 imx-wsl 中除 note 以外的所有子目录 (提高性能，规避损坏链接)
+        /^MPUthings\/imx-wsl\/(?!note(\/|$)).*$/
     ]
 };

@@ -85,6 +85,18 @@ async function processDirectory(currentPath, relativePath) {
     try {
         stats = await fs.stat(currentPath);
     } catch (error) {
+        if (error.code === 'ENOENT') {
+            try {
+                // If lstat works but stat failed, it's a broken symlink
+                const linkStats = await fs.lstat(currentPath);
+                if (linkStats.isSymbolicLink()) {
+                    // console.warn(`⚠️ Skipping broken link: ${name}`);
+                    return null;
+                }
+            } catch (e) {
+                // Really doesn't exist
+            }
+        }
         console.warn(`⚠️ Cannot access ${currentPath}: ${error.message}`);
         return null;
     }
