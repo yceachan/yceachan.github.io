@@ -6,60 +6,74 @@
       "name": "MCUthings",
       "type": "directory",
       "path": "MCUthings",
-      "mtime": "2026-01-22T17:14:00.040Z",
+      "mtime": "2026-01-26T15:43:02.096Z",
       "children": [
         {
-          "name": "ModernSTM32_CookBook",
+          "name": "Embedded Aimed 设计模式漫谈",
           "type": "directory",
-          "path": "MCUthings/ModernSTM32_CookBook",
+          "path": "MCUthings/Embedded Aimed 设计模式漫谈",
+          "mtime": "2026-01-26T15:45:02.221Z",
+          "children": [
+            {
+              "name": "Overview.md",
+              "type": "file",
+              "path": "MCUthings/Embedded Aimed 设计模式漫谈/Overview.md",
+              "mtime": "2026-01-26T15:45:02.220Z"
+            }
+          ]
+        },
+        {
+          "name": "Leagacy CookBook",
+          "type": "directory",
+          "path": "MCUthings/Leagacy CookBook",
           "mtime": "2026-01-22T17:20:59.031Z",
           "children": [
             {
               "name": "Clion-arm-cmakelist-templete.md",
               "type": "file",
-              "path": "MCUthings/ModernSTM32_CookBook/Clion-arm-cmakelist-templete.md",
+              "path": "MCUthings/Leagacy CookBook/Clion-arm-cmakelist-templete.md",
               "mtime": "2026-01-22T17:20:58.700Z"
             },
             {
               "name": "EmbeddedCookBook",
               "type": "directory",
-              "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook",
+              "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook",
               "mtime": "2026-01-22T17:20:58.708Z",
               "children": [
                 {
                   "name": "CortexM内核札记.md",
                   "type": "file",
-                  "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/CortexM内核札记.md",
+                  "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/CortexM内核札记.md",
                   "mtime": "2026-01-22T17:20:58.700Z"
                 },
                 {
                   "name": "FSMC_FMC_CookBook.md",
                   "type": "file",
-                  "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/FSMC_FMC_CookBook.md",
+                  "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/FSMC_FMC_CookBook.md",
                   "mtime": "2026-01-22T17:20:58.701Z"
                 },
                 {
                   "name": "IIC_CookBook.md",
                   "type": "file",
-                  "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/IIC_CookBook.md",
+                  "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/IIC_CookBook.md",
                   "mtime": "2026-01-22T17:20:58.702Z"
                 },
                 {
                   "name": "Timer_CookBook.md",
                   "type": "file",
-                  "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/Timer_CookBook.md",
+                  "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/Timer_CookBook.md",
                   "mtime": "2026-01-22T17:20:58.702Z"
                 },
                 {
                   "name": "USB",
                   "type": "directory",
-                  "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/USB",
+                  "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/USB",
                   "mtime": "2026-01-22T17:20:58.703Z",
                   "children": [
                     {
                       "name": "STM32-USB-OTG-2.0.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/USB/STM32-USB-OTG-2.0.md",
+                      "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/USB/STM32-USB-OTG-2.0.md",
                       "mtime": "2026-01-22T17:20:58.703Z"
                     }
                   ]
@@ -67,31 +81,31 @@
                 {
                   "name": "串口与DMA",
                   "type": "directory",
-                  "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/串口与DMA",
+                  "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/串口与DMA",
                   "mtime": "2026-01-22T17:20:58.707Z",
                   "children": [
                     {
                       "name": "DMACookBook.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/串口与DMA/DMACookBook.md",
+                      "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/串口与DMA/DMACookBook.md",
                       "mtime": "2026-01-22T17:20:58.705Z"
                     },
                     {
                       "name": "UART_CookBook.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/串口与DMA/UART_CookBook.md",
+                      "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/串口与DMA/UART_CookBook.md",
                       "mtime": "2026-01-22T17:20:58.706Z"
                     },
                     {
                       "name": "gpio_CookBook.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/串口与DMA/gpio_CookBook.md",
+                      "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/串口与DMA/gpio_CookBook.md",
                       "mtime": "2026-01-22T17:20:58.707Z"
                     },
                     {
                       "name": "串口dma接受器.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/串口与DMA/串口dma接受器.md",
+                      "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/串口与DMA/串口dma接受器.md",
                       "mtime": "2026-01-22T17:20:58.707Z"
                     }
                   ]
@@ -99,7 +113,7 @@
                 {
                   "name": "基于内核调试组件DWT的微妙级延时案例.md",
                   "type": "file",
-                  "path": "MCUthings/ModernSTM32_CookBook/EmbeddedCookBook/基于内核调试组件DWT的微妙级延时案例.md",
+                  "path": "MCUthings/Leagacy CookBook/EmbeddedCookBook/基于内核调试组件DWT的微妙级延时案例.md",
                   "mtime": "2026-01-22T17:20:58.708Z"
                 }
               ]
@@ -107,31 +121,31 @@
             {
               "name": "README.md",
               "type": "file",
-              "path": "MCUthings/ModernSTM32_CookBook/README.md",
+              "path": "MCUthings/Leagacy CookBook/README.md",
               "mtime": "2026-01-22T17:20:58.708Z"
             },
             {
               "name": "bsp",
               "type": "directory",
-              "path": "MCUthings/ModernSTM32_CookBook/bsp",
+              "path": "MCUthings/Leagacy CookBook/bsp",
               "mtime": "2026-01-22T17:20:58.716Z",
               "children": [
                 {
                   "name": "Dev",
                   "type": "directory",
-                  "path": "MCUthings/ModernSTM32_CookBook/bsp/Dev",
+                  "path": "MCUthings/Leagacy CookBook/bsp/Dev",
                   "mtime": "2026-01-22T17:20:58.712Z",
                   "children": [
                     {
                       "name": "HCxx蓝牙",
                       "type": "directory",
-                      "path": "MCUthings/ModernSTM32_CookBook/bsp/Dev/HCxx蓝牙",
+                      "path": "MCUthings/Leagacy CookBook/bsp/Dev/HCxx蓝牙",
                       "mtime": "2026-01-22T17:20:58.709Z",
                       "children": [
                         {
                           "name": "HC09CookBook.md",
                           "type": "file",
-                          "path": "MCUthings/ModernSTM32_CookBook/bsp/Dev/HCxx蓝牙/HC09CookBook.md",
+                          "path": "MCUthings/Leagacy CookBook/bsp/Dev/HCxx蓝牙/HC09CookBook.md",
                           "mtime": "2026-01-22T17:20:58.710Z"
                         }
                       ]
@@ -139,13 +153,13 @@
                     {
                       "name": "SHT30",
                       "type": "directory",
-                      "path": "MCUthings/ModernSTM32_CookBook/bsp/Dev/SHT30",
+                      "path": "MCUthings/Leagacy CookBook/bsp/Dev/SHT30",
                       "mtime": "2026-01-22T17:20:58.711Z",
                       "children": [
                         {
                           "name": "README.md",
                           "type": "file",
-                          "path": "MCUthings/ModernSTM32_CookBook/bsp/Dev/SHT30/README.md",
+                          "path": "MCUthings/Leagacy CookBook/bsp/Dev/SHT30/README.md",
                           "mtime": "2026-01-22T17:20:58.710Z"
                         }
                       ]
@@ -153,13 +167,13 @@
                     {
                       "name": "fdc2214",
                       "type": "directory",
-                      "path": "MCUthings/ModernSTM32_CookBook/bsp/Dev/fdc2214",
+                      "path": "MCUthings/Leagacy CookBook/bsp/Dev/fdc2214",
                       "mtime": "2026-01-22T17:20:58.712Z",
                       "children": [
                         {
                           "name": "README.md",
                           "type": "file",
-                          "path": "MCUthings/ModernSTM32_CookBook/bsp/Dev/fdc2214/README.md",
+                          "path": "MCUthings/Leagacy CookBook/bsp/Dev/fdc2214/README.md",
                           "mtime": "2026-01-22T17:20:58.713Z"
                         }
                       ]
@@ -169,37 +183,37 @@
                 {
                   "name": "README.md",
                   "type": "file",
-                  "path": "MCUthings/ModernSTM32_CookBook/bsp/README.md",
+                  "path": "MCUthings/Leagacy CookBook/bsp/README.md",
                   "mtime": "2026-01-22T17:20:58.713Z"
                 },
                 {
                   "name": "prpl",
                   "type": "directory",
-                  "path": "MCUthings/ModernSTM32_CookBook/bsp/prpl",
+                  "path": "MCUthings/Leagacy CookBook/bsp/prpl",
                   "mtime": "2026-01-22T17:20:58.723Z",
                   "children": [
                     {
                       "name": "README.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/bsp/prpl/README.md",
+                      "path": "MCUthings/Leagacy CookBook/bsp/prpl/README.md",
                       "mtime": "2026-01-22T17:20:58.717Z"
                     },
                     {
                       "name": "fifo通信接口设计.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/bsp/prpl/fifo通信接口设计.md",
+                      "path": "MCUthings/Leagacy CookBook/bsp/prpl/fifo通信接口设计.md",
                       "mtime": "2026-01-22T17:20:58.720Z"
                     },
                     {
                       "name": "基于DWT的微妙级延时案例与软件IIC速率的进一步优化札记.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/bsp/prpl/基于DWT的微妙级延时案例与软件IIC速率的进一步优化札记.md",
+                      "path": "MCUthings/Leagacy CookBook/bsp/prpl/基于DWT的微妙级延时案例与软件IIC速率的进一步优化札记.md",
                       "mtime": "2026-01-22T17:20:58.723Z"
                     },
                     {
                       "name": "软件IIC通讯速率札记.md",
                       "type": "file",
-                      "path": "MCUthings/ModernSTM32_CookBook/bsp/prpl/软件IIC通讯速率札记.md",
+                      "path": "MCUthings/Leagacy CookBook/bsp/prpl/软件IIC通讯速率札记.md",
                       "mtime": "2026-01-22T17:20:58.723Z"
                     }
                   ]
@@ -209,13 +223,13 @@
             {
               "name": "基于CLion的STM32开发环境搭建.md",
               "type": "file",
-              "path": "MCUthings/ModernSTM32_CookBook/基于CLion的STM32开发环境搭建.md",
+              "path": "MCUthings/Leagacy CookBook/基于CLion的STM32开发环境搭建.md",
               "mtime": "2026-01-22T17:20:58.823Z"
             },
             {
               "name": "基于EIDE_vscode的单片机开发环境搭建.md",
               "type": "file",
-              "path": "MCUthings/ModernSTM32_CookBook/基于EIDE_vscode的单片机开发环境搭建.md",
+              "path": "MCUthings/Leagacy CookBook/基于EIDE_vscode的单片机开发环境搭建.md",
               "mtime": "2026-01-22T17:20:58.824Z"
             }
           ]
@@ -796,7 +810,7 @@
           "name": "git版本控制",
           "type": "directory",
           "path": "OsCookBook/git版本控制",
-          "mtime": "2026-01-24T18:12:04.744Z",
+          "mtime": "2026-01-26T16:37:42.642Z",
           "children": [
             {
               "name": "git rebase -i 合并提交操作手册及最佳实践.md",
@@ -859,6 +873,20 @@
               "type": "file",
               "path": "OsCookBook/git版本控制/删除误追踪缓存SOP.md",
               "mtime": "2026-01-24T16:43:17.684Z"
+            },
+            {
+              "name": "大型Git版本控制最佳实践与漫谈",
+              "type": "directory",
+              "path": "OsCookBook/git版本控制/大型Git版本控制最佳实践与漫谈",
+              "mtime": "2026-01-26T16:39:37.866Z",
+              "children": [
+                {
+                  "name": "20260127-geminichat.md",
+                  "type": "file",
+                  "path": "OsCookBook/git版本控制/大型Git版本控制最佳实践与漫谈/20260127-geminichat.md",
+                  "mtime": "2026-01-26T16:39:37.864Z"
+                }
+              ]
             },
             {
               "name": "大型协作项目快速迭代规范.md",
