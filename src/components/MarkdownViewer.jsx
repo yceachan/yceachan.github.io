@@ -10,6 +10,7 @@ import { oneDark as atomOneDark } from 'react-syntax-highlighter/dist/esm/styles
 import 'katex/dist/katex.min.css'; // Import KaTeX styles
 import Sidebar from './Sidebar';
 import '../markdown-styles.css'; // Import custom styles
+import Mermaid from './Mermaid';
 
 const MarkdownViewer = ({ node, siblings }) => {
   const [content, setContent] = useState('');
@@ -91,6 +92,9 @@ const MarkdownViewer = ({ node, siblings }) => {
                   components={{
                     code({ node, inline, className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || '');
+                      if (!inline && match && match[1] === 'mermaid') {
+                        return <Mermaid chart={String(children).replace(/\n$/, '')} />;
+                      }
                       return !inline && match ? (
                         <SyntaxHighlighter
                           style={atomOneDark}
