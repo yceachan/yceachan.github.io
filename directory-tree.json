@@ -12,13 +12,13 @@
           "name": "Embedded Aimed 设计模式漫谈",
           "type": "directory",
           "path": "MCUthings/Embedded Aimed 设计模式漫谈",
-          "mtime": "2026-01-26T15:45:02.221Z",
+          "mtime": "2026-01-26T16:59:07.575Z",
           "children": [
             {
               "name": "Overview.md",
               "type": "file",
               "path": "MCUthings/Embedded Aimed 设计模式漫谈/Overview.md",
-              "mtime": "2026-01-26T15:45:02.220Z"
+              "mtime": "2026-01-26T16:59:07.573Z"
             }
           ]
         },
@@ -266,7 +266,7 @@
       "name": "MPUthings",
       "type": "directory",
       "path": "MPUthings",
-      "mtime": "2026-01-24T17:39:34.100Z",
+      "mtime": "2026-01-27T13:18:40.759Z",
       "children": [
         {
           "name": "imx-wsl",
@@ -1064,7 +1064,7 @@
       "name": "WikiExplorer",
       "type": "directory",
       "path": "WikiExplorer",
-      "mtime": "2026-01-21T18:55:16.877Z",
+      "mtime": "2026-01-27T16:49:19.345Z",
       "children": [
         {
           "name": "README.md",
@@ -1121,6 +1121,12 @@
               "mtime": "2026-01-21T18:19:59.196Z"
             }
           ]
+        },
+        {
+          "name": "test_mermaid.md",
+          "type": "file",
+          "path": "WikiExplorer/test_mermaid.md",
+          "mtime": "2026-01-27T13:21:19.177Z"
         }
       ]
     },
@@ -1128,7 +1134,7 @@
       "name": "蓝牙协议栈",
       "type": "directory",
       "path": "蓝牙协议栈",
-      "mtime": "2026-01-23T13:40:51.480Z",
+      "mtime": "2026-01-27T16:49:19.345Z",
       "children": [
         {
           "name": ".gemini",
@@ -1140,8 +1146,42 @@
               "name": "skills",
               "type": "directory",
               "path": "蓝牙协议栈/.gemini/skills",
-              "mtime": "2026-01-22T13:06:50.566Z",
+              "mtime": "2026-01-27T13:46:08.870Z",
               "children": [
+                {
+                  "name": "mermaid",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/.gemini/skills/mermaid",
+                  "mtime": "2026-01-27T13:45:04.921Z",
+                  "children": [
+                    {
+                      "name": "SKILL.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/.gemini/skills/mermaid/SKILL.md",
+                      "mtime": "2026-01-27T05:44:54.000Z"
+                    },
+                    {
+                      "name": "reference.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/.gemini/skills/mermaid/reference.md",
+                      "mtime": "2026-01-27T05:44:54.000Z"
+                    },
+                    {
+                      "name": "scripts",
+                      "type": "directory",
+                      "path": "蓝牙协议栈/.gemini/skills/mermaid/scripts",
+                      "mtime": "2026-01-27T13:45:04.922Z",
+                      "children": [
+                        {
+                          "name": "README.md",
+                          "type": "file",
+                          "path": "蓝牙协议栈/.gemini/skills/mermaid/scripts/README.md",
+                          "mtime": "2026-01-27T05:44:54.000Z"
+                        }
+                      ]
+                    }
+                  ]
+                },
                 {
                   "name": "pdf",
                   "type": "directory",
@@ -1890,19 +1930,19 @@
           "name": "GEMINI.md",
           "type": "file",
           "path": "蓝牙协议栈/GEMINI.md",
-          "mtime": "2026-01-22T17:11:01.140Z"
+          "mtime": "2026-01-27T14:54:24.260Z"
         },
         {
           "name": "README.md",
           "type": "file",
           "path": "蓝牙协议栈/README.md",
-          "mtime": "2026-01-22T17:31:31.179Z"
+          "mtime": "2026-01-27T15:01:06.321Z"
         },
         {
           "name": "notebook",
           "type": "directory",
           "path": "蓝牙协议栈/notebook",
-          "mtime": "2026-01-22T16:56:35.590Z",
+          "mtime": "2026-01-27T14:54:02.979Z",
           "children": [
             {
               "name": "Overview",
@@ -1914,7 +1954,59 @@
                   "name": "README.md",
                   "type": "file",
                   "path": "蓝牙协议栈/notebook/Overview/README.md",
-                  "mtime": "2026-01-22T16:52:49.149Z"
+                  "mtime": "2026-01-27T13:39:46.073Z"
+                }
+              ]
+            },
+            {
+              "name": "README.md",
+              "type": "file",
+              "path": "蓝牙协议栈/notebook/README.md",
+              "mtime": "2026-01-27T16:47:19.310Z"
+            },
+            {
+              "name": "profiles",
+              "type": "directory",
+              "path": "蓝牙协议栈/notebook/profiles",
+              "mtime": "2026-01-27T14:33:44.728Z",
+              "children": [
+                {
+                  "name": "hid",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/notebook/profiles/hid",
+                  "mtime": "2026-01-27T16:16:25.004Z",
+                  "children": [
+                    {
+                      "name": "hid_report_map_guide.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/profiles/hid/hid_report_map_guide.md",
+                      "mtime": "2026-01-27T14:50:15.804Z"
+                    },
+                    {
+                      "name": "hogp_architecture.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/profiles/hid/hogp_architecture.md",
+                      "mtime": "2026-01-27T16:44:02.527Z"
+                    },
+                    {
+                      "name": "嵌入式HID设备开发——自底向上视角_v0.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/profiles/hid/嵌入式HID设备开发——自底向上视角_v0.md",
+                      "mtime": "2026-01-27T15:56:30.389Z"
+                    },
+                    {
+                      "name": "嵌入式HID设备开发——自底向上视角_v1.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/profiles/hid/嵌入式HID设备开发——自底向上视角_v1.md",
+                      "mtime": "2026-01-27T15:52:23.884Z"
+                    },
+                    {
+                      "name": "嵌入式HID设备开发——自底向上视角_v2.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/profiles/hid/嵌入式HID设备开发——自底向上视角_v2.md",
+                      "mtime": "2026-01-27T16:36:23.333Z"
+                    }
+                  ]
                 }
               ]
             },
@@ -1936,13 +2028,71 @@
               "name": "vol3_host",
               "type": "directory",
               "path": "蓝牙协议栈/notebook/vol3_host",
-              "mtime": "2026-01-22T17:07:04.644Z",
+              "mtime": "2026-01-27T16:47:47.397Z",
               "children": [
                 {
-                  "name": "gatt_hierarchy.md",
+                  "name": "att_protocol.md",
                   "type": "file",
-                  "path": "蓝牙协议栈/notebook/vol3_host/gatt_hierarchy.md",
-                  "mtime": "2026-01-22T17:07:02.211Z"
+                  "path": "蓝牙协议栈/notebook/vol3_host/att_protocol.md",
+                  "mtime": "2026-01-27T14:22:56.142Z"
+                },
+                {
+                  "name": "att_raw",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/notebook/vol3_host/att_raw",
+                  "mtime": "2026-01-27T14:10:51.418Z",
+                  "children": [
+                    {
+                      "name": "att_concepts_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/att_raw/att_concepts_raw.md",
+                      "mtime": "2026-01-27T14:10:47.697Z"
+                    },
+                    {
+                      "name": "att_pdus_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/att_raw/att_pdus_raw.md",
+                      "mtime": "2026-01-27T14:10:51.419Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "gap_advertising_data.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/gap_advertising_data.md",
+                  "mtime": "2026-01-27T13:55:52.738Z"
+                },
+                {
+                  "name": "gap_modes_procedures.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/gap_modes_procedures.md",
+                  "mtime": "2026-01-27T13:56:21.593Z"
+                },
+                {
+                  "name": "gap_raw",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/notebook/vol3_host/gap_raw",
+                  "mtime": "2026-01-27T13:51:37.549Z",
+                  "children": [
+                    {
+                      "name": "gap_advertising_data_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/gap_raw/gap_advertising_data_raw.md",
+                      "mtime": "2026-01-27T13:51:37.549Z"
+                    },
+                    {
+                      "name": "gap_modes_procedures_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/gap_raw/gap_modes_procedures_raw.md",
+                      "mtime": "2026-01-27T13:51:35.704Z"
+                    },
+                    {
+                      "name": "gap_security_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/gap_raw/gap_security_raw.md",
+                      "mtime": "2026-01-27T13:51:37.424Z"
+                    }
+                  ]
                 },
                 {
                   "name": "gatt_overview.md",
@@ -1957,6 +2107,20 @@
                   "mtime": "2026-01-22T17:07:34.753Z"
                 },
                 {
+                  "name": "gatt_raw",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/notebook/vol3_host/gatt_raw",
+                  "mtime": "2026-01-27T16:47:47.397Z",
+                  "children": [
+                    {
+                      "name": "gatt_hierarchy.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/gatt_raw/gatt_hierarchy.md",
+                      "mtime": "2026-01-22T17:07:02.211Z"
+                    }
+                  ]
+                },
+                {
                   "name": "l2cap_general_operation.md",
                   "type": "file",
                   "path": "蓝牙协议栈/notebook/vol3_host/l2cap_general_operation.md",
@@ -1967,6 +2131,90 @@
                   "type": "file",
                   "path": "蓝牙协议栈/notebook/vol3_host/l2cap_packet_formats.md",
                   "mtime": "2026-01-22T16:58:11.816Z"
+                },
+                {
+                  "name": "smp_keys_distribution.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/smp_keys_distribution.md",
+                  "mtime": "2026-01-27T13:57:42.366Z"
+                },
+                {
+                  "name": "smp_pairing_process.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol3_host/smp_pairing_process.md",
+                  "mtime": "2026-01-27T13:57:22.081Z"
+                },
+                {
+                  "name": "smp_raw",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/notebook/vol3_host/smp_raw",
+                  "mtime": "2026-01-27T13:56:55.936Z",
+                  "children": [
+                    {
+                      "name": "smp_pairing_methods_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/smp_raw/smp_pairing_methods_raw.md",
+                      "mtime": "2026-01-27T13:56:54.134Z"
+                    },
+                    {
+                      "name": "smp_protocol_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol3_host/smp_raw/smp_protocol_raw.md",
+                      "mtime": "2026-01-27T13:56:55.936Z"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "vol4_hci",
+              "type": "directory",
+              "path": "蓝牙协议栈/notebook/vol4_hci",
+              "mtime": "2026-01-27T14:17:09.203Z",
+              "children": [
+                {
+                  "name": "hci_initialization_flow.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol4_hci/hci_initialization_flow.md",
+                  "mtime": "2026-01-27T14:17:09.204Z"
+                },
+                {
+                  "name": "hci_packet_structures.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol4_hci/hci_packet_structures.md",
+                  "mtime": "2026-01-27T14:16:35.904Z"
+                },
+                {
+                  "name": "hci_raw",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/notebook/vol4_hci/hci_raw",
+                  "mtime": "2026-01-27T14:16:13.119Z",
+                  "children": [
+                    {
+                      "name": "hci_cmd_read_ver_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol4_hci/hci_raw/hci_cmd_read_ver_raw.md",
+                      "mtime": "2026-01-27T14:16:12.680Z"
+                    },
+                    {
+                      "name": "hci_cmd_reset_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol4_hci/hci_raw/hci_cmd_reset_raw.md",
+                      "mtime": "2026-01-27T14:16:12.588Z"
+                    },
+                    {
+                      "name": "hci_cmd_set_adv_param_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol4_hci/hci_raw/hci_cmd_set_adv_param_raw.md",
+                      "mtime": "2026-01-27T14:16:13.120Z"
+                    },
+                    {
+                      "name": "hci_packet_formats_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol4_hci/hci_raw/hci_packet_formats_raw.md",
+                      "mtime": "2026-01-27T14:16:12.487Z"
+                    }
+                  ]
                 }
               ]
             },
@@ -1974,7 +2222,7 @@
               "name": "vol6_controller",
               "type": "directory",
               "path": "蓝牙协议栈/notebook/vol6_controller",
-              "mtime": "2026-01-22T16:30:33.380Z",
+              "mtime": "2026-01-27T14:30:35.153Z",
               "children": [
                 {
                   "name": "air_interface_packets.md",
@@ -1987,6 +2235,32 @@
                   "type": "file",
                   "path": "蓝牙协议栈/notebook/vol6_controller/connection_establishment.md",
                   "mtime": "2026-01-22T16:30:33.382Z"
+                },
+                {
+                  "name": "iso_raw",
+                  "type": "directory",
+                  "path": "蓝牙协议栈/notebook/vol6_controller/iso_raw",
+                  "mtime": "2026-01-27T14:30:10.411Z",
+                  "children": [
+                    {
+                      "name": "isoal_features_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol6_controller/iso_raw/isoal_features_raw.md",
+                      "mtime": "2026-01-27T14:30:09.394Z"
+                    },
+                    {
+                      "name": "isoal_timing_raw.md",
+                      "type": "file",
+                      "path": "蓝牙协议栈/notebook/vol6_controller/iso_raw/isoal_timing_raw.md",
+                      "mtime": "2026-01-27T14:30:10.411Z"
+                    }
+                  ]
+                },
+                {
+                  "name": "isochronous_channels.md",
+                  "type": "file",
+                  "path": "蓝牙协议栈/notebook/vol6_controller/isochronous_channels.md",
+                  "mtime": "2026-01-27T14:30:35.156Z"
                 },
                 {
                   "name": "link_layer_states.md",

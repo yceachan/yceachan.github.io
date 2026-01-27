@@ -52,22 +52,30 @@
 *   **Vol 3 Host**:
     *   `notebook/vol3_host/l2cap_general_operation.md`: CID 分配、Basic/FlowControl/LE-Credit 模式。
     *   `notebook/vol3_host/l2cap_packet_formats.md`: B-Frame, K-Frame 结构。
+    *   `notebook/vol3_host/att_protocol.md`: PDU 结构、Opcode 字典、MTU 交换与错误码。
     *   `notebook/vol3_host/gatt_overview.md`: Client/Server 角色, Attribute 结构, Service 层级。
     *   `notebook/vol3_host/gatt_procedures.md`: Read/Write/Notify/Indicate 交互流程。
+    *   `notebook/vol3_host/gap_advertising_data.md`: 广播数据格式 (Flags, Local Name, UUIDs)。
+    *   `notebook/vol3_host/gap_modes_procedures.md`: 发现模式 (Discoverable)、连接模式 (Connectable) 与 安全模式。
+    *   `notebook/vol3_host/smp_pairing_process.md`: 配对流程 (Phase 1-3), Just Works vs Passkey。
+    *   `notebook/vol3_host/smp_keys_distribution.md`: 密钥类型 (LTK, IRK, CSRK) 与分发。
+*   **Vol 4 HCI**:
+    *   `notebook/vol4_hci/hci_packet_structures.md`: Command, Event, ACL/ISO Data 包结构与 H4 协议。
+    *   `notebook/vol4_hci/hci_initialization_flow.md`: 初始化流程与核心命令映射。
 *   **Vol 6 LE Controller**:
     *   `notebook/vol6_controller/link_layer_states.md`: 7 种 LL 状态机 (Standby, Adv, Conn, etc.)。
     *   `notebook/vol6_controller/air_interface_packets.md`: Uncoded/Coded PHY 包格式, PDU Header。
     *   `notebook/vol6_controller/connection_establishment.md`: 广播与连接建立的详细 Mermaid 时序图。
+    *   `notebook/vol6_controller/isochronous_channels.md`: CIS/BIS 与 ISOAL 机制 (LE Audio)。
+*   **Profiles (Application Layer)**:
+    *   `notebook/profiles/hid/hogp_architecture.md`: HOGP 架构与服务依赖 (v1.1 ISO Support)。
+    *   `notebook/profiles/hid/hid_report_map_guide.md`: Report Descriptor 实战与字节码解析。
+    *   `notebook/profiles/hid/hid_device_development.md`: 嵌入式开发指南 (扫描、上报、功耗)。
 
 ### ⏳ 待办 (To-Do)
-1.  **Host 层补全**:
-    *   **GAP (Generic Access Profile)**: 广播数据格式 (AD Types), 发现模式, 安全模式。
-    *   **SMP (Security Manager)**: 配对流程 (Pairing), 密钥分发, Just Works vs Passkey。
-2.  **Controller 层进阶**:
-    *   **Channel Sounding**: 测距功能 (Vol 6 Part H)。
-    *   **Isochronous Channels**: CIS/BIS (用于 LE Audio)。
-3.  **应用层 (Profiles)**:
-    *   HOGP (HID over GATT), HRP (Heart Rate), etc.
+*   **Maintenance**: 随着 Spec 更新持续维护。
+*   **More Profiles**: 扩展至 HRP (Heart Rate), FTMS (Fitness Machine) 等。
+*   **Advanced Controller**: Channel Sounding (v6.0) 深度实战。
 
 ---
 

@@ -57,7 +57,7 @@ graph TD
 | :--- | :--- | :--- |
 | **7. 应用层 (Application)** | **Profiles / Services** | 定义特定场景的行为（如音频传输 A2DP、心率监测 HRM）。 |
 | **6. 表示层 (Presentation)** | **GATT / GAP** | **GATT**: 定义数据的格式和访问方式（属性、特征）。<br>**GAP**: 定义设备如何被发现、连接和呈现（广播、扫描、角色）。 |
-| **5. 会话层 (Session)** | **L2CAP / SMP** | **L2CAP**: 管理逻辑通道的建立和拆除。<br>**SMP**: 管理会话的安全密钥和配对过程。 |
+| **5. 会话层 (Session)** | **ATT / SMP / L2CAP** | **ATT**: 定义客户端与服务器间的 Request/Response 数据交换机制。<br>**SMP**: 管理会话的安全密钥和配对过程。<br>**L2CAP**: 管理逻辑通道的建立和拆除。 |
 | **4. 传输层 (Transport)** | **L2CAP** | 提供数据分段与重组 (Segmentation & Reassembly)、流控、多路复用。 |
 | **3. 网络层 (Network)** | *(No direct equivalent)* | 蓝牙通常是点对点或星型网络，L2CAP 承担了部分寻址功能 (CID)。 |
 | **2. 数据链路层 (Data Link)** | **Link Layer (LE) / Link Manager (BR/EDR)** | 数据包的封装、校验 (CRC)、重传 (ACK)、以及信道接入控制 (MAC)。 |

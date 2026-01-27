@@ -2,3 +2,4 @@
 
 - 工具：Gemini Agnet ，claude pdf skill 工具集
 - 产出：`notebook/` 下的笔记库体系
+- [notebook/README ](notebook/README.md)
