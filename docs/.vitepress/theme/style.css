@@ -1,0 +1,288 @@
+/**
+ * Customize default theme styling by overriding CSS variables:
+ * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
+ */
+
+:root {
+  --vp-c-default-1: var(--vp-c-gray-1);
+  --vp-c-default-2: var(--vp-c-gray-2);
+  --vp-c-default-3: var(--vp-c-gray-3);
+  --vp-c-default-soft: var(--vp-c-gray-soft);
+
+  --vp-c-brand-1: var(--vp-c-indigo-1);
+  --vp-c-brand-2: var(--vp-c-indigo-2);
+  --vp-c-brand-3: var(--vp-c-indigo-3);
+  --vp-c-brand-soft: var(--vp-c-indigo-soft);
+
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-2: var(--vp-c-brand-2);
+  --vp-c-tip-3: var(--vp-c-brand-3);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+  --vp-c-warning-1: var(--vp-c-yellow-1);
+  --vp-c-warning-2: var(--vp-c-yellow-2);
+  --vp-c-warning-3: var(--vp-c-yellow-3);
+  --vp-c-warning-soft: var(--vp-c-yellow-soft);
+
+  --vp-c-danger-1: var(--vp-c-red-1);
+  --vp-c-danger-2: var(--vp-c-red-2);
+  --vp-c-danger-3: var(--vp-c-red-3);
+  --vp-c-danger-soft: var(--vp-c-danger-soft);
+}
+
+/**
+ * Component: Button
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: var(--vp-c-white);
+  --vp-button-brand-bg: var(--vp-c-brand-3);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: var(--vp-c-white);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: var(--vp-c-white);
+  --vp-button-brand-active-bg: var(--vp-c-brand-1);
+}
+
+/**
+ * Component: Home
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #bd34fe 30%,
+    #41d1ff
+  );
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #bd34fe 50%,
+    #47caff 50%
+  );
+  --vp-home-hero-image-filter: blur(44px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(68px);
+  }
+}
+
+/**
+ * Component: Custom Block
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-custom-block-tip-border: transparent;
+  --vp-custom-block-tip-text: var(--vp-c-text-1);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-soft);
+  --vp-custom-block-tip-code-bg: var(--vp-c-brand-soft);
+}
+
+/**
+ * Component: Algolia
+ * -------------------------------------------------------------------------- */
+
+.DocSearch {
+  --docsearch-primary-color: var(--vp-c-brand-1) !important;
+}
+
+/**
+ * Notion-style Callout
+ * -------------------------------------------------------------------------- */
+.custom-block.callout {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  background-color: var(--vp-c-default-soft);
+  border-radius: 8px;
+  border: 1px solid var(--vp-c-divider);
+  margin: 16px 0;
+}
+
+.callout-icon {
+  font-size: 24px;
+  margin-right: 12px;
+  line-height: 1;
+}
+
+.callout-content {
+  flex: 1;
+  margin: 0 !important;
+}
+
+.callout-content > p {
+  margin: 0 !important;
+}
+
+/* --- Homepage Enhancements --- */
+
+/* Feature Cards Hover Effect */
+.VPFeature {
+  transition: all 0.3s ease !important;
+  border: 1px solid transparent !important;
+}
+
+.VPFeature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: var(--vp-c-brand-1) !important;
+  background-color: var(--vp-c-bg-soft-up) !important;
+}
+
+/* Hero Image Floating Animation */
+.VPHero .image-src {
+  filter: drop-shadow(0 0 30px rgba(189, 52, 254, 0.5));
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Force Last Updated to the right */
+.vp-doc-footer .last-updated {
+  margin-left: auto;
+}
+
+/* --- Global Sidebar Style Enhancements --- */
+
+/* 1. 右侧文章大纲 (Outline) 换行支持 */
+.VPDocOutlineItem .outline-link {
+  white-space: normal !important;
+  height: auto !important;
+  line-height: 1.4 !important;
+  padding: 4px 0 !important;
+  display: block !important;
+  text-overflow: clip !important;
+  overflow: visible !important;
+}
+
+/* 2. 左侧文件树图标注入 */
+.VPSidebarItem.collapsible > .item .text::before {
+  content: "📂";
+  margin-right: 8px;
+  display: inline-block;
+}
+.VPSidebarItem:not(.collapsible) > .item .text::before {
+  content: "📄";
+  margin-right: 8px;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+/* 2. 基础项布局 */
+.VPSidebarItem .item {
+  position: relative;
+  border-radius: 6px;
+  margin: 2px 0;
+  transition: background-color 0.2s;
+}
+
+.VPSidebarItem .text {
+  white-space: normal !important; /* 核心修改：允许长标题换行 */
+  line-height: 1.4;
+  padding: 4px 0;
+}
+
+.VPSidebarItem .item:hover {
+  background-color: var(--vp-c-bg-mute);
+}
+
+/* 3. 激活状态 (纯背景色模式，强制去除边框和阴影) */
+.VPSidebarItem .item.active {
+  background-color: var(--vp-c-brand-soft) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 确保伪元素也不显示 */
+.VPSidebarItem .item.active::before {
+  display: none !important;
+  content: none !important;
+}
+
+.VPSidebarItem .item.active .text {
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 600;
+}
+
+/* 4. 层级缩进与辅助线 */
+
+@media (min-width: 960px) {
+  .VPSidebar {
+    padding-left: 0 !important;
+  }
+
+  .VPSidebar .nav {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .VPSidebar .nav .group {
+    width: 100% !important;
+  }
+}
+
+/* 子容器的辅助线 */
+.VPSidebarItem .items {
+  border-left: 1px solid var(--vp-c-divider) !important;
+  margin-left: 0 !important;
+}
+
+/* 各级 Item 的 Padding */
+.VPSidebarItem.level-0 > .item { padding-left: 0 !important; }
+.VPSidebarItem.level-1 > .item { padding-left: 10px !important; }
+.VPSidebarItem.level-2 > .item { padding-left: 18px !important; }
+.VPSidebarItem.level-3 > .item { padding-left: 26px !important; }
+
+/* 文件夹标题加粗 */
+.VPSidebarItem.collapsible > .item .text {
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+/* --- Layout Adjustments --- */
+@media (min-width: 1440px) {
+  :root {
+    /* 移除最大布局宽度限制，确保侧边栏贴死左边缘 */
+    --vp-layout-max-width: 100% !important;
+  }
+}
+/* Explorer Specific Overrides */
+html.is-explorer .VPSidebar > .nav {
+  display: none !important;
+}
+
+html.is-explorer .VPSidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+html.is-explorer .VPDoc {
+  padding: 0 !important;
+}
+
+html.is-explorer .VPDoc .container {
+  max-width: 100% !important;
+}
+
+html.is-explorer .VPDoc .content {
+  padding: 0 !important;
+}
+
+html.is-explorer .nav-left-actions {
+  display: none !important;
+}
