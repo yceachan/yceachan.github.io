@@ -126,7 +126,7 @@ function toSidebarItems(nodes: DocTreeNode[]): DefaultTheme.SidebarItem[] {
     }
     return {
       text: node.name,
-      collapsed: false,
+      collapsed: true,
       items: toSidebarItems(node.children || [])
     }
   })

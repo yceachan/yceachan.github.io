@@ -1,5 +1,5 @@
 ---
-title: Zephyr 构建系统: BOARD 变量的优先级与缓存机制
+title: "Zephyr 构建系统: BOARD 变量的优先级与缓存机制"
 tags: [Zephyr, CMake, Build, BOARD, Cache] 
 desc: 深入解析 Zephyr 中 BOARD 变量的确定优先级及特殊的 CMake Cache 保护机制
 update: 2026-02-26

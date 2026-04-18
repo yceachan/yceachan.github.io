@@ -6,10 +6,16 @@
       "sync": "MPUthings",
       "branch": "main"
     },
-     {
+    {
       "repo": "MCUthings",
       "scan": ".",
-      "sync": "MCUthings",
+      "sync": "MCUthings/view",
+      "branch": "main"
+    },
+    {
+      "repo": "Zephyr",
+      "scan": "note",
+      "sync": "MCUthings/Zephyr",
       "branch": "main"
     },
     {
