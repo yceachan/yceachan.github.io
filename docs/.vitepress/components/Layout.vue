@@ -14,7 +14,7 @@ const lastWidth = ref(DEFAULT_WIDTH) // 记录折叠前的宽度
 // 配置常量
 const STORAGE_KEY = 'vp-sidebar-width'
 const COLLAPSE_KEY = 'vp-sidebar-collapsed'
-const DEFAULT_WIDTH = 238
+const DEFAULT_WIDTH = 260
 const MIN_WIDTH = 200
 const MAX_WIDTH = 600
 
