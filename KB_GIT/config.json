@@ -23,6 +23,12 @@
       "scan": ".",
       "sync": "OsCookBook",
       "branch": "main"
+    },
+       {
+      "repo": "Awesome-Bluetooth",
+      "scan": "Knowledge_Base",
+      "sync": "Protocol/Bluetooth",
+      "branch": "main"
     }
   ]
 }
