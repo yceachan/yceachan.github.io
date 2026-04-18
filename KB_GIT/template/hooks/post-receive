@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+# KB_GIT post-receive hook
+# Sync pushed notes to <repo_root>/docs/<sync> according to KB_GIT/config.json.
+#
+# Why post-receive (not update):
+#   `update` fires per-ref BEFORE the ref moves and cannot safely check out
+#   the new tree. `post-receive` fires once after all refs land, which is the
+#   canonical place to run deploy/sync logic.
+
+set -euo pipefail
+
+REPO_DIR="$PWD"                        # hooks run with CWD = bare repo root
+REPO_NAME="$(basename "$REPO_DIR")"
+REPO_NAME="${REPO_NAME%.git}"
+
+KB_GIT_DIR="$(cd "$REPO_DIR/.." && pwd)"
+CONFIG="$KB_GIT_DIR/config.json"
+EA_KB_ROOT="$(cd "$KB_GIT_DIR/.." && pwd)"
+DOCS_DIR="$EA_KB_ROOT/docs"
+WT_BASE="$KB_GIT_DIR/.worktrees"
+
+log() { printf '[kb-sync] %s\n' "$*" >&2; }
+
+[[ -f "$CONFIG" ]] || { log "config.json missing: $CONFIG — skipping"; exit 0; }
+
+PUSH_HOOK="$KB_GIT_DIR/push.sh"
+NEED_PUSH=0
+PUSH_REPO_NAME=""
+PUSH_BRANCH_NAME=""
+PUSH_NEWREV=""
+PUSH_SYNC=""
+
+# -- resolve rule for this repo via python3 -----------------------------------
+# Fields: scan, sync, branch, transform (optional path to .py/.js/exec script)
+rule=$(python3 - "$CONFIG" "$REPO_NAME" <<'PY' || true
+import json, sys
+path, name = sys.argv[1], sys.argv[2]
+try:
+    with open(path) as f:
+        cfg = json.load(f)
+except Exception as e:
+    sys.stderr.write(f"[kb-sync] bad json in {path}: {e}\n")
+    sys.exit(2)
+rules = cfg.get("rules", []) if isinstance(cfg, dict) else cfg
+if not isinstance(rules, list):
+    sys.exit(1)
+for r in rules:
+    if r.get("repo") == name:
+        print(r.get("scan", "."))
+        print(r.get("sync", ""))
+        print(r.get("branch", "main"))
+        print(r.get("transform", ""))
+        sys.exit(0)
+sys.exit(1)
+PY
+)
+
+if [[ -z "$rule" ]]; then
+  log "no rule for repo '$REPO_NAME' in config.json — skipping"
+  exit 0
+fi
+
+SCAN=$(printf '%s\n' "$rule" | sed -n '1p')
+SYNC=$(printf '%s\n' "$rule" | sed -n '2p')
+BRANCH=$(printf '%s\n' "$rule" | sed -n '3p')
+TRANSFORM=$(printf '%s\n' "$rule" | sed -n '4p')
+
+if [[ -z "$SYNC" ]]; then
+  log "rule for '$REPO_NAME' has empty 'sync' — refusing to sync to docs root"
+  exit 0
+fi
+
+# -- per-ref processing --------------------------------------------------------
+while read -r oldrev newrev refname; do
+  if [[ "$refname" != "refs/heads/$BRANCH" ]]; then
+    log "ignoring $refname (watching refs/heads/$BRANCH)"
+    continue
+  fi
+
+  # Deletion of the tracked branch — clear the sync target.
+  if [[ "$newrev" =~ ^0+$ ]]; then
+    log "$BRANCH deleted; leaving docs/$SYNC untouched"
+    continue
+  fi
+
+  # Resolve LFS objects for this rev so smudge filters can materialise them.
+  git -C "$REPO_DIR" lfs fetch origin "$newrev" >/dev/null 2>&1 || \
+    git -C "$REPO_DIR" lfs fetch "$newrev" >/dev/null 2>&1 || true
+
+  # (Re)create a disposable worktree for this repo. `git worktree add`
+  # runs smudge filters, so LFS pointers become real content.
+  WT="$WT_BASE/$REPO_NAME"
+  mkdir -p "$WT_BASE"
+  if git -C "$REPO_DIR" worktree list --porcelain 2>/dev/null \
+       | grep -qxF "worktree $WT"; then
+    git -C "$REPO_DIR" worktree remove --force "$WT" 2>/dev/null || rm -rf "$WT"
+  else
+    rm -rf "$WT"
+  fi
+  git -C "$REPO_DIR" worktree add --force --detach "$WT" "$newrev" >/dev/null
+
+  # Compute source dir inside the pushed tree.
+  SRC="$WT"
+  if [[ -n "$SCAN" && "$SCAN" != "." && "$SCAN" != "/" ]]; then
+    SRC="$WT/${SCAN#/}"
+  fi
+  if [[ ! -d "$SRC" ]]; then
+    log "scan path '$SCAN' not found in $REPO_NAME@$(git -C "$REPO_DIR" rev-parse --short "$newrev") — skipping"
+    continue
+  fi
+
+  DEST="$DOCS_DIR/${SYNC#/}"
+  mkdir -p "$DEST"
+
+  if [[ -n "$TRANSFORM" ]]; then
+    # Resolve transform path (absolute or relative to KB_GIT dir).
+    if [[ "$TRANSFORM" = /* ]]; then
+      TR_PATH="$TRANSFORM"
+    else
+      TR_PATH="$KB_GIT_DIR/$TRANSFORM"
+    fi
+    if [[ ! -f "$TR_PATH" ]]; then
+      log "transform script not found: $TR_PATH — falling back to md-only rsync"
+      TRANSFORM=""
+    fi
+  fi
+
+  if [[ -n "$TRANSFORM" ]]; then
+    # User-defined transform owns SRC→DEST. It is responsible for filtering
+    # (md-only, asset handling, etc.) and for wiping stale files in DEST.
+    case "$TR_PATH" in
+      *.py)            CMD=(python3 "$TR_PATH") ;;
+      *.js|*.mjs|*.cjs) CMD=(node    "$TR_PATH") ;;
+      *)               CMD=("$TR_PATH") ;;
+    esac
+    log "running transform: ${CMD[*]} $SRC $DEST"
+    "${CMD[@]}" "$SRC" "$DEST" "$REPO_NAME"
+  else
+    # Default sync: markdown only, skip symlinks, drop empty dirs.
+    # -rptgoD == -a minus -l, so symlinks are ignored entirely (VitePress
+    # would otherwise choke on dangling links into _external/, DTS-ln, ...).
+    rsync -rptgoD --delete --delete-excluded --prune-empty-dirs \
+          --include='*/' \
+          --include='*.md' \
+          --exclude='*' \
+          --exclude='.git' \
+          --exclude='.gitattributes' \
+          --exclude='.gitignore' \
+          "$SRC"/ "$DEST"/
+  fi
+
+  log "$REPO_NAME:${SCAN:-.} → docs/$SYNC  @$(git -C "$REPO_DIR" rev-parse --short "$newrev")${TRANSFORM:+ (transform: $(basename "$TRANSFORM"))}"
+  NEED_PUSH=1
+  PUSH_REPO_NAME="$REPO_NAME"
+  PUSH_BRANCH_NAME="$BRANCH"
+  PUSH_NEWREV="$newrev"
+  PUSH_SYNC="$SYNC"
+done
+
+if [[ "$NEED_PUSH" -eq 1 ]]; then
+  if [[ -x "$PUSH_HOOK" ]]; then
+    "$PUSH_HOOK" "$PUSH_REPO_NAME" "$PUSH_BRANCH_NAME" "$PUSH_NEWREV" "$PUSH_SYNC"
+  else
+    log "push hook not executable or missing: $PUSH_HOOK"
+  fi
+fi

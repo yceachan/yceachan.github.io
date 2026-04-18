@@ -1,15 +1,21 @@
 {
   "rules": [
     {
-      "repo": "test",
-      "scan": "note",
-      "sync": "99-test",
-      "branch": "main"
-    },
-    {
       "repo": "MPUthings",
       "scan": "note",
       "sync": "MPUthings",
+      "branch": "main"
+    },
+     {
+      "repo": "MCUthings",
+      "scan": ".",
+      "sync": "MCUthings",
+      "branch": "main"
+    },
+    {
+      "repo": "OsCookBook",
+      "scan": ".",
+      "sync": "OsCookBook",
       "branch": "main"
     }
   ]
