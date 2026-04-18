@@ -304,7 +304,7 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
       // Shiki's alias (languageAlias) doesn't help here: its plain-lang
       // fast-path tests the raw lang id before alias resolution runs.
       const UNSUPPORTED_LANGS = new Set([
-        'kconfig', 'dts', 'assembly', 'pwsh', 'pfofile',
+        'kconfig', 'dts', 'devicetree', 'cfg', 'ld', 'assembly', 'pwsh', 'pfofile',
       ])
       md.core.ruler.after('block', 'downgrade-unsupported-fence-lang', (state) => {
         for (const tok of state.tokens) {

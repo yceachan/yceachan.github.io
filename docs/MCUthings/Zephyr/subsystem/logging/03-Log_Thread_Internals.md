@@ -1,5 +1,5 @@
 ---
-title: Zephyr Logging Thread Internals: 调度与流控
+title: "Zephyr Logging Thread Internals: 调度与流控"
 tags: [Zephyr, Logging, Thread, Flow Control, mpsc_pbuf]
 desc: 深入剖析 Zephyr 日志处理线程 (log_process_thread) 的生命周期、唤醒机制以及高并发下的丢包 (Drop) 策略。
 update: 2026-02-25
