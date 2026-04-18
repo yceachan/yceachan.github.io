@@ -17,6 +17,7 @@ type ProfileConfig = {
   github?: string
   repo?: string
   friends?: string[]
+  copyright?: string
 }
 
 type ThemeConfig = DefaultTheme.Config & {
@@ -244,7 +245,8 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
       mail: profileData.email,
       github: profileData.github,
       repo: profileData.repo,
-      friends: profileData.friends
+      friends: profileData.friends,
+      copyright: profileData.copyright
     },
 
     outline: {

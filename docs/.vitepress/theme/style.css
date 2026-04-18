@@ -286,3 +286,23 @@ html.is-explorer .VPDoc .content {
 html.is-explorer .nav-left-actions {
   display: none !important;
 }
+
+/* Make sidebar nav flex container to allow bottom-aligned copyright */
+.VPSidebar {
+  display: flex !important;
+  flex-direction: column !important;
+  padding-bottom: 0 !important; /* Remove VitePress default padding */
+}
+
+.VPSidebar > .nav {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Take up all available space in the flex column */
+}
+
+/* Ensure the copyright injected in sidebar-nav-after pushes to the bottom */
+.VPSidebar > .nav > .site-copyright.sidebar {
+  margin-top: auto;
+  padding-bottom: 32px; /* Restore padding here instead */
+}
+

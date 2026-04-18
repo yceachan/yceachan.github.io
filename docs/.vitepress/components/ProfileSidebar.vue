@@ -38,6 +38,9 @@
           <span class="link-value">{{ item.value }}</span>
         </a>
       </div>
+      <div class="profile-copyright" v-if="profile.copyright">
+        {{ profile.copyright }}
+      </div>
     </div>
   </div>
 </template>
@@ -55,6 +58,7 @@ type Profile = {
   github?: string
   repo?: string
   friends?: string[]
+  copyright?: string
 }
 
 type ContactLink = {
@@ -156,6 +160,7 @@ const close = () => {
   flex-direction: column;
   align-items: stretch;
   text-align: left;
+  min-height: 100%;
 }
 .profile-header {
   display: flex;
@@ -236,6 +241,14 @@ const close = () => {
   flex: 1;
   word-break: break-all;
   font-size: 14px;
+}
+
+.profile-copyright {
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+  text-align: center;
 }
 
 @media (max-width: 959px) {

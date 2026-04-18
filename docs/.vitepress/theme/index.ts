@@ -11,6 +11,7 @@ import Layout from '../components/Layout.vue'
 import PullToRefresh from '../components/PullToRefresh.vue'
 import SidebarProfileWrapper from '../components/SidebarProfileWrapper.vue'
 import NavLeftActions from '../components/NavLeftActions.vue'
+import Copyright from '../components/Copyright.vue'
 import { onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vitepress'
 import mediumZoom from 'medium-zoom'
@@ -24,7 +25,9 @@ export default {
         'layout-bottom': () => [
           h(Layout),
           h(SidebarProfileWrapper)
-        ]
+        ],
+        'sidebar-nav-after': () => h(Copyright, { placement: 'sidebar' }),
+        'doc-after': () => h(Copyright, { placement: 'doc' })
       })
     })
   },
