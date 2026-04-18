@@ -8,14 +8,29 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vitepress'
+import { onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vitepress'
 import { explorerStore } from '../explorerStore'
 import ExplorerTopBar from './ExplorerTopBar.vue'
 import ExplorerList from './ExplorerList.vue'
 
-const route = useRoute()
 const router = useRouter()
+
+function syncPathFromUrl() {
+  if (typeof window === 'undefined') return
+  const url = new URL(window.location.href)
+  explorerStore.currentPath = url.searchParams.get('path') || '/'
+}
+
+// VitePress keeps the Explorer mounted across `/?path=X` → `/?path=Y` clicks
+// (same route, only the query changes), so onMounted fires once and popstate
+// only covers back/forward. Hook onAfterRouteChange so every router.go call
+// re-reads the query too.
+const prevAfter = router.onAfterRouteChange
+router.onAfterRouteChange = (to) => {
+  prevAfter?.(to)
+  syncPathFromUrl()
+}
 
 onMounted(() => {
   document.documentElement.classList.add('is-explorer')
@@ -26,29 +41,19 @@ onMounted(() => {
       if (key === 'name' || key === 'date') explorerStore.sortKey = key
       if (order === 'asc' || order === 'desc') explorerStore.sortOrder = order
     }
-    
-    // Parse query manually since Vitepress useRoute().query might be undefined during initial static mount
-    const url = new URL(window.location.href)
-    const queryPath = url.searchParams.get('path')
-    if (queryPath) {
-      explorerStore.currentPath = queryPath
-    } else {
-      explorerStore.currentPath = '/'
-    }
+    syncPathFromUrl()
   }
 })
 
 onUnmounted(() => {
   document.documentElement.classList.remove('is-explorer')
+  if (router.onAfterRouteChange !== prevAfter) {
+    router.onAfterRouteChange = prevAfter
+  }
 })
 
-// watch hash/path change
 if (typeof window !== 'undefined') {
-  window.addEventListener('popstate', () => {
-    const url = new URL(window.location.href)
-    const queryPath = url.searchParams.get('path')
-    explorerStore.currentPath = queryPath || '/'
-  })
+  window.addEventListener('popstate', syncPathFromUrl)
 }
 </script>
 
