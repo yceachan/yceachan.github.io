@@ -174,9 +174,10 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
     ['meta', { name: 'theme-color', content: '#ffffff' }]
   ],
 
-  ignoreDeadLinks: [
-    '/index.md'
-  ],
+  // Upstream-synced notes reference source files outside the md-only tree
+  // (e.g. `../../sdk/.../spinlock.c`) and occasional intra-repo orphans. Don't
+  // fail the build on those — they'd require touching upstream content.
+  ignoreDeadLinks: true,
 
   vite: {
     plugins: [
@@ -206,7 +207,10 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
           ]
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+          // Default is 2 MiB; the local search index grows past that once the
+          // MPUthings note set lands. Bump to 5 MiB so build doesn't abort.
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         }
       })
     ]
@@ -278,6 +282,88 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
       }
     },
     config: (md) => {
+      // Rewrite fence languages that Shiki doesn't bundle to `txt`, so the
+      // build doesn't fail on `dts`, `kconfig`, `assembly`, ... The fence is
+      // still rendered as a code block — just without syntax highlighting.
+      // Shiki's alias (languageAlias) doesn't help here: its plain-lang
+      // fast-path tests the raw lang id before alias resolution runs.
+      const UNSUPPORTED_LANGS = new Set(['kconfig', 'dts', 'assembly'])
+      md.core.ruler.after('block', 'downgrade-unsupported-fence-lang', (state) => {
+        for (const tok of state.tokens) {
+          if (tok.type !== 'fence') continue
+          const lang = (tok.info || '').trim().split(/\s+/)[0].toLowerCase()
+          if (UNSUPPORTED_LANGS.has(lang)) tok.info = 'txt'
+        }
+        return false
+      })
+
+      // Escape bare <identifier> placeholders (e.g. `<file>`, `<path>`, `<library>`
+      // in prose / table cells). markdown-it tokenises them as html_inline and
+      // passes them through raw, which makes Vue's template compiler see them
+      // as unclosed tags and aborts the build. We rewrite such tokens to text
+      // unless the tag name is in a known-safe allowlist of real inline HTML.
+      const SAFE_INLINE_HTML = new Set([
+        'a','abbr','audio','b','blockquote','br','code','del','details','div',
+        'em','figcaption','figure','hr','i','iframe','img','ins','kbd','li',
+        'mark','ol','p','pre','q','s','small','source','span','strong','sub',
+        'summary','sup','table','tbody','td','th','thead','tr','u','ul','video',
+      ])
+      const PLACEHOLDER_RE = /^<\/?([a-zA-Z_][\w.\-]*)\s*\/?>$/
+      md.core.ruler.after('inline', 'escape-bare-placeholders', (state) => {
+        for (const block of state.tokens) {
+          if (block.type !== 'inline' || !block.children) continue
+          for (const tok of block.children) {
+            if (tok.type !== 'html_inline') continue
+            const m = tok.content.match(PLACEHOLDER_RE)
+            if (!m) continue
+            if (SAFE_INLINE_HTML.has(m[1].toLowerCase())) continue
+            tok.type = 'text'
+            tok.content = tok.content
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+          }
+        }
+        return false
+      })
+
+      // Neutralise images whose src is a local absolute path (Typora leftover
+      // `C:\Users\...`, `file://...`, or any `/home/<user>/...`). Vite would
+      // otherwise try to resolve them as module imports and abort the build.
+      const BROKEN_SRC_RE = /^(?:[a-zA-Z]:(?:[\\/]|%5[Cc]|%2[Ff])|file:|\\\\|\/(?:home|Users|mnt|root|tmp)\/)/
+      const HTML_IMG_SRC_RE = /<img\b([^>]*?)\bsrc\s*=\s*(["'])([^"']*)\2/gi
+      md.core.ruler.after('inline', 'neutralise-broken-images', (state) => {
+        const scrubHtml = (html: string) =>
+          html.replace(HTML_IMG_SRC_RE, (full, pre, q, src) =>
+            BROKEN_SRC_RE.test(src) ? `<img${pre}src=${q}data:,${q}` : full
+          )
+        for (const block of state.tokens) {
+          if (block.type === 'html_block') {
+            block.content = scrubHtml(block.content)
+            continue
+          }
+          if (block.type !== 'inline' || !block.children) continue
+          for (const tok of block.children) {
+            if (tok.type === 'html_inline') {
+              tok.content = scrubHtml(tok.content)
+              continue
+            }
+            if (tok.type !== 'image') continue
+            const srcIdx = tok.attrIndex('src')
+            if (srcIdx < 0) continue
+            const src = tok.attrs![srcIdx][1]
+            if (!BROKEN_SRC_RE.test(src)) continue
+            const alt = tok.children?.reduce((a, c) => a + (c.content || ''), '') || 'broken image'
+            tok.type = 'text'
+            tok.tag = ''
+            tok.attrs = null
+            tok.children = null
+            tok.content = `[broken image: ${alt}]`
+          }
+        }
+        return false
+      })
+
       md.use(taskLists)
       md.use(container, 'callout', {
         validate: (params) => params.trim().match(/^callout\s+(.*)$/),
