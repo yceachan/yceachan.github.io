@@ -179,6 +179,13 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
   // fail the build on those — they'd require touching upstream content.
   ignoreDeadLinks: true,
 
+  // Skip vendored / third-party READMEs whose raw HTML is too lax for Vue's
+  // template compiler (e.g. unclosed <p> tags in Catppuccin's footer). The
+  // files stay in the repo; they just aren't rendered as pages.
+  srcExclude: [
+    '**/windows-terminal-main/**',
+  ],
+
   vite: {
     plugins: [
       docTreePlugin(),
@@ -287,7 +294,9 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
       // still rendered as a code block — just without syntax highlighting.
       // Shiki's alias (languageAlias) doesn't help here: its plain-lang
       // fast-path tests the raw lang id before alias resolution runs.
-      const UNSUPPORTED_LANGS = new Set(['kconfig', 'dts', 'assembly'])
+      const UNSUPPORTED_LANGS = new Set([
+        'kconfig', 'dts', 'assembly', 'pwsh', 'pfofile',
+      ])
       md.core.ruler.after('block', 'downgrade-unsupported-fence-lang', (state) => {
         for (const tok of state.tokens) {
           if (tok.type !== 'fence') continue

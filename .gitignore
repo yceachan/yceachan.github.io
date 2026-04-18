@@ -1,3 +1,4 @@
+.claude/
 # 依赖目录 (必须忽略！)
 node_modules/
 
