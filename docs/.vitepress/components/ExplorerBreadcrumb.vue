@@ -1,5 +1,5 @@
 <template>
-  <div class="breadcrumb" v-if="visibleSegments.length || isExplorer">
+  <div class="breadcrumb" v-if="shouldShow">
     <a href="javascript:void(0)" class="crumb-item" @click="go('/')">🏠</a>
 
     <template v-for="(segment, idx) in visibleSegments" :key="idx">
@@ -16,12 +16,26 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vitepress'
 import { explorerStore } from '../explorerStore'
 
+const props = withDefaults(defineProps<{ context?: 'doc' | 'explorer' }>(), {
+  context: 'doc'
+})
+
 const router = useRouter()
 const route = useRoute()
 
 const isExplorer = computed(() => {
   const p = route.path.replace(/\.html$/, '')
   return p === '/' || p === '/index'
+})
+
+// Two instances render on the home page: one inside ExplorerTopBar
+// (context=explorer) and one via the `doc-before` slot (context=doc).
+// Suppress the doc-slot one on the explorer page so the breadcrumb
+// doesn't duplicate underneath the Explorer overlay — only the TopBar
+// copy remains.
+const shouldShow = computed(() => {
+  if (props.context === 'doc' && isExplorer.value) return false
+  return visibleSegments.value.length > 0 || props.context === 'explorer'
 })
 
 const fullPath = computed(() => {

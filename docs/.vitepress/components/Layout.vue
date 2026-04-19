@@ -18,17 +18,19 @@ const DEFAULT_WIDTH = 260
 const MIN_WIDTH = 200
 const MAX_WIDTH = 600
 
-// 核心：测量侧边栏真实的右边缘位置
+// 核心：侧边栏右边缘 = CSS 变量 --vp-sidebar-width。
+// 早期用 `.VPSidebar.getBoundingClientRect().right` 测量，但在 Explorer
+// 首页，`SidebarProfileWrapper`（z-index:35）覆盖在 `.VPSidebar` 上作为
+// 视觉侧栏，测 `.VPSidebar` 的 rect 可能因布局时机或 `display:flex` 覆盖
+// 返回过期值，导致手柄不跟随拖动。直接读 CSS 变量最稳。
 function updateHandlePos() {
   if (isCollapsed.value) {
     handleLeft.value = 0
     return
   }
-  const sidebar = document.querySelector('.VPSidebar')
-  if (sidebar) {
-    const rect = sidebar.getBoundingClientRect()
-    handleLeft.value = rect.right
-  }
+  const cssWidth = getComputedStyle(document.documentElement)
+    .getPropertyValue('--vp-sidebar-width')
+  handleLeft.value = parseInt(cssWidth) || DEFAULT_WIDTH
 }
 
 function checkVisibility() {

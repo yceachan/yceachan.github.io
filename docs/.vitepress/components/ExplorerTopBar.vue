@@ -1,7 +1,7 @@
 <template>
   <div class="explorer-topbar">
     <ProfileToggle />
-    <ExplorerBreadcrumb />
+    <ExplorerBreadcrumb context="explorer" />
     <div class="spacer"></div>
     <SortControl />
   </div>
