@@ -3,3 +3,5 @@
 !.gitignore
 !config.json
 !template/
+!push.sh
+!create_repo.sh
