@@ -24,16 +24,6 @@ function getGitMtime(filePath: string): number {
   return fs.statSync(filePath).mtimeMs
 }
 
-function readH1(filePath: string): string | null {
-  try {
-    const content = fs.readFileSync(filePath, 'utf-8')
-    const match = content.match(/^#\s+(.+)$/m)
-    return match ? match[1].trim() : null
-  } catch (e) {
-    return null
-  }
-}
-
 function walk(dir: string, baseDir: string, excludePatterns: RegExp[]): DocNode[] {
   if (!fs.existsSync(dir)) return []
   const items = fs.readdirSync(dir)
@@ -63,9 +53,9 @@ function walk(dir: string, baseDir: string, excludePatterns: RegExp[]): DocNode[
         })
       }
     } else if (item.endsWith('.md')) {
-      const h1 = readH1(fullPath)
+      const baseName = item.replace(/\.md$/, '')
       nodes.push({
-        name: h1 || item.replace(/\.md$/, ''),
+        name: baseName,
         path: '/' + relativePath.replace(/\.md$/, ''),
         rawName: item,
         type: 'file',

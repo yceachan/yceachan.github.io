@@ -1,10 +1,11 @@
 <template>
-  <div class="breadcrumb">
+  <div class="breadcrumb" v-if="visibleSegments.length || isExplorer">
     <a href="javascript:void(0)" class="crumb-item" @click="go('/')">🏠</a>
-    
+
     <template v-for="(segment, idx) in visibleSegments" :key="idx">
       <span class="separator">/</span>
       <span v-if="segment.isEllipsis" class="crumb-item ellipsis" :title="fullPath">...</span>
+      <span v-else-if="segment.isCurrent" class="crumb-item text current">{{ segment.name }}</span>
       <a v-else href="javascript:void(0)" class="crumb-item text" @click="go(segment.path)">{{ segment.name }}</a>
     </template>
   </div>
@@ -12,32 +13,47 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vitepress'
+import { useRoute, useRouter } from 'vitepress'
 import { explorerStore } from '../explorerStore'
 
 const router = useRouter()
+const route = useRoute()
 
-const fullPath = computed(() => explorerStore.currentPath)
+const isExplorer = computed(() => {
+  const p = route.path.replace(/\.html$/, '')
+  return p === '/' || p === '/index'
+})
+
+const fullPath = computed(() => {
+  if (isExplorer.value) return explorerStore.currentPath
+  return route.path.replace(/\.html$/, '')
+})
 
 const visibleSegments = computed(() => {
   const path = fullPath.value
   if (!path || path === '/') return []
-  
-  const parts = path.replace(/^\/+|\/+$/g, '').split('/')
-  
+
+  const parts = path.replace(/^\/+|\/+$/g, '').split('/').map(decodeURIComponent)
+  const lastIdx = parts.length - 1
+
+  const makeSeg = (i: number) => ({
+    name: parts[i],
+    // On md page the last segment is the file itself, not a dir — mark
+    // as non-clickable current crumb. In explorer mode every segment is a
+    // dir and remains clickable.
+    path: '/' + parts.slice(0, i + 1).join('/'),
+    isEllipsis: false,
+    isCurrent: !isExplorer.value && i === lastIdx
+  })
+
   if (parts.length <= 3) {
-    return parts.map((name, i) => ({
-      name,
-      path: '/' + parts.slice(0, i + 1).join('/'),
-      isEllipsis: false
-    }))
-  } else {
-    return [
-      { name: '...', path: '', isEllipsis: true },
-      { name: parts[parts.length - 2], path: '/' + parts.slice(0, parts.length - 1).join('/'), isEllipsis: false },
-      { name: parts[parts.length - 1], path: '/' + parts.slice(0, parts.length).join('/'), isEllipsis: false }
-    ]
+    return parts.map((_, i) => makeSeg(i))
   }
+  return [
+    { name: '...', path: '', isEllipsis: true, isCurrent: false },
+    makeSeg(lastIdx - 1),
+    makeSeg(lastIdx)
+  ]
 })
 
 function go(path: string) {
@@ -75,5 +91,10 @@ function go(path: string) {
 }
 .ellipsis:hover {
   color: var(--vp-c-text-2);
+}
+.crumb-item.current {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+  cursor: default;
 }
 </style>

@@ -1,6 +1,5 @@
 import { defineConfigWithTheme } from 'vitepress'
 import type { DefaultTheme } from 'vitepress'
-import { generateSidebar } from 'vitepress-sidebar'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import { VitePWA } from 'vite-plugin-pwa'
 import container from 'markdown-it-container'
@@ -45,14 +44,6 @@ try {
   console.warn('Could not read profile.json, using fallback.')
 }
 
-// 自动获取侧边栏配置
-const sidebarConfig = generateSidebar({
-  documentRootPath: 'docs',
-  useTitleFromFileHeading: true,
-  collapsed: true,
-  excludeByGlobPattern: ['index.md', '**/index.md', '.gitignore', '98-Private/**', 'chat.md','保险箱.md', 'guide.md','001-guide.md','library.md']
-})
-
 const SIDEBAR_EXCLUDE = new Set([
   'index.md',
   '保险箱.md',
@@ -62,16 +53,6 @@ const SIDEBAR_EXCLUDE = new Set([
   'chat.md',
   '.gitignore'
 ])
-
-function readH1Title(filePath: string): string | null {
-  try {
-    const content = fs.readFileSync(filePath, 'utf-8')
-    const match = content.match(/^#\s+(.+)$/m)
-    return match ? match[1].trim() : null
-  } catch {
-    return null
-  }
-}
 
 function walkDocsTree(dir: string, baseDir: string): DocTreeNode[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true })
@@ -101,7 +82,7 @@ function walkDocsTree(dir: string, baseDir: string): DocTreeNode[] {
     if (SIDEBAR_EXCLUDE.has(entry.name)) continue
 
     const fileNoExt = relPath.replace(/\.md$/, '')
-    const title = readH1Title(fullPath) || entry.name.replace(/\.md$/, '')
+    const title = entry.name.replace(/\.md$/, '')
     nodes.push({
       type: 'file',
       name: title,
@@ -111,6 +92,9 @@ function walkDocsTree(dir: string, baseDir: string): DocTreeNode[] {
 
   nodes.sort((a, b) => {
     if (a.type !== b.type) return a.type === 'dir' ? -1 : 1
+    const aAscii = a.name.charCodeAt(0) < 0x80
+    const bAscii = b.name.charCodeAt(0) < 0x80
+    if (aAscii !== bAscii) return aAscii ? -1 : 1
     return a.name.localeCompare(b.name, 'zh-Hans-CN')
   })
 
@@ -152,9 +136,7 @@ function collectScopedSidebar(
 
 const docsRoot = path.resolve(__dirname, '../')
 const docsTree = walkDocsTree(docsRoot, docsRoot)
-const scopedSidebarConfig: DefaultTheme.SidebarMulti = {
-  '/': sidebarConfig as DefaultTheme.SidebarItem[]
-}
+const scopedSidebarConfig: DefaultTheme.SidebarMulti = {}
 collectScopedSidebar(docsTree, scopedSidebarConfig)
 
 // https://vitepress.dev/reference/site-config
@@ -170,6 +152,7 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
     ['link', { rel: 'icon', href: '/profile-photo.svg', type: 'image/svg+xml' }],
     ['link', { rel: 'alternate icon', href: logoBase64Url }],
     ['link', { rel: 'apple-touch-icon', href: '/profile-photo-192.jpg' }],
+    ['meta', { name: 'mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ['meta', { name: 'theme-color', content: '#ffffff' }]
@@ -193,6 +176,13 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
       VitePWA({
         registerType: 'prompt',
         includeAssets: ['profile-photo.svg', 'favicon.ico'],
+        // 开发模式下也产出 manifest/SW，否则 dev 服务器请求
+        // `/manifest.webmanifest` 会落到 SPA fallback 返回 HTML，
+        // Chrome 解析时报 "Manifest: Line: 1, column: 1, Syntax error."
+        devOptions: {
+          enabled: true,
+          type: 'module'
+        },
         manifest: {
           name: `${profileData.name}'s Knowledge Base`,
           short_name: `${profileData.name}'s Knowledge Base`,

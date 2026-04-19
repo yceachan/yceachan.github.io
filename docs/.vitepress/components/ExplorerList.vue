@@ -45,8 +45,14 @@ const currentNodes = computed(() => {
   const dirs = nodes.filter(n => n.type === 'dir')
   const files = nodes.filter(n => n.type === 'file')
 
+  const nameCmp = (a: DocNode, b: DocNode) => {
+    const aAscii = a.name.charCodeAt(0) < 0x80
+    const bAscii = b.name.charCodeAt(0) < 0x80
+    if (aAscii !== bAscii) return aAscii ? -1 : 1
+    return a.name.localeCompare(b.name, 'zh-Hans-CN')
+  }
   const cmp = explorerStore.sortKey === 'name'
-    ? (a: DocNode, b: DocNode) => a.name.localeCompare(b.name, 'zh-Hans-CN')
+    ? nameCmp
     : (a: DocNode, b: DocNode) => a.mtime - b.mtime
 
   dirs.sort(cmp)

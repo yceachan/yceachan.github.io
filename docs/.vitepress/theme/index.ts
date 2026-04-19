@@ -12,6 +12,7 @@ import PullToRefresh from '../components/PullToRefresh.vue'
 import SidebarProfileWrapper from '../components/SidebarProfileWrapper.vue'
 import NavLeftActions from '../components/NavLeftActions.vue'
 import Copyright from '../components/Copyright.vue'
+import ExplorerBreadcrumb from '../components/ExplorerBreadcrumb.vue'
 import { onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vitepress'
 import mediumZoom from 'medium-zoom'
@@ -27,6 +28,7 @@ export default {
           h(SidebarProfileWrapper)
         ],
         'sidebar-nav-after': () => h(Copyright, { placement: 'sidebar' }),
+        'doc-before': () => h(ExplorerBreadcrumb),
         'doc-after': () => h(Copyright, { placement: 'doc' })
       })
     })

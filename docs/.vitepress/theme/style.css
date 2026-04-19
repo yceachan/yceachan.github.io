@@ -193,8 +193,13 @@
 
 .VPSidebarItem .text {
   white-space: normal !important; /* 核心修改：允许长标题换行 */
-  line-height: 1.4;
-  padding: 4px 0;
+  line-height: 1.45;
+  padding: 3px 0;
+}
+
+.VPSidebarItem .item {
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .VPSidebarItem .item:hover {
@@ -287,22 +292,109 @@ html.is-explorer .nav-left-actions {
   display: none !important;
 }
 
-/* Make sidebar nav flex container to allow bottom-aligned copyright */
+/* Make sidebar nav flex container to allow bottom-aligned copyright.
+   Flex is applied to `.nav` (not `.VPSidebar` itself) so VitePress's
+   `.curtain` keeps its native `position: sticky` behavior — otherwise
+   tree items scroll past the top backdrop and visually overlap the
+   navbar title on short-height tablets. */
 .VPSidebar {
-  display: flex !important;
-  flex-direction: column !important;
   padding-bottom: 0 !important; /* Remove VitePress default padding */
+}
+
+/* Mobile drawer: VitePress defaults to 32px horizontal padding, which
+   eats too much of the narrow viewport. Tighten to 12px. */
+@media (max-width: 959px) {
+  .VPSidebar {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 8px !important;
+  }
 }
 
 .VPSidebar > .nav {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Take up all available space in the flex column */
+  min-height: 100%; /* Fill the sidebar so margin-top:auto works below */
 }
 
 /* Ensure the copyright injected in sidebar-nav-after pushes to the bottom */
 .VPSidebar > .nav > .site-copyright.sidebar {
   margin-top: auto;
   padding-bottom: 32px; /* Restore padding here instead */
+}
+
+/* Widen the middle doc column. VitePress defaults cap
+   `.VPDoc.has-aside .content-container` at 688px, so the article stays
+   narrow even on wide screens. Remove the cap and let it fill. */
+.VPDoc.has-aside .content-container {
+  max-width: none !important;
+}
+
+/* GitHub-style alerts. VitePress emits `> [!NOTE]` as
+   `<div class="note custom-block github-alert">`, so target that exact
+   class combo — NOT `.markdown-alert`, which is a separate package we
+   don't use. Fill with a tinted wash + colored border + title color. */
+.vp-doc .custom-block.github-alert {
+  padding: 0.75rem 1rem !important;
+  border-radius: 6px !important;
+  border-left: 0.25em solid var(--vp-c-default-1) !important;
+  background-color: var(--alert-bg, var(--vp-c-default-soft)) !important;
+  color: var(--vp-c-text-1) !important;
+}
+.vp-doc .custom-block.github-alert .custom-block-title {
+  color: var(--alert-color, inherit) !important;
+  font-weight: 600;
+}
+.vp-doc .custom-block.note.github-alert {
+  --alert-color: #0969da;
+  --alert-bg: rgba(9, 105, 218, 0.1);
+  border-left-color: #0969da !important;
+}
+.vp-doc .custom-block.tip.github-alert {
+  --alert-color: #1a7f37;
+  --alert-bg: rgba(26, 127, 55, 0.1);
+  border-left-color: #1a7f37 !important;
+}
+.vp-doc .custom-block.warning.github-alert {
+  --alert-color: #9a6700;
+  --alert-bg: rgba(154, 103, 0, 0.1);
+  border-left-color: #9a6700 !important;
+}
+.vp-doc .custom-block.important.github-alert {
+  --alert-color: #8250df;
+  --alert-bg: rgba(130, 80, 223, 0.1);
+  border-left-color: #8250df !important;
+}
+.vp-doc .custom-block.caution.github-alert,
+.vp-doc .custom-block.danger.github-alert {
+  --alert-color: #d1242f;
+  --alert-bg: rgba(209, 36, 47, 0.1);
+  border-left-color: #d1242f !important;
+}
+.dark .vp-doc .custom-block.note.github-alert {
+  --alert-color: #58a6ff;
+  --alert-bg: rgba(56, 139, 253, 0.15);
+  border-left-color: #58a6ff !important;
+}
+.dark .vp-doc .custom-block.tip.github-alert {
+  --alert-color: #56d364;
+  --alert-bg: rgba(63, 185, 80, 0.15);
+  border-left-color: #56d364 !important;
+}
+.dark .vp-doc .custom-block.warning.github-alert {
+  --alert-color: #e3b341;
+  --alert-bg: rgba(210, 153, 34, 0.15);
+  border-left-color: #e3b341 !important;
+}
+.dark .vp-doc .custom-block.important.github-alert {
+  --alert-color: #bc8cff;
+  --alert-bg: rgba(163, 113, 247, 0.15);
+  border-left-color: #bc8cff !important;
+}
+.dark .vp-doc .custom-block.caution.github-alert,
+.dark .vp-doc .custom-block.danger.github-alert {
+  --alert-color: #ff7b72;
+  --alert-bg: rgba(248, 81, 73, 0.15);
+  border-left-color: #ff7b72 !important;
 }
 
