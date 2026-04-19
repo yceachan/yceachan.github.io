@@ -24,10 +24,16 @@
       "sync": "OsCookBook",
       "branch": "main"
     },
-       {
+    {
       "repo": "Awesome-Bluetooth",
       "scan": "Knowledge_Base",
       "sync": "Protocol/Bluetooth",
+      "branch": "main"
+    },
+    {
+      "repo": "所以后来我放弃了半导体",
+      "scan": ".",
+      "sync": "所以后来我放弃了半导体",
       "branch": "main"
     }
   ]
