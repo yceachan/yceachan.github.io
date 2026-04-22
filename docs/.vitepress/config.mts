@@ -273,6 +273,7 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
 
   },
   markdown: {
+    math: true,
     anchor: {
       slugify: (str) => {
         const slug = str
