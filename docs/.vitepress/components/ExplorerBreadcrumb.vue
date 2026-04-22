@@ -71,6 +71,9 @@ const visibleSegments = computed(() => {
 })
 
 function go(path: string) {
+  // Explorer 内原地跳转时先同步 store，避免仅依赖 router.onAfterRouteChange：
+  // 同路由仅 query 变化时该钩子偶发不触发，会出现 URL 已改但视图未刷新的情况。
+  if (isExplorer.value) explorerStore.currentPath = path
   router.go(`/?path=${encodeURIComponent(path)}`)
 }
 </script>

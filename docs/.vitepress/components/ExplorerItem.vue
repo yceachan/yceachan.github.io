@@ -27,6 +27,9 @@ const dateStr = computed(() => {
 
 function handleClick() {
   if (props.node.type === 'dir') {
+    // 同步更新 store，避免仅依赖 router.onAfterRouteChange —
+    // 同路由下仅 query 变化时该钩子偶发不触发，导致 URL 已改但视图不刷新。
+    explorerStore.currentPath = props.node.path
     router.go(`/?path=${encodeURIComponent(props.node.path)}`)
   } else {
     router.go(withBase(props.node.path))
