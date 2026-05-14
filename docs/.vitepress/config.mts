@@ -206,9 +206,9 @@ export default withMermaid(defineConfigWithTheme<ThemeConfig>({
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-          // Default is 2 MiB; the local search index grows past that once the
-          // MPUthings note set lands. Bump to 5 MiB so build doesn't abort.
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+          // Default is 2 MiB; the local search index keeps growing as notes
+          // accrue (5.26 MiB after docs/lang landed). 10 MiB leaves headroom.
+          maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
           // VitePress is MPA — every page has its own .html. The default
           // navigateFallback ('index.html') would hijack `/?path=/MCUthings`
           // style navigations with a precache lookup that races the SW's
