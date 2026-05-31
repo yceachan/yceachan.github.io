@@ -35,6 +35,12 @@
       "scan": ".",
       "sync": "所以后来我放弃了半导体",
       "branch": "main"
+    },
+    {
+      "repo": "lang",
+      "scan": ".",
+      "sync": "lang",
+      "branch": "main"
     }
   ]
 }

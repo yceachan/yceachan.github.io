@@ -17,112 +17,92 @@ update: 2026-05-13
 > - [kernel.org gpu/drm 子系统文档](https://www.kernel.org/doc/html/latest/gpu/index.html)
 > - [Mesa 3D 项目](https://www.mesa3d.org/)
 > - [libinput 文档](https://wayland.freedesktop.org/libinput/doc/latest/)
-> - [Rockchip RK3566 TRM (VOP2 章节)](file:///home/pi/imx/docs/)
-> - 本仓库内置参考：`note/BSP-Dev/LCD-Touch/TSPI-D310T9362V1/Port-log/`、`prj/dts_tspi/tspi-rk3566-dsi-v10.dtsi`
 
 本笔记的目标是用一份"地图式"文档把 Linux 图形栈的每一层都摆到对的位置。
-我们采用 **自顶向下** 视角：从开发者最熟悉的 UI 应用代码（Qt/QML、GTK、LVGL……）
-出发，一路追到屏幕上真正点亮的 MIPI-DSI 像素。每一层都标出：
 
-- **定位 / 职责**：它解决什么问题？
-- **代表项目**：在生产环境里你会看到哪些名字？
-- **上下游关系**：往上对接谁、往下调用谁？
-- **嵌入式 vs 桌面**：i.MX6ULL / RK3566 这类 SoC 上的取舍。
-
----
-
-
-## 0. 一张图看完整条链路
-
-下面这张 flowchart 是后续所有章节的"目录索引"。每个虚线方框代表一层，
-内部列出该层的代表项目。**箭头方向 = 数据/调用 自顶向下**。
-
-```mermaid
-flowchart TD
-    subgraph L1["L1 应用 & UI 框架（开发者直接写代码的地方）"]
-        QML["Qt Quick / QML"]
-        QtW["Qt Widgets"]
-        GTK["GTK 4"]
-        LVGL["LVGL（裸机/RTOS 也可跑）"]
-        Flutter["Flutter Embedded"]
-        Tauri["Tauri（WebView 壳）"]
-        Electron["Electron（Chromium 全家桶）"]
-    end
-
-    subgraph L2["L2 桌面环境 DE / 窗口管理器 WM"]
-        GNOME["GNOME Shell + Mutter"]
-        KDE["KDE Plasma + KWin"]
-        XFCE["XFCE + xfwm4"]
-        Kiosk["嵌入式 Kiosk（无 DE，单一合成器）"]
-    end
-
-    subgraph L3["L3 显示协议 / 显示服务器"]
-        Wayland["Wayland 协议"]
-        Weston["Weston / Mutter / KWin / Sway（compositor）"]
-        Xorg["X11 / Xorg Server"]
-        XWayland["XWayland（兼容桥）"]
-    end
-
-    subgraph L4["L4 渲染 / 图形库（用户态）"]
-        EGL["EGL（上下文/Surface 抽象）"]
-        GLES["OpenGL ES 2/3"]
-        Vulkan["Vulkan"]
-        Skia["Skia / Cairo（2D）"]
-        Mesa["Mesa（用户态驱动 + llvmpipe）"]
-        GBM["GBM（裸 KMS 下的 buffer 分配）"]
-    end
-
-    subgraph L5["L5 输入子系统（旁路链路）"]
-        evdev["/dev/input/eventN（evdev）"]
-        libinput["libinput"]
-    end
-
-    subgraph L6["L6 内核图形子系统"]
-        DRM["DRM core"]
-        KMS["KMS（CRTC/Plane/Encoder/Connector）"]
-        GEM["GEM / dma-buf / PRIME"]
-        FB["fbdev（legacy）"]
-    end
-
-    subgraph L7["L7 SoC 显示控制器 & GPU 驱动"]
-        VOP["VOP2（Rockchip）/ LCDIF（i.MX）/ DCSS"]
-        GPU["GPU 驱动（Mali/Adreno/Vivante/Panfrost）"]
-    end
-
-    subgraph L8["L8 物理输出接口"]
-        DSI["MIPI-DSI"]
-        HDMI["HDMI"]
-        eDP["eDP / DP"]
-        LVDS["LVDS"]
-        RGB["Parallel RGB / BT.1120"]
-    end
-
-    L1 --> L2 --> L3
-    L3 --> L4
-    L3 --> L5
-    L4 --> L6
-    L6 --> L7
-    L7 --> L8
-    L5 -.事件.-> L3
+```text
+┌─────────────────────────────────────────────────────────────────┐
+│                         客户端进程                               │
+│  ┌───────────┐    ┌─────────────────────────────────────────┐  │
+│  │ 调用图形库  │───▶│              EGL 内部                   │  │
+│  │ 渲染API    │    │  ┌───────────────────────────────────┐ │  │
+│  └───────────┘    │  │       平台接口层 (Platform)        │ │  │
+│                   │  │  • 适配 Wayland/X11/GBM            │ │  │
+│                   │  │  • 接收 wl_display, wl_surface     │ │  │
+│                   │  │  • 管理 wl_egl_window              │ │  │
+│                   │  └───────────────┬───────────────────┘ │  │
+│                   │                  │                      │  │
+│                   │                  ▼                      │  │
+│                   │  ┌───────────────────────────────────┐ │  │
+│                   │  │        驱动核心层 (Driver)         │ │  │
+│                   │  │  • 加载 Mesa 用户态驱动 (如 i915)  │ │  │
+│                   │  │  • 管理 GPU 上下文, 编译 shader    │ │  │
+│                   │  │  • 分配 dma-buf (通过 GBM/dmabuf)  │ │  │
+│                   │  └───────────────┬───────────────────┘ │  │
+│                   │                  │                      │  │
+│                   │                  ▼                      │  │
+│                   │  ┌───────────────────────────────────┐ │  │
+│   |-----------|    │  │        GPU 硬件驱动 (DRI)          │ │  │
+│   |返回 client |<---│  │  • 生成命令缓冲区                  │ │  │
+│   |surface 对象|    │  │  • 调用 ioctl 与内核通信           │ │  │
+│   |-----------|    │  └───────────────┬───────────────────┘ │  │
+│                   └─────────────────┼─────────────────────┘  │
+│                                     │                         │
+│                                     │ ioctl (DRM) 
+│                                     | 提交GPU渲染命令
+│                                     ▼                         │
+│                           ┌─────────────────┐                 │
+│                           │  内核 DRM/KMS    │                 │
+│                           │ • 命令提交       │                 │
+│                           │ • 显存管理       │                 │
+│                           └─────────────────┘                 │
+│                                     │                         │
+│                                     │ 硬件执行                 │
+│                                     ▼                         │
+│                           ┌─────────────────┐                 │
+│                           │      GPU         │                 │
+│                           │  (渲染到 dma-buf) │                 │
+│                           └────────┬────────┘                 │
+│                                    │                          │
+│                                    │ dma-buf fd (已渲染)       │
+│                                    │ 通过 Wayland 协议传递     │
+└────────────────────────────────────┼──────────────────────────┘
+                                     │
+                                     │ SCM_RIGHTS + socket
+                                     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        Wayland 合成器                            │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  接收 wl_surface.commit → 获取 dma-buf                    │  │
+│  └──────────────────────────┬───────────────────────────────┘  │
+│                             │  提交一帧画面                      │
+│                             ▼                                   │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  合成器内部 EGL/DRM (合成输出)                              │  │
+│  │  • 读取各客户端 dma-buf                                   │  │
+│  │  • 合成最终画面                                           │  │
+│  │  • 提交到内核 DRM/KMS                                     │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-> 关键直觉：**L1–L4 全部在用户态**；L6 是内核态；L5（输入）走的是另一条
-> "硬件 → 内核 evdev → 用户态 libinput → 合成器"的旁路链路，并不参与像素
-> 生成，但和合成器（L3）紧密耦合，所以画成虚线。
-
 ---
 
 
-## 1. UI 应用与框架层（L1）
+## 1. GUI框架层（L1）
 
 这是开发者**写代码**的地方。所有"按钮、动画、文字渲染"都在这一层被描述，
 最终都被转换成 OpenGL ES / Vulkan / 2D 位图的绘制指令交给下游。
+
+> [!note]
+>
+> **在GUI框架层的工作，会对接到L4 渲染/图形库 (客户端渲染) 和 L3 窗口管理**  
 
 ### 1.1 代表框架对比
 
 | 框架 | 渲染方式 | 典型场景 | 嵌入式适配度 | 备注 |
 |------|---------|---------|------------|------|
-| Qt Widgets | 软件光栅 + QPainter | 传统桌面工控 HMI | 高（占用可控） | 老牌、稳定、控件丰富 |
+| Qt Widgets | 软件光栅 + QPainter | 传统桌面工控 HMI | 高（占用可控） | cpu软渲染，性能差 |
 | Qt Quick / QML | Scene Graph + OpenGL ES / Vulkan / RHI | 现代车机/HMI | 高（主流选择） | 声明式 UI，硬件加速 |
 | GTK 4 | GSK + OpenGL / Vulkan | GNOME 桌面应用 | 中 | 依赖较多 |
 | LVGL | 纯软件 2D，可选 GPU 加速 | MCU / 低端 Linux | 极高 | 可在裸机/RTOS 跑 |
@@ -130,42 +110,11 @@ flowchart TD
 | Tauri | 系统 WebView（WebKitGTK）渲染 HTML/CSS | 桌面工具 | 低 | 体积小但依赖 WebView |
 | Electron | 内嵌完整 Chromium | 桌面应用 | 极低 | 一个空窗口 ~150 MB |
 
-### 1.2 嵌入式 vs 桌面：怎么选？
-
-```mermaid
-flowchart LR
-    A["内存 < 64MB / MCU"] --> LVGL_pick["LVGL"]
-    B["RK3566 等中端 SoC + Linux"] --> Qt_pick["Qt Quick / LVGL / Flutter"]
-    C["桌面 Linux"] --> Desk_pick["Qt / GTK / Electron 任选"]
-    D["要求 Web 技术栈"] --> Web_pick["Tauri（轻） / Electron（重）"]
-```
-
 - **重客户端渲染派（Qt/GTK/LVGL/Flutter）**：自己用 GLES 直接画，控件即绘
   制指令；启动快、内存小、不依赖整套浏览器。
 - **浏览器栈派（Electron/Tauri）**：HTML/CSS 经 Chromium 或 WebKitGTK 渲
   染，开发体验好但下层链路（V8、Blink、Skia、GLES、合成器……）层层叠加，
   内存/启动时间在嵌入式上经常不可接受。
-
-### 1.3 一段 QML 是怎么下到 GPU 的？
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant App as "QML 源码"
-    participant SG as "Qt Scene Graph"
-    participant RHI as "Qt RHI（统一渲染抽象）"
-    participant GLES as "OpenGL ES / Vulkan"
-    participant Mesa as "Mesa 用户态驱动"
-    participant DRM as "内核 DRM/KMS"
-    rect rgb(220, 240, 255)
-    App ->> SG: 解析 QML → 节点树
-    SG ->> RHI: 提交几何 + 材质 + 变换
-    RHI ->> GLES: 翻译为 GL/Vulkan API 调用
-    GLES ->> Mesa: 真正的驱动实现
-    Mesa ->> DRM: ioctl 提交命令缓冲到 GPU
-    DRM -->> Mesa: 完成 fence + dma-buf
-    end
-```
 
 > 注：这里 RHI（Rendering Hardware Interface）是 Qt 6 引入的统一抽象层，
 > 屏蔽了 GL / Vulkan / Metal / D3D 的差异。Qt 5 时代是直接用 GLES。
@@ -291,66 +240,20 @@ XWayland 看起来是 Xorg，但它**自己不直接管屏幕**，而是把每�
 
 ---
 
-
 ## 4. 渲染 / 图形库（L4）
 
-这一层是**用户态**的"画笔与画布"。再往下就是 ioctl 进内核了。
-
-### 4.1 角色划分
-
-```mermaid
-flowchart TB
-    subgraph API["规范 / API"]
-        GL["OpenGL"]
-        GLES["OpenGL ES 2/3"]
-        VK["Vulkan"]
-        EGLn["EGL（上下文/平台粘合）"]
-    end
-    subgraph Impl["用户态实现"]
-        Mesa["Mesa（Iris/Radeonsi/Panfrost/Lavapipe/llvmpipe…）"]
-        VendorBlob["厂商二进制（Mali r-series、Vivante 等）"]
-    end
-    subgraph TwoD["2D 库（栅格化文字/矢量）"]
-        Cairo["Cairo"]
-        Skia["Skia"]
-        Pixman["pixman"]
-    end
-    subgraph BufMgmt["Buffer 管理"]
-        GBM["GBM（裸 KMS 下分配可被 scanout 的 BO）"]
-        Wlbuf["wl_drm / linux-dmabuf"]
-    end
-    API --> Impl
-    Impl --> BufMgmt
-    TwoD -. "也可走 GLES 加速" .-> API
-```
-
-### 4.2 几个易混术语
-
-> [!note]
->
-> **EGL** 是 [Khronos](https://en.wikipedia.org/wiki/Khronos_Group)[ 渲染 API](https://en.wikipedia.org/wiki/Rendering_API)（如 [OpenGL、](https://en.wikipedia.org/wiki/OpenGL)[OpenGL ES](https://en.wikipedia.org/wiki/OpenGL_ES) 或 [OpenVG](https://en.wikipedia.org/wiki/OpenVG)）与底层原生[平台窗口系统](https://en.wikipedia.org/wiki/Windowing_system)之间的[接口 ](https://en.wikipedia.org/wiki/Interface_(computing))。EGL 负责图形上下文管理、[ 表面 ](https://en.wikipedia.org/wiki/Computer_representation_of_surfaces)/[ 缓冲](https://en.wikipedia.org/wiki/Data_buffer)区绑定、[ 渲染](https://en.wikipedia.org/wiki/Rendering_(computer_graphics))同步，并支持“使用其他 Khronos API 实现高性能、加速、混合模式的[二维](https://en.wikipedia.org/wiki/2D_computer_graphics)和[三维](https://en.wikipedia.org/wiki/3D_computer_graphics)渲染”。 [[2\]](https://en.wikipedia.org/wiki/EGL_(API)#cite_note-2) EGL 由[非营利](https://en.wikipedia.org/wiki/Non-profit_organization)技术联盟 [Khronos Group](https://en.wikipedia.org/wiki/Khronos_Group) 管理。
+### 4.1 Arch
 
 | 名字 | 是什么 | 典型用法 |
 |------|-------|---------|
 | **OpenGL** | 桌面 3D API 规范 | Linux 桌面 / 工作站 |
 | **OpenGL ES** | 嵌入式精简版 GL | Android / 所有 SoC GPU |
 | **Vulkan** | 显式、低开销的新一代 API | 游戏 / 高性能 HMI |
-| **EGL** | 把 GL/GLES "上下文 + Surface" 接到具体平台（X、Wayland、GBM、Android） | `eglGetDisplay(EGL_PLATFORM_GBM_KHR, …)` |
-| **GBM** (Generic Buffer Management) | 不依赖任何显示服务器的 buffer 分配器，可直接交给 KMS scanout | 自研 kiosk / weston-launch |
+| **EGL** | 图形API 到 原生窗口系统的平台绑定层 | mali.so |
+| **GBM** (Generic Buffer Management) | 用户态库，Buffer管理器，解决"EGL/合成器想在 DRM 设备上分配一块**既能给 GPU 渲染、又能给 KMS scanout** 的 buffer"这个具体需求。 |  |
 | **Mesa** | 开源用户态图形栈，囊括上述所有 API 的实现 | 大多数 Linux 发行版默认 |
-| **llvmpipe / swrast** | Mesa 提供的纯软件 GL 实现，无 GPU 也能跑 | 服务器 / 容器 / GPU 驱动缺失 |
-| **Lavapipe** | Mesa 提供的软件 Vulkan 实现 | 调试 / CI |
 
-### 4.3 2D vs 3D，硬件加速 vs 软件渲染
-
-- **2D 路径**：Cairo/Skia/QPainter；最终要么走 CPU 像素操作（pixman），
-  要么把绘制翻译为 GLES 三角形（"软光栅"还是"GPU 光栅"取决于配置）。
-- **3D 路径**：直接面向 GLES/Vulkan，GPU 上跑 shader。
-- **软件渲染**：llvmpipe 把 GL 调用 JIT 成 SSE/AVX/NEON 代码在 CPU 上跑。
-  i.MX6ULL **没有 GPU**，所以图形栈只能走 llvmpipe + fbdev/DRM；
-  RK3566 自带 Mali-G52，能跑真硬件 GLES 3.2 / Vulkan 1.x。
-
-### 4.4 嵌入式 SoC GPU 用户态驱动一览
+### 4.2 嵌入式 SoC GPU 用户态驱动一览
 
 | SoC 平台 | GPU IP | 开源驱动 | 闭源 blob |
 |----------|--------|---------|----------|
