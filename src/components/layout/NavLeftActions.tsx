@@ -49,10 +49,7 @@ export default function NavLeftActions() {
 	};
 
 	return (
-		<div
-			className="nav-left-actions"
-			style={{ display: "flex", alignItems: "center", gap: 8, marginRight: 10 }}
-		>
+		<div className="nav-left-actions">
 			{showBack && (
 				<Link
 					to={backHref}

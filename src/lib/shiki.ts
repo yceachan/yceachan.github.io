@@ -65,11 +65,16 @@ export function highlightSync(code: string, lang: string): string {
 	const safeLang = (lang || "").trim().toLowerCase();
 	if (highlighter) {
 		try {
-			return highlighter.codeToHtml(code, {
+			const html = highlighter.codeToHtml(code, {
 				lang: safeLang || "plaintext",
 				themes: { light: "github-light", dark: "github-dark" },
 				defaultColor: false,
 			});
+			// baseline pre carries the `vp-code` class too
+			return html.replace(
+				'class="shiki shiki-themes github-light github-dark"',
+				'class="shiki shiki-themes github-light github-dark vp-code"',
+			);
 		} catch {
 			// unknown language → plain block (baseline txt behavior)
 		}
