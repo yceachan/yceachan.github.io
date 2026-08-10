@@ -90,12 +90,7 @@ export function docMetaPlugin(): Plugin {
 		load(id) {
 			if (id === resolvedVirtualModuleId) {
 				const docsDir = path.resolve(import.meta.dirname, "../../docs");
-				const excludePatterns = [
-					/^\./,
-					/^public$/,
-					/^98-Private$/,
-					/(^|\/)index\.md$/,
-				];
+				const excludePatterns = [/^\./, /^public$/, /(^|\/)index\.md$/];
 				const tree = walk(docsDir, docsDir, excludePatterns);
 				return `export default ${JSON.stringify(tree)}`;
 			}

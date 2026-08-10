@@ -2,17 +2,11 @@
  * NavLeftActions — Back/Home links in the navbar (baseline NavLeftActions.vue).
  * Back is hidden on the same path set; both links navigate with react-router.
  */
+import { ArrowBack, Home } from "@appica/icons-react";
 import { Link, useLocation } from "react-router-dom";
 import { useExplorerStore } from "@/stores/explorer";
 
-const HIDDEN_PATHS = new Set([
-	"/",
-	"/index",
-	"/保险箱",
-	"/保险箱.html",
-	"/library",
-	"/library.html",
-]);
+const HIDDEN_PATHS = new Set(["/", "/index"]);
 
 function normalizePath(raw: string): string {
 	const withoutHtml = raw.replace(/\.html$/, "");
@@ -57,18 +51,17 @@ export default function NavLeftActions() {
 					className="nav-left-link"
 					title={`返回 Explorer 目录: ${parentPath || "/"}`}
 				>
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M11 5 4 12l7 7" />
-						<path d="M4 12h9a7 7 0 0 1 7 7" />
-					</svg>
+					<ArrowBack size={16} strokeWidth={1.75} aria-hidden="true" />
 					<span>Back</span>
 				</Link>
 			)}
-			<Link to="/" onClick={goHome} className="nav-left-link" title="回到首页">
-				<svg viewBox="0 0 24 24" aria-hidden="true">
-					<path d="m3 11 9-7 9 7" />
-					<path d="M5 10v10h14V10" />
-				</svg>
+			<Link
+				to="/"
+				onClick={goHome}
+				className="nav-left-link nav-home-link"
+				title="回到首页"
+			>
+				<Home size={16} strokeWidth={1.75} aria-hidden="true" />
 				<span>Home</span>
 			</Link>
 		</div>

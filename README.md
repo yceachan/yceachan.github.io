@@ -40,7 +40,7 @@
 | 搜索 | minisearch（构建期内容索引） | 顶栏搜索，`K` / `Ctrl+K` 聚焦 |
 | 图片 | medium-zoom | 点击放大 |
 | 导航 | 自定义 Explorer 组件族 | Explorer 风格目录浏览（与基线交互一致） |
-| 状态 | zustand | explorer / vault store（localStorage key 与基线同名） |
+| 状态 | zustand | explorer store（localStorage key 与基线同名） |
 | PWA | vite-plugin-pwa + workbox | 离线缓存、可安装、更新提示 |
 
 ### md_render（与 VitePress 基线逐项对齐，见 `docs/design/design-freeze.md` §4）

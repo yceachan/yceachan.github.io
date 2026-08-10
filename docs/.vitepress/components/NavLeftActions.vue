@@ -31,7 +31,7 @@ import { useRoute, useRouter, withBase } from 'vitepress'
 const route = useRoute()
 const router = useRouter()
 
-const hiddenPaths = new Set(['/', '/index', '/保险箱', '/保险箱.html', '/library', '/library.html'])
+const hiddenPaths = new Set(['/', '/index'])
 
 const normalizePath = (raw: string) => {
   const withoutHtml = raw.replace(/\.html$/, '')

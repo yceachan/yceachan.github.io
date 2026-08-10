@@ -16,7 +16,7 @@ import { useRoute, useRouter, withBase } from 'vitepress'
 const route = useRoute()
 const router = useRouter()
 
-const HIDDEN_PATHS = ['/', '/index', '/保险箱', '/保险箱.html', '/library', '/library.html']
+const HIDDEN_PATHS = ['/', '/index']
 
 const visible = computed(() => {
   const p = route.path.replace(/\.html$/, '')

@@ -7,11 +7,7 @@
  * so the content root is `../../docs`.
  */
 const rawModules = import.meta.glob(
-	[
-		"../../docs/**/*.md",
-		"!../../docs/public/**/*.md",
-		"!../../docs/98-Private/**/*.md",
-	],
+	["../../docs/**/*.md", "!../../docs/public/**/*.md"],
 	{ query: "?raw", import: "default", eager: true },
 );
 
@@ -19,7 +15,7 @@ const contentMap: Record<string, string> = {};
 
 for (const [key, value] of Object.entries(rawModules)) {
 	const rel = key.replace(/^\.\.\/\.\.\/docs\//, "").replace(/\\/g, "/");
-	if (rel.startsWith("public/") || rel.startsWith("98-Private/")) continue;
+	if (rel.startsWith("public/")) continue;
 	const urlPath = "/" + rel.replace(/\.md$/, "");
 	contentMap[urlPath] = value as string;
 }

@@ -10,8 +10,6 @@ const MAX_DRAG = 120;
 const EXCLUDE_SELECTOR = [
 	".kb-sidebar",
 	".mobile-sidebar",
-	".vault-sidebar",
-	".mobile-sidebar-toggle",
 	".kb-local-nav",
 	".vp-code-group",
 	"pre",

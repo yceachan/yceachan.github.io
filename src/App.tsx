@@ -1,46 +1,44 @@
 /**
- * App — route table (baseline URL semantics preserved).
+ * App — public route table.
  *   `/`               Explorer home (?path= drives the directory)
- *   `/:path*`         note pages (excluding reserved routes)
- *   `/保险箱`          PrivateVault
- *   `/library`        LibraryControl
+ *   `/:path*`         note pages and the rendered 404 state
  */
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppShell from "@/components/layout/AppShell";
 import ExplorerPage from "@/components/explorer/ExplorerPage";
 import NotePage from "@/components/note/NotePage";
-import PrivateVault from "@/components/vault/PrivateVault";
-import LibraryPage from "@/components/library/LibraryPage";
-
-const RESERVED = new Set(["保险箱", "library", "index"]);
+import { profileTitle } from "@/lib/profile";
 
 export default function App() {
+	useEffect(() => {
+		// Keep the browser tab label owned by the app, rather than inheriting a
+		// stale title from the legacy VitePress shell or a cached PWA document.
+		const title = profileTitle();
+		const enforceTitle = () => {
+			if (document.title !== title) document.title = title;
+		};
+		enforceTitle();
+
+		const titleElement = document.querySelector("title");
+		if (!titleElement) return;
+		const observer = new MutationObserver(enforceTitle);
+		observer.observe(titleElement, {
+			childList: true,
+			characterData: true,
+			subtree: true,
+		});
+		return () => observer.disconnect();
+	}, []);
+
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route element={<AppShell />}>
 					<Route path="/" element={<ExplorerPage />} />
-					<Route path="/保险箱" element={<PrivateVault />} />
-					<Route path="/library" element={<LibraryPage />} />
-					<Route
-						path="/*"
-						element={
-							<ReservedGuard>
-								<NotePage />
-							</ReservedGuard>
-						}
-					/>
-					<Route path="*" element={<Navigate to="/" replace />} />
+					<Route path="/*" element={<NotePage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
 	);
-}
-
-function ReservedGuard({ children }: { children: React.ReactNode }) {
-	const first = window.location.pathname.split("/").filter(Boolean)[0] ?? "";
-	if (RESERVED.has(decodeURIComponent(first))) {
-		return <Navigate to="/" replace />;
-	}
-	return children;
 }

@@ -29,6 +29,13 @@ docs/.obsidian/workspace.json
 # pi-subagents runtime artifacts
 .pi-subagents/
 
+# pi agent runtime artifacts
+.pi/
+skills-lock.json
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+
 # SPA build outputs
 dist/
 dev-dist/

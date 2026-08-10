@@ -4,7 +4,7 @@
  * VPDocAsideOutline, Copyright doc placement).
  */
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { getContent } from "@/lib/content";
 import { renderMarkdown, type RenderResult } from "@/lib/markdown";
 import ExplorerBreadcrumb from "../explorer/ExplorerBreadcrumb";
@@ -49,31 +49,6 @@ export default function NotePage() {
 		}
 	}, [path, location.key]);
 
-	// global /98-Private/ link interception (baseline theme behavior)
-	useEffect(() => {
-		const onClick = (e: MouseEvent) => {
-			const link = (e.target as Element | null)?.closest?.("a");
-			if (link) {
-				const href = link.getAttribute("href");
-				if (href) {
-					let decoded = href;
-					try {
-						decoded = decodeURIComponent(href);
-					} catch {
-						/* keep raw */
-					}
-					if (decoded.includes("/98-Private/")) {
-						e.preventDefault();
-						console.log("拦截到私密链接:", decoded);
-						window.location.href = `/保险箱?target=${encodeURIComponent(decoded)}`;
-					}
-				}
-			}
-		};
-		window.addEventListener("click", onClick);
-		return () => window.removeEventListener("click", onClick);
-	}, []);
-
 	if (notFound) {
 		return (
 			<div className="note-page">
@@ -83,9 +58,9 @@ export default function NotePage() {
 					<p>
 						笔记 <code>{path}</code> 不在本知识库中。
 					</p>
-					<a href="/" className="note-404-home">
+					<Link to="/" className="note-404-home">
 						返回 Explorer
-					</a>
+					</Link>
 				</div>
 			</div>
 		);

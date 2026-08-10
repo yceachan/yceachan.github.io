@@ -46,8 +46,6 @@ try {
 
 const SIDEBAR_EXCLUDE = new Set([
   'index.md',
-  '保险箱.md',
-  'library.md',
   '001-guide.md',
   'guide.md',
   'chat.md',
@@ -64,7 +62,6 @@ function walkDocsTree(dir: string, baseDir: string): DocTreeNode[] {
 
     if (entry.name.startsWith('.')) continue
     if (relPath.startsWith('public/')) continue
-    if (relPath.startsWith('98-Private/')) continue
 
     if (entry.isDirectory()) {
       const children = walkDocsTree(fullPath, baseDir)
