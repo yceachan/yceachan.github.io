@@ -25,3 +25,10 @@ docs/98-Private/
 
 docs/.obsidian/workspace.json
 /.claude/worktrees/trusting-leavittdocs/
+
+# pi-subagents runtime artifacts
+.pi-subagents/
+
+# SPA build outputs
+dist/
+dev-dist/
