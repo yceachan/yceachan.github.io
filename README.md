@@ -1,6 +1,6 @@
 # Ea-Knowledge_Base
 
-> 一个面向嵌入式开发者的个人知识库，基于 VitePress 重构，支持 PWA、Mermaid、LaTeX、Explorer 风格导航。
+> 一个面向嵌入式开发者的个人知识库，React SPA + Appica UI + marked，支持 PWA 离线、Mermaid、KaTeX、Explorer 风格导航。
 
 ## Pre
 
@@ -8,24 +8,22 @@
 > **Inspired by:**
 > [Legacy.kb.io](https://github.com/yceachan/Legacy.kb.io/) ｜ [Lysssyo.github.io](https://github.com/Lysssyo/Lysssyo.github.io/)
 
-### 为什么放弃 `Legacy.kb.io`？
+### 演进历史
 
-`Legacy` 是一个嵌入式开发者纯 Vibe Coding 实现的前端博客项目，采用 `React + SPA + Tailwind` 来渲染 Markdown 并提供 Explorer 风格导航。这是核心想法没错，但暴露出三个硬伤：
+1. **Legacy（React + Tailwind 手搓）** —— Markdown 渲染体验差、CI/CD 繁琐、移动端没设计。
+2. **VitePress 版（v1）** —— 主题开箱即用，但依赖 VPS + GitHub Actions + Pages 的弯弯绕绕。
+3. **当前版（v2，本分支）** —— React SPA + **Appica UI** + **marked**，内容构建期打包进
+   bundle（PWA 100% 离线），笔记仓库通过 **WSL 本地 bare git** 推送触发钩子同步，无 VPS。
 
-- **Markdown 渲染**
-  Tailwind theme 的开箱效果不尽人意，需要和 AI 对话多轮逐个加插件；devper 对前端栈掌握不深，技术债快速累叠，维护苦不堪言。
+## Solution
 
-- **CI/CD 繁琐**
-  旧方案在 JS 里硬编码本地路径做全量扫描，devper 需要定期 `do.bat sync` 一下 note repo（这个项目的最大需求场景就是：会有很多个、不同领域、项目/笔记混杂的仓库）。
-  目标是 —— 在 note repo `git push` 一下，就能让 `github.io` 端笔记自动同步上线。
-
-- **移动端适配**
-  不想再重头设计一遍移动端 UI。
-
-### Solution
-
-- **VitePress + PWA**：theme 开箱即用，移动端适配性好，有好 Hommie 模板可抄 [Lysssyo.github.io](https://github.com/Lysssyo/Lysssyo.github.io/)。
-- **CI/CD**：VPS 上部署本地 git 服务器，`post-update` 钩子 sync notes 到 VitePress Engine，再 CI/CD 到 GitHub Pages，最省心。
+- **前端**：React 19 SPA，UI 基础组件库 [Appica UI](https://appica.dev)（Base UI + Tailwind v4），
+  Markdown 渲染器 [marked](https://marked.js.org)。
+- **内容管线**：`src/lib/content.ts` 用 `import.meta.glob` 把 `docs/**/*.md` 全部打包进产物
+  —— 离线可用 = 首次加载后 100% 可用；`src/vite-plugin/docMeta.ts` 提供文档树 + git mtime。
+- **笔记同步**：`KB_GIT/` 本地 bare 仓库 + `post-receive` 钩子，笔记仓库 `git push` 即同步
+  到 `docs/`（可自动重建 SPA），详见 [`KB_GIT/README.md`](./KB_GIT/README.md)。
+- **PWA**：`vite-plugin-pwa`（registerType `prompt`），precache 全部资源；更新提示「发现新版本」。
 
 ## Stack
 
@@ -33,64 +31,53 @@
 
 | 模块 | 技术 | 用途 |
 | --- | --- | --- |
-| 框架 | **VitePress 1.5** (Vite + Vue 3 + MPA SSG) | 静态站点生成，自带 Shiki 代码高亮、本地搜索 |
-| PWA | **vite-plugin-pwa** + Workbox | 离线缓存、可安装到桌面/手机主屏 |
-| 图片 | **medium-zoom** | 点击放大查看 |
-| 导航 | `docTreePlugin` + `Explorer.vue` 组件族 | Explorer 风格的目录浏览 |
-| 主题 | 自定义 `ProfileSidebar` / `Layout` / `PrivateVault` | 个人资料栏、PWA Reload 提示 |
+| 框架 | **React 19 + Vite + TypeScript** | SPA 应用骨架 |
+| UI | **@appica/ui-react** + Tailwind CSS v4 | 组件库 / 设计 token / 深色模式 |
+| Markdown | **marked 18** + 自定义扩展 | 渲染管线（基线对齐见 `docs/design/`） |
+| 代码高亮 | shiki（github-light / github-dark 双主题） | 与基线视觉一致 |
+| 数学 | KaTeX（marked-katex-extension） | `$...$` / `$$...$$` |
+| 图表 | mermaid 11 | 流程图 / 时序图（运行时水合） |
+| 搜索 | minisearch（构建期内容索引） | 顶栏搜索，`K` / `Ctrl+K` 聚焦 |
+| 图片 | medium-zoom | 点击放大 |
+| 导航 | 自定义 Explorer 组件族 | Explorer 风格目录浏览（与基线交互一致） |
+| 状态 | zustand | explorer / vault store（localStorage key 与基线同名） |
+| PWA | vite-plugin-pwa + workbox | 离线缓存、可安装、更新提示 |
 
-### md_render
+### md_render（与 VitePress 基线逐项对齐，见 `docs/design/design-freeze.md` §4）
 
-| 模块 | 技术 | 用途 |
-| --- | --- | --- |
-| 图表 | **vitepress-plugin-mermaid** | Mermaid 流程图 / 时序图 |
-| 公式 | **markdown-it-mathjax3** | LaTeX 数学公式渲染 |
-| Alert | `markdown-it-github-alerts` | GitHub 风格的 `> [!note]` / `> [!tip]` 块 |
-| Task | `markdown-it-task-lists` | `- [x]` 复选框任务列表 |
-| Callout | `markdown-it-container` | 自定义 `:::callout 💡 ... :::` 容器 |
+| 特性 | 实现 |
+| --- | --- |
+| 锚点 slugify | 与基线同正则（空格/冒号/括号/百分号 → `-`，数字开头 `_` 前缀） |
+| GitHub alerts | `> [!note/tip/important/warning/caution]` → 基线同款 DOM + 配色 |
+| Task lists | `- [x]` → `li.task-list-item` + checkbox（基线 DOM） |
+| Callout | `:::callout 💡 … :::` 容器 |
+| Mermaid | ` ```mermaid ` fence → `mermaid.run()` 水合 |
+| 代码块 | 未知语言降级纯文本（kconfig/dts/…）；`vp-code` 类与基线一致 |
+| 安全 | DOMPurify sanitize；裸 `<placeholder>` 转义；坏图片中和 |
 
-vitepress 的 config.mts 里还做了一些**毛刺打磨**：
+## CI/CD —— 本地优先（无 VPS）
 
-- 自定义 `slugify`（兼容中英文、括号、冒号、百分号），并同步拦截 markdown 内部锚点链接，保持一致
-- 把 Shiki 不识别的 fence 语言（`dts` / `kconfig` / `assembly` …）降级为 `txt`，避免构建中断
-- 拦截 Typora 残留的本地绝对路径图片（`C:\…`、`/home/…`），替换为 data-url，避免 Vite 当模块解析
-- 拦截裸 `<placeholder>` 标签，避免 Vue 模板编译器把它当未闭合 HTML
-
-### CI/CD
-
-**核心诉求**：本博客的最大使用场景是 —— 有很多个、不同领域、项目/笔记混杂的仓库（`MPUthings` / `MCUthings` / `Zephyr` / `Awesome-Bluetooth` …），希望在 **笔记 repo 直接 `git push`**，`github.io` 端笔记就能自动同步上线，devper 不再手动 `do.bat sync` 运维。
-
-方案是在 VPS 上自建 Git 服务器，把每个外部笔记仓做成一个 **bare 仓库**，用 `post-receive` 钩子把指定子路径镜像到本站 `docs/`，再由 GitHub Actions 一次构建并发布到 GitHub Pages：
+**核心诉求**：笔记 repo 直接 `git push`，本机站点内容自动同步。
 
 ```mermaid
 flowchart LR
-  A["作者本地<br/>(notes repo)"] -- "git push (ssh + lfs)" --> B["VPS:KB_GIT/&lt;repo&gt;<br/>(bare)"]
-  B -- "post-receive hook" --> C["worktree add<br/>+ lfs smudge"]
-  C -- "rsync -a --delete<br/>(按 config.json 规则)" --> D["ea-kb/docs/&lt;sync&gt;"]
-  D -- "git push (sync_vps.sh)" --> E["GitHub: ea-kb"]
-  E -- "GitHub Actions" --> F["GitHub Pages<br/>yceachan.github.io"]
+  A["Windows 作者仓库"] -- "git push (ssh localhost / local path)" --> B["WSL: KB_GIT/&lt;repo&gt; (bare)"]
+  B -- "post-receive hook" --> C["rsync → docs/&lt;sync&gt;"]
+  C -- "KB_AUTO_BUILD=1" --> D["npm run build → dist/ (PWA)"]
 ```
 
-关键设计：
-
-- **一个 bare 仓库 = 一块 VitePress 子树**，由 `KB_GIT/config.json` 里的 `{repo, scan, sync, branch}` 规则声明映射关系
-- 镜像走 `rsync --delete`，仓内删除的笔记下次推送时同步消失，避免脏数据沉淀
-- LFS 走 pure-SSH（`git-lfs ≥ 3.4` + scutiger `git-lfs-transfer`），不用额外起 HTTPS LFS server
-- 本站这个 `ea-kb` 仓本身也托管在 VPS，`sync_vps.sh` 走 `ssh + git pull --ff-only` 让 **本地 / VPS / GitHub 三端**保持同步
-
-> 详细的服务端依赖、`config.json` 规则、SSH/LFS 配置和故障排查，见 [`KB_GIT/README.md`](./KB_GIT/README.md)。
+- bare 仓库在 WSL 本地（`KB_GIT/`），Windows 通过 `ssh yceachan@localhost`（WSL2 localhost
+  转发）或 WSL 内 local path 推送。
+- 钩子同步后自动 commit 进 ea-kb；远端推送改为可选（`KB_PUSH_REMOTE`）。
+- 站点即 `dist/` 静态产物，`npm run preview` 或任意静态服务器托管。
 
 ## Knowledge Base
 
-- **MCUthings** — 微控制器
-  - `Zephyr` RTOS、外设视图
-- **MPUthings** — Linux MPU / 内核
-  - `kernel` `Subsystem` `SysCall` `DTS` `FS` `Kbuild` `BSP-Dev` `SoC-Arch` `sdk` `虚拟化` 等
-- **Protocol** — 协议栈
-  - `Bluetooth`
-- **OsCookBook** — 操作系统 & CS 基础
-  - `操作系统理论` `计算机体系结构` `网络原理` `编译原理与交叉编译技术` `CSAPP`
-  - 工具链：`Better Linux` `Better Wins` `git版本控制` `Frontend` `Agent`
+- **MCUthings** — 微控制器（Zephyr、外设视图）
+- **MPUthings** — Linux MPU / 内核（kernel、Subsystem、SysCall、DTS、FS、Kbuild、BSP-Dev、SoC-Arch、sdk、虚拟化…）
+- **Protocol** — 协议栈（Bluetooth）
+- **OsCookBook** — 操作系统 & CS 基础（操作系统理论、计算机体系结构、网络原理、编译原理与交叉编译技术、CSAPP）
+- 工具链：Better Linux、Better Wins、git版本控制、Frontend、Agent
 
 ## QuickStart
 
@@ -99,52 +86,49 @@ flowchart LR
 git clone https://github.com/yceachan/yceachan.github.io.git ea-kb
 cd ea-kb
 
-# 2. 安装依赖（任选其一）
+# 2. 安装依赖
 npm install
-# 或者 pnpm install / yarn
 
-# 3. 本地预览（默认 http://localhost:5173 ）
-npm run docs:dev
+# 3. 本地预览（默认 http://localhost:5174；旧 VitePress 基线占 5173）
+npm run dev
 
-# 4. 生产构建 → docs/.vitepress/dist
-npm run docs:build
+# 4. 生产构建 → dist/
+npm run build
 
 # 5. 预览构建产物
-npm run docs:preview
+npm run preview
 ```
 
 要把它变成你自己的知识库，至少要改三处：
 
 1. `docs/public/profile.json` — 个人信息（name / bio / email / github / repo）
 2. `docs/public/profile-photo.{svg,jpg}` — 头像
-3. `docs/` 下任意 Markdown — 用 YAML frontmatter 起头（详见全局规范），目录结构即侧边栏
+3. `docs/` 下任意 Markdown — 用 YAML frontmatter 起头（详见全局规范），目录结构即文件树
 
 ### 接入其他项目的笔记仓
 
-如果你想让另一个项目（例如 `MPUthings`、`Zephyr`、自己的某个 repo）的笔记**通过 `git push` 自动同步**到本知识库，详见 [`KB_GIT/README.md`](./KB_GIT/README.md)。简要流程：
+详见 [`KB_GIT/README.md`](./KB_GIT/README.md)。简要流程：
 
 ```bash
-# 1. 在 VPS 上为该项目创建一个 bare 仓库
+# 1. 本地创建一个 bare 仓库
 cd /home/pi/work/ea-kb/KB_GIT
-./create_repo.sh MyNotes               # 创建 bare 仓 + 安装 post-receive hook
+./create_repo.sh MyNotes
 
-# 2. 在 KB_GIT/config.json 里追加一条同步规则
-#    repo:   bare 仓目录名
-#    scan:   推送树里要导出的子路径（"." 表示整仓）
-#    sync:   目标路径，相对于 ea-kb/docs/
-#    branch: 触发同步的分支
-# {
-#   "repo": "MyNotes", "scan": "note",
-#   "sync": "MyNotes", "branch": "main"
-# }
+# 2. 在 KB_GIT/config.json 里追加同步规则（repo/scan/sync/branch）
 
-# 3. 在作者本地 repo 添加 remote 并推送
-git remote add kb ssh://pi@<vps-host>/home/pi/work/ea-kb/KB_GIT/MyNotes
+# 3. 作者本地 repo 添加 remote 并推送
+git remote add kb /home/pi/work/ea-kb/KB_GIT/MyNotes   # WSL 内
+# 或 Windows: git remote add kb yceachan@localhost:/home/pi/work/ea-kb/KB_GIT/MyNotes
 git push kb main
-# → 服务端钩子触发 → docs/MyNotes/ 自动更新 → CI/CD 发布到 GitHub Pages
+# → 钩子触发 → docs/MyNotes/ 自动更新 → （KB_AUTO_BUILD=1 时）SPA 自动重建
 ```
 
-LFS、`git-shell` 权限收紧、推送后 `docs/` 没更新等问题的排查清单，KB_GIT/README.md 第 §1、§7 章有完整说明。
+## Design & Verification
+
+- [`docs/design/design-freeze.md`](./docs/design/design-freeze.md) — 设计冻结（唯一权威契约）
+- [`docs/design/current-app-inventory.md`](./docs/design/current-app-inventory.md) — 基线行为清单
+- [`docs/design/stack-research.md`](./docs/design/stack-research.md) — 技术栈研究
+- [`docs/design/verification-report.md`](./docs/design/verification-report.md) — browser-harness 验证报告
 
 ## License
 

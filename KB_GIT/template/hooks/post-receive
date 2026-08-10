@@ -164,3 +164,15 @@ if [[ "$NEED_PUSH" -eq 1 ]]; then
     log "push hook not executable or missing: $PUSH_HOOK"
   fi
 fi
+
+# Local-first (no VPS): when KB_AUTO_BUILD=1, rebuild the SPA bundle so the
+# browser-served app reflects pushed notes immediately. The bundled markdown
+# lives inside the JS chunks, so a rebuild is required for content updates.
+if [[ "${KB_AUTO_BUILD:-0}" == "1" && -f "$EA_KB_ROOT/package.json" ]]; then
+  log "KB_AUTO_BUILD=1 — rebuilding SPA bundle"
+  if (cd "$EA_KB_ROOT" && npm run build >/dev/null 2>&1); then
+    log "SPA build ok"
+  else
+    log "SPA build failed — run npm run build manually"
+  fi
+fi

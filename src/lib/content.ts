@@ -28,10 +28,6 @@ export function getContent(urlPath: string): string | undefined {
 	return contentMap[urlPath];
 }
 
-export function hasContent(urlPath: string): boolean {
-	return urlPath in contentMap;
-}
-
 export function allContentPaths(): string[] {
 	return Object.keys(contentMap);
 }
