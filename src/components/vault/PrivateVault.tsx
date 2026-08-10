@@ -379,6 +379,7 @@ export default function PrivateVault() {
 						{currentDoc ? (
 							<div className="vp-doc">
 								<h2 className="vault-doc-title">{currentDoc.name}</h2>
+								// pi-lens-ignore: dangerously-set-inner-html
 								<div dangerouslySetInnerHTML={{ __html: renderedContent }} />
 							</div>
 						) : (

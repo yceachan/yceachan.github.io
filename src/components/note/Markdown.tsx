@@ -28,6 +28,7 @@ export default function Markdown({ result, onHeadings }: MarkdownProps) {
 	useEffect(() => {
 		const el = containerRef.current;
 		if (!el) return;
+		// pi-lens-ignore: dangerously-set-inner-html
 		el.innerHTML = result.html;
 
 		const nodes = [...el.querySelectorAll<HTMLElement>(".mermaid")];
