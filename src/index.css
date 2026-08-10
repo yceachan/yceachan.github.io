@@ -1174,9 +1174,17 @@ body.vp-sidebar-collapsed .kb-sidebar {
   color: var(--shiki-light, var(--vp-c-text-1));
 }
 
+.vp-doc .shiki span {
+  color: var(--shiki-light, inherit);
+}
+
 .dark .vp-doc .shiki {
   background-color: var(--shiki-dark-bg, var(--vp-code-block-bg));
   color: var(--shiki-dark, var(--vp-c-text-1));
+}
+
+.dark .vp-doc .shiki span {
+  color: var(--shiki-dark, inherit);
 }
 
 .vp-doc .shiki code {

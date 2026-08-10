@@ -120,7 +120,11 @@ const md = new Marked({
 	breaks: false,
 });
 
-md.use(markedKatex({ throwOnError: false }));
+// nonStandard: the baseline MathJax pipeline parses `$L$（…）` (closing `$`
+// followed by a fullwidth paren). marked-katex-extension's default lookahead
+// only allows [\s?!\.,:？！。，：]|$ after the closing `$`, so we relax it.
+// Corpus has no currency-style `$<digit>` outside code fences, so this is safe.
+md.use(markedKatex({ throwOnError: false, nonStandard: true }));
 
 md.use({
 	extensions: [
@@ -246,7 +250,7 @@ const rendererOverrides: Partial<Renderer> = {
 			const m = head.text.match(ALERT_RE);
 			if (m) {
 				const type = m[1].toLowerCase();
-				head.text = head.text.slice(m[0].length);
+				head.text = head.text.slice(m[0].length).trimStart();
 				const typeName = m[2].trim() || type.toUpperCase();
 				const rest = tokens.filter((t) => t !== first || head.text !== "");
 				const inner = this.parser.parse(rest);

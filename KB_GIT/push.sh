@@ -33,15 +33,15 @@ cd "$EA_KB_ROOT"
 
 SYNC_DIR="docs/${SYNC#/}"
 if [[ ! -d "$SYNC_DIR" ]]; then
-  log "expected $SYNC_DIR missing — skipping"
-  exit 0
+	log "expected $SYNC_DIR missing — skipping"
+	exit 0
 fi
 
 git add -A -- "$SYNC_DIR"
 
 if git diff --cached --quiet -- "$SYNC_DIR"; then
-  log "no change staged under $SYNC_DIR — skipping commit"
-  exit 0
+	log "no change staged under $SYNC_DIR — skipping commit"
+	exit 0
 fi
 
 TS="$(date '+%Y-%m-%d %H:%M')"
@@ -53,12 +53,12 @@ log "committed: $MSG (${REPO_NAME}@$(git -C "$KB_GIT_DIR/$REPO_NAME" rev-parse -
 # `git push` to the GitHub remote was the VPS/Pages-era behaviour; the local
 # SPA consumes docs/ directly from this checkout, so no push is needed.
 if [[ -n "${KB_PUSH_REMOTE:-}" ]]; then
-  if git push "$KB_PUSH_REMOTE" 2>&1 | sed 's/^/[kb-push] git: /' >&2; then
-    log "push complete ($KB_PUSH_REMOTE)"
-  else
-    log "push failed"
-    exit 1
-  fi
+	if git push "$KB_PUSH_REMOTE" 2>&1 | sed 's/^/[kb-push] git: /' >&2; then
+		log "push complete ($KB_PUSH_REMOTE)"
+	else
+		log "push failed"
+		exit 1
+	fi
 else
-  log "local-only: KB_PUSH_REMOTE unset, skipping remote push"
+	log "local-only: KB_PUSH_REMOTE unset, skipping remote push"
 fi

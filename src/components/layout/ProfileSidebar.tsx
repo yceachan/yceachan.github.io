@@ -26,19 +26,6 @@ const getDisplayNameFromUrl = (url: string, fallback: string) => {
 const toMailto = (email: string) =>
 	email.startsWith("mailto:") ? email : `mailto:${email}`;
 
-const getFriendNameFromUrl = (url: string) => {
-	try {
-		const parsed = new URL(url);
-		const segments = parsed.pathname.split("/").filter(Boolean);
-		if (parsed.hostname.includes("github.com") && segments[0]) {
-			return segments[0];
-		}
-		return segments.at(-1) || parsed.hostname;
-	} catch {
-		return "friend";
-	}
-};
-
 export default function ProfileSidebar() {
 	const profileOpen = useExplorerStore((s) => s.profileOpen);
 	const setProfileOpen = useExplorerStore((s) => s.setProfileOpen);
@@ -78,7 +65,9 @@ export default function ProfileSidebar() {
 			if (!friend) continue;
 			links.push({
 				kind: "friend",
-				value: getFriendNameFromUrl(friend),
+				// baseline ProfileSidebar.vue uses getDisplayNameFromUrl (last
+				// URL path segment), not the github username derivation
+				value: getDisplayNameFromUrl(friend, "Repo"),
 				href: friend,
 				external: true,
 			});
