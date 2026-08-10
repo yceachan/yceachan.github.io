@@ -2,6 +2,7 @@
  * ExplorerItem — one row (list) or one card (icon) in the explorer
  * (baseline ExplorerItem.vue). Date is YYYY-MM-DD zero-padded.
  */
+import { FileText, Folder } from "@appica/icons-react";
 import type { DocNode } from "@/vite-plugin/docMeta";
 
 function formatDate(mtime: number): string {
@@ -21,18 +22,26 @@ export default function ExplorerItem({
 }) {
 	const isDir = node.type === "dir";
 	return (
-		<div
+		<button
+			type="button"
 			className={`explorer-item${mode === "icon" ? " is-icon" : ""}`}
 			title={node.name}
+			aria-label={`${isDir ? "打开目录" : "打开文档"}: ${node.name}`}
 			onClick={() => onSelect(node)}
 		>
-			<span className="icon">{isDir ? "📂" : "📄"}</span>
+			<span className="explorer-icon" aria-hidden="true">
+				{isDir ? (
+					<Folder size={mode === "icon" ? 60 : 19} strokeWidth={1.55} />
+				) : (
+					<FileText size={mode === "icon" ? 52 : 18} strokeWidth={1.55} />
+				)}
+			</span>
 			<div className="name-container">
 				<span className="name">{node.name}</span>
 				{mode === "list" && node.mtime > 0 && (
 					<span className="date">{formatDate(node.mtime)}</span>
 				)}
 			</div>
-		</div>
+		</button>
 	);
 }

@@ -3,14 +3,14 @@
  * `--vp-sidebar-width` CSS-variable layout, resize handle and PWA toast.
  */
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import SidebarResizeHandle from "./SidebarResizeHandle";
 import PwaReload from "./PwaReload";
 import PullToRefresh from "./PullToRefresh";
 import { restoreSidebarWidth } from "@/lib/sidebar";
-import { useLocation } from "react-router-dom";
+import { profileTitle } from "@/lib/profile";
 
 export default function AppShell() {
 	const [mobileOpen, setMobileOpen] = useState(false);
@@ -34,8 +34,12 @@ export default function AppShell() {
 		<PullToRefresh>
 			<PwaReload />
 			<div className="kb-app">
-				<Navbar onToggleMobileSidebar={() => setMobileOpen((v) => !v)} />
-				<div className="kb-body">
+				<aside className="kb-rail">
+					<div className="kb-rail-header">
+						<Link to="/" className="rail-title" title="回到首页">
+							{profileTitle()}
+						</Link>
+					</div>
 					<div className="kb-sidebar-slot">
 						<Sidebar
 							mobileOpen={mobileOpen}
@@ -43,9 +47,14 @@ export default function AppShell() {
 						/>
 						<SidebarResizeHandle />
 					</div>
-					<main className="kb-main">
-						<Outlet />
-					</main>
+				</aside>
+				<div className="kb-workspace">
+					<Navbar onToggleMobileSidebar={() => setMobileOpen((v) => !v)} />
+					<div className="kb-body">
+						<main className="kb-main">
+							<Outlet />
+						</main>
+					</div>
 				</div>
 			</div>
 		</PullToRefresh>

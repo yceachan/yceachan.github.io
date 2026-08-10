@@ -5,6 +5,7 @@
  * drawer with overlay, toggled by the navbar hamburger.
  */
 import { useEffect, useMemo, useState } from "react";
+import { ChevronRight, FileText, Folder } from "@appica/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { docTree, nameCmp } from "@/lib/tree";
 import type { DocNode } from "@/vite-plugin/docMeta";
@@ -43,15 +44,20 @@ function TreeItem({
 		const children = node.children ?? [];
 		return (
 			<div className="tree-node">
-				<div
+				<button
+					type="button"
 					className="tree-folder-label"
 					style={{ paddingLeft: depth * 16 + 8 }}
 					onClick={() => setExpanded((v) => !v)}
 				>
-					<span className={`icon arrow${expanded ? " expanded" : ""}`}>▶</span>
-					<span className="icon">📂</span>
-					<span className="text">{node.name}</span>
-				</div>
+					<ChevronRight
+						className={`tree-chevron${expanded ? " expanded" : ""}`}
+						size={14}
+						strokeWidth={1.75}
+					/>
+					<Folder className="tree-node-icon" size={16} strokeWidth={1.65} />
+					<span className="tree-text">{node.name}</span>
+				</button>
 				{expanded && (
 					<div className="tree-children">
 						{children.map((c) => (
@@ -70,14 +76,15 @@ function TreeItem({
 	}
 
 	return (
-		<div
+		<button
+			type="button"
 			className={`tree-item${activePath === node.path ? " active" : ""}`}
 			style={{ paddingLeft: depth * 16 + 24 }}
 			onClick={() => onNavigate(node.path)}
 		>
-			<span className="icon">📄</span>
-			<span className="text">{node.name}</span>
-		</div>
+			<FileText className="tree-node-icon" size={15} strokeWidth={1.65} />
+			<span className="tree-text">{node.name}</span>
+		</button>
 	);
 }
 
@@ -110,9 +117,7 @@ export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
 		onCloseMobile();
 	};
 
-	const content = isHome ? (
-		<ProfileSidebar />
-	) : (
+	const treeContent = (
 		<>
 			<div className="sidebar-tree">
 				{sortedTree.map((node) => (
@@ -132,13 +137,21 @@ export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
 	return (
 		<>
 			{/* Desktop sidebar */}
-			<aside className="kb-sidebar">{content}</aside>
+			<aside className="kb-sidebar">
+				{isHome ? <ProfileSidebar /> : treeContent}
+			</aside>
 
-			{/* Mobile drawer */}
-			<div className={`mobile-sidebar${mobileOpen ? " is-open" : ""}`}>
-				<div className="mobile-sidebar-overlay" onClick={onCloseMobile} />
-				<aside className="mobile-sidebar-panel">{content}</aside>
-			</div>
+			{/* Mobile layers stay outside the transformed tree drawer. */}
+			{isHome ? (
+				<div className="mobile-profile-layer">
+					<ProfileSidebar />
+				</div>
+			) : (
+				<div className={`mobile-sidebar${mobileOpen ? " is-open" : ""}`}>
+					<div className="mobile-sidebar-overlay" onClick={onCloseMobile} />
+					<aside className="mobile-sidebar-panel">{treeContent}</aside>
+				</div>
+			)}
 		</>
 	);
 }

@@ -2,6 +2,7 @@
  * SearchBox — navbar search with `K` shortcut, dropdown results
  * (baseline VitePress local-search interaction).
  */
+import { Search } from "@appica/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchNotes, type SearchHit } from "@/lib/search";
@@ -70,18 +71,7 @@ export default function SearchBox({
 				aria-label="搜索"
 				title="搜索 (Ctrl+K)"
 			>
-				<svg
-					viewBox="0 0 24 24"
-					width="16"
-					height="16"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="2"
-					strokeLinecap="round"
-				>
-					<circle cx="11" cy="11" r="7" />
-					<path d="m21 21-4.3-4.3" />
-				</svg>
+				<Search size={16} strokeWidth={1.75} aria-hidden="true" />
 				<span className="search-trigger-text">Search</span>
 				<kbd className="search-kbd">K</kbd>
 			</button>

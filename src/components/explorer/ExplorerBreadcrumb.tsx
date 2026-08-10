@@ -1,27 +1,53 @@
 /**
- * ExplorerBreadcrumb — home icon + segment trail (baseline
- * ExplorerBreadcrumb.vue). explorer mode: every segment clickable; doc mode:
- * current page non-clickable. >3 segments collapse to ellipsis.
+ * ExplorerBreadcrumb — shared trail for the explorer and note pages.
+ * The home link and spacing stay identical in both contexts so navigation
+ * never changes visual language when a directory becomes a document.
  */
+import { ChevronRight, Home } from "@appica/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useExplorerStore } from "@/stores/explorer";
 
+type BreadcrumbProps = {
+	context?: "doc" | "explorer";
+};
+
+type Crumb = {
+	label: string;
+	path: string;
+};
+
+type VisibleCrumb = Crumb | { kind: "ellipsis" };
+
+function decodeSegment(value: string): string {
+	try {
+		return decodeURIComponent(value);
+	} catch {
+		return value;
+	}
+}
+
+function normalisePath(value: string): string {
+	const withoutHtml = value.replace(/\.html$/, "");
+	if (!withoutHtml || withoutHtml === "/") return "/";
+	return `/${withoutHtml.replace(/^\/+/, "").replace(/\/+$/, "")}`;
+}
+
 export default function ExplorerBreadcrumb({
 	context = "doc",
-}: {
-	context?: "doc" | "explorer";
-}) {
+}: BreadcrumbProps) {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const explorerPath = useExplorerStore((s) => s.currentPath);
 	const setCurrentPath = useExplorerStore((s) => s.setCurrentPath);
 
-	const fullPath =
+	const fullPath = normalisePath(
 		context === "explorer"
 			? explorerPath
-			: location.pathname.replace(/\.html$/, "");
+			: decodeURIComponent(location.pathname.replace(/\.html$/, "")),
+	);
 
-	// doc-context on the explorer home page → hidden (baseline suppression)
+	// The explorer owns its home trail. The doc-context instance is suppressed
+	// on the home route so the home page never receives a duplicate breadcrumb.
 	if (
 		context === "doc" &&
 		(location.pathname === "/" || location.pathname === "/index")
@@ -32,73 +58,82 @@ export default function ExplorerBreadcrumb({
 	const segments = fullPath
 		.split("/")
 		.filter(Boolean)
-		.map((s) => {
-			try {
-				return decodeURIComponent(s);
-			} catch {
-				return s;
-			}
-		});
+		.map((label, index, all) => ({
+			label: decodeSegment(label),
+			path: `/${all.slice(0, index + 1).join("/")}`,
+		}));
 
-	if (segments.length === 0 && context === "doc") return null;
-
-	const visible =
-		segments.length <= 3 ? segments : ["…", ...segments.slice(-2)];
-	const isCurrent = (i: number) =>
-		context !== "explorer" && i === segments.length - 1;
+	const visible: VisibleCrumb[] =
+		segments.length <= 3
+			? segments
+			: [{ kind: "ellipsis" }, ...segments.slice(-2)];
 
 	const go = (path: string) => {
-		if (context === "explorer") {
-			setCurrentPath(path);
-		}
+		if (context === "explorer") setCurrentPath(path);
 		navigate(path === "/" ? "/" : `/?path=${encodeURIComponent(path)}`);
 	};
 
-	let acc = "";
-
 	return (
-		<nav className="breadcrumb" aria-label="面包屑">
-			<span
+		<nav className="breadcrumb" aria-label="面包屑导航">
+			<button
+				type="button"
 				className="crumb-item crumb-home"
 				title="回到首页"
 				onClick={() => go("/")}
 			>
-				🏠
-			</span>
-			{visible.map((seg, i) => {
-				if (seg === "…") {
+				<Home size={15} strokeWidth={1.75} />
+				<span>~</span>
+			</button>
+			<ChevronRight
+				className="crumb-chevron"
+				size={14}
+				strokeWidth={1.5}
+				aria-hidden="true"
+			/>
+
+			{visible.length === 0 ? (
+				<span className="crumb-item current">Explorer</span>
+			) : (
+				visible.map((crumb, index) => {
+					if ("kind" in crumb) {
+						return (
+							<span
+								key="ellipsis"
+								className="crumb-item ellipsis"
+								title={fullPath}
+							>
+								…
+							</span>
+						);
+					}
+
+					const isCurrent = context === "doc" && index === visible.length - 1;
 					return (
-						<span
-							key="ellipsis"
-							className="crumb-item ellipsis"
-							title={fullPath}
-						>
-							…
+						<span key={crumb.path} className="crumb-item-group">
+							<ChevronRight
+								className="crumb-chevron"
+								size={14}
+								strokeWidth={1.5}
+								aria-hidden="true"
+							/>
+							{isCurrent ? (
+								<span className="crumb-item current" title={crumb.path}>
+									{crumb.label}
+								</span>
+							) : (
+								<button
+									type="button"
+									className="crumb-item text"
+									title={crumb.path}
+									onClick={() => go(crumb.path)}
+								>
+									{crumb.label}
+								</button>
+							)}
 						</span>
 					);
-				}
-				const idx = i === 0 && visible[0] === "…" ? segments.length - 2 : i;
-				const prev = acc;
-				acc = prev ? `${prev}/${seg}` : seg;
-				const segPath = `/${acc}`;
-				const isLast = i === visible.length - 1;
-				return (
-					<span key={segPath} className="crumb-item-group">
-						<span className="crumb-separator">/</span>
-						{isLast && isCurrent(idx) ? (
-							<span className="crumb-item current">{seg}</span>
-						) : (
-							<span
-								className="crumb-item text"
-								title={segPath}
-								onClick={() => go(segPath)}
-							>
-								{seg}
-							</span>
-						)}
-					</span>
-				);
-			})}
+				})
+			)}
 		</nav>
 	);
 }

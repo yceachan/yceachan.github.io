@@ -36,8 +36,23 @@ export default function Markdown({ result, onHeadings }: MarkdownProps) {
 			(async () => {
 				try {
 					await mermaid.run({ nodes });
-				} catch (err) {
-					console.error("[mermaid] render failed", err);
+					for (const node of nodes) {
+						const svg = node.querySelector("svg");
+						if (!svg) continue;
+						const viewBox = svg.viewBox.baseVal;
+						if (viewBox.width <= 0) continue;
+						// Mermaid emits width="100%". Preserve the diagram's native
+						// label scale and let the styled container scroll on small
+						// screens instead of shrinking complex graphs to a thumbnail.
+						svg.style.width = `${Math.max(viewBox.width, 900)}px`;
+						svg.style.maxWidth = "none";
+						svg.style.height = "auto";
+					}
+				} catch {
+					for (const node of nodes) {
+						node.classList.add("mermaid-error");
+						node.textContent = "Diagram unavailable";
+					}
 				}
 			})();
 		}
