@@ -1,6 +1,7 @@
 /**
  * Sidebar resize handle + collapse toggle (baseline Layout.vue).
- * Desktop only (≥960px), hidden on the explorer home page.
+ * Desktop only (≥960px); also shown on the explorer home page so the
+ * profile sidebar is drag-resizable there too.
  */
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -36,9 +37,7 @@ export default function SidebarResizeHandle() {
 	useEffect(() => {
 		const checkVisibility = () => {
 			const isDesktop = window.matchMedia("(min-width: 960px)").matches;
-			const isHomePage =
-				location.pathname === "/" || location.pathname === "/index";
-			const visible = isDesktop && !isHomePage;
+			const visible = isDesktop;
 			setShowHandle(visible);
 			if (visible) {
 				window.setTimeout(updateHandlePos, 100);
