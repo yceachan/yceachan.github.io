@@ -39,3 +39,4 @@ tsconfig.tsbuildinfo
 # SPA build outputs
 dist/
 dev-dist/
+.agents
