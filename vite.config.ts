@@ -18,7 +18,7 @@ export default defineConfig({
 		docMetaPlugin(),
 		VitePWA({
 			registerType: "prompt",
-			includeAssets: ["favicon.ico", "profile-photo.jpg"],
+			includeAssets: ["profile-photo.svg", "profile-photo.jpg"],
 			devOptions: {
 				enabled: true,
 				type: "module",
