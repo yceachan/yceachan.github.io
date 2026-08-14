@@ -22,6 +22,11 @@ export default defineConfig({
 			devOptions: {
 				enabled: true,
 				type: "module",
+				// In dev the plugin generates the SW from dev-dist/, which only
+				// holds sw.js + workbox-*.js — both excluded by the default
+				// globIgnores — so the workbox globs match nothing and warn.
+				// This switches the dev precache to a stub file, silencing it.
+				suppressWarnings: true,
 			},
 			manifest: {
 				name: "yceachan's Knowledge Base",

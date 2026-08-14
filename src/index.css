@@ -686,7 +686,6 @@ body.vp-sidebar-collapsed .kb-sidebar {
 
 .link-value {
   min-width: 0;
-  flex: 1;
   word-break: break-all;
   font-size: 14px;
 }
@@ -982,12 +981,12 @@ body.vp-sidebar-collapsed .kb-sidebar {
 }
 
 .note-loading {
-  padding: 60px 48px;
+  padding: 32px 0 0;
   color: var(--vp-c-text-3);
 }
 
 .note-404 {
-  padding: 60px 48px;
+  padding: 32px 0 0;
 }
 
 .note-404 h1 {
@@ -1379,7 +1378,8 @@ body.vp-sidebar-collapsed .kb-sidebar {
 .kb-toc-link {
   display: block;
   padding: 4px 12px;
-  font-size: 13px;
+  font-family: inherit;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--vp-c-text-2);
   text-decoration: none;
@@ -1973,7 +1973,8 @@ body.vp-sidebar-collapsed .kb-rail-header {
 }
 
 .profile-links {
-  width: 100%;
+  width: fit-content;
+  margin: 0 auto;
   gap: 3px;
 }
 
@@ -3122,7 +3123,7 @@ body,
   appearance: none;
   border: 0;
   background: transparent;
-  font: inherit;
+  font-family: inherit;
   text-align: left;
   cursor: pointer;
 }

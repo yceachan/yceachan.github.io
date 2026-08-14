@@ -52,15 +52,17 @@ export default function NotePage() {
 	if (notFound) {
 		return (
 			<div className="note-page">
-				<ExplorerBreadcrumb />
-				<div className="note-404">
-					<h1>页面不存在</h1>
-					<p>
-						笔记 <code>{path}</code> 不在本知识库中。
-					</p>
-					<Link to="/" className="note-404-home">
-						返回 Explorer
-					</Link>
+				<div className="note-main">
+					<ExplorerBreadcrumb />
+					<div className="note-404">
+						<h1>页面不存在</h1>
+						<p>
+							笔记 <code>{path}</code> 不在本知识库中。
+						</p>
+						<Link to="/" className="note-404-home">
+							返回 Explorer
+						</Link>
+					</div>
 				</div>
 			</div>
 		);
@@ -69,8 +71,10 @@ export default function NotePage() {
 	if (!result) {
 		return (
 			<div className="note-page">
-				<ExplorerBreadcrumb />
-				<div className="note-loading">加载中…</div>
+				<div className="note-main">
+					<ExplorerBreadcrumb />
+					<div className="note-loading">加载中…</div>
+				</div>
 			</div>
 		);
 	}
