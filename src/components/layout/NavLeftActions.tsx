@@ -20,19 +20,24 @@ function normalizePath(raw: string): string {
 export default function NavLeftActions() {
 	const location = useLocation();
 	const setCurrentPath = useExplorerStore((s) => s.setCurrentPath);
-	const currentPath = normalizePath(location.pathname);
-	const showBack = !HIDDEN_PATHS.has(currentPath);
+	// The explorer route owns its directory in the store (ExplorerPage syncs
+	// it from ?path=), so the same Back affordance can serve both contexts:
+	// note pages derive the trail from the pathname, the explorer from the
+	// store — the interaction stays uniform instead of Home-only on /.
+	const explorerPath = useExplorerStore((s) => s.currentPath);
+	const current = normalizePath(
+		location.pathname === "/" ? explorerPath : location.pathname,
+	);
+	const showBack = !HIDDEN_PATHS.has(current);
 
-	const parentPath = currentPath
+	const parentPath = current
 		.replace(/^\/+|\/+$/g, "")
 		.split("/")
 		.filter(Boolean)
 		.slice(0, -1)
 		.join("/");
 
-	const backHref = parentPath
-		? `/?path=${encodeURIComponent(parentPath)}`
-		: "/";
+	const backHref = parentPath ? `/?path=${encodeURIComponent(parentPath)}` : "/";
 
 	const goBack = () => {
 		setCurrentPath(parentPath || "/");

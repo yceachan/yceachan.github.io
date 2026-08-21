@@ -56,10 +56,12 @@ export default defineConfig({
 				// Notes keep accruing; the bundled content lives inside JS chunks,
 				// so 10 MiB leaves the same headroom the VitePress build used.
 				maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
-				// SPA: deep links must resolve to index.html offline. The allowlist
-				// keeps it from hijacking non-navigation requests.
+				// SPA: all same-origin navigations (deep links, `/?path=` explorer
+				// views) must resolve to index.html from the precache; the
+				// NavigationRoute only intercepts `mode: "navigate"` requests, so
+				// asset fetches are never hijacked. The default allowlist (match
+				// all) is what makes pull-to-refresh offline-capable.
 				navigateFallback: "index.html",
-				navigateFallbackAllowlist: [/^\/$/],
 				cleanupOutdatedCaches: true,
 			},
 		}),

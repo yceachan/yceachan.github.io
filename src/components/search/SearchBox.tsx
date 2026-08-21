@@ -21,6 +21,7 @@ export default function SearchBox({
 	onQueryChange,
 }: SearchBoxProps) {
 	const [results, setResults] = useState<SearchHit[]>([]);
+	const [searching, setSearching] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const boxRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
@@ -34,10 +35,22 @@ export default function SearchBox({
 
 	useEffect(() => {
 		if (query.trim()) {
-			setResults(searchNotes(query, 12));
-		} else {
-			setResults([]);
+			let cancelled = false;
+			// First search builds the corpus index (lazy chunks) — show a
+			// progress hint instead of silently reporting zero hits.
+			setSearching(true);
+			searchNotes(query, 12).then((hits) => {
+				if (!cancelled) {
+					setSearching(false);
+					setResults(hits);
+				}
+			});
+			return () => {
+				cancelled = true;
+			};
 		}
+		setSearching(false);
+		setResults([]);
 	}, [query]);
 
 	useEffect(() => {
@@ -89,9 +102,10 @@ export default function SearchBox({
 						{query.trim() === "" && (
 							<div className="search-empty">输入关键词开始搜索</div>
 						)}
-						{query.trim() !== "" && results.length === 0 && (
+						{query.trim() !== "" && results.length === 0 && !searching && (
 							<div className="search-empty">未找到匹配的笔记</div>
 						)}
+						{searching && <div className="search-empty">正在加载索引…</div>}
 						{results.map((r) => (
 							<button
 								key={r.path}

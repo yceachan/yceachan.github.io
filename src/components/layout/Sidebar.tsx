@@ -7,7 +7,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronRight, FileText, Folder } from "@appica/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { docTree, nameCmp } from "@/lib/tree";
+import { docTree, findNodeByPath, nameCmp } from "@/lib/tree";
 import type { DocNode } from "@/vite-plugin/docMeta";
 import Copyright from "./Copyright";
 import ProfileSidebar from "./ProfileSidebar";
@@ -44,20 +44,35 @@ function TreeItem({
 		const children = node.children ?? [];
 		return (
 			<div className="tree-node">
-				<button
-					type="button"
-					className="tree-folder-label"
+				<div
+					className={`tree-folder-label${activePath === node.path ? " active" : ""}`}
 					style={{ paddingLeft: depth * 16 + 8 }}
-					onClick={() => setExpanded((v) => !v)}
 				>
-					<ChevronRight
-						className={`tree-chevron${expanded ? " expanded" : ""}`}
-						size={14}
-						strokeWidth={1.75}
-					/>
-					<Folder className="tree-node-icon" size={16} strokeWidth={1.65} />
-					<span className="tree-text">{node.name}</span>
-				</button>
+					<button
+						type="button"
+						className="tree-folder-toggle"
+						aria-label={`${expanded ? "收起" : "展开"}目录: ${node.name}`}
+						aria-expanded={expanded}
+						title={expanded ? "收起目录" : "展开目录"}
+						onClick={() => setExpanded((v) => !v)}
+					>
+						<ChevronRight
+							className={`tree-chevron${expanded ? " expanded" : ""}`}
+							size={14}
+							strokeWidth={1.75}
+						/>
+					</button>
+					<button
+						type="button"
+						className="tree-folder-link"
+						aria-label={`打开目录: ${node.name}`}
+						title={`在 Explorer 中打开 ${node.name}`}
+						onClick={() => onNavigate(node.path)}
+					>
+						<Folder className="tree-node-icon" size={16} strokeWidth={1.65} />
+						<span className="tree-text">{node.name}</span>
+					</button>
+				</div>
 				{expanded && (
 					<div className="tree-children">
 						{children.map((c) => (
@@ -92,10 +107,10 @@ export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const isHome = location.pathname === "/" || location.pathname === "/index";
-	const activePath = decodeURIComponent(location.pathname).replace(
-		/\.html$/,
-		"",
-	);
+	const explorerPath = new URLSearchParams(location.search).get("path");
+	const activePath = decodeURIComponent(
+		isHome && explorerPath ? explorerPath : location.pathname,
+	).replace(/\.html$/, "");
 
 	const sortedTree = useMemo(() => {
 		const sortDeep = (nodes: DocNode[]): DocNode[] => {
@@ -113,7 +128,8 @@ export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
 	}, []);
 
 	const onNavigate = (path: string) => {
-		navigate(path);
+		const node = findNodeByPath(sortedTree, path);
+		navigate(node?.type === "dir" ? `/?path=${encodeURIComponent(path)}` : path);
 		onCloseMobile();
 	};
 
@@ -141,17 +157,19 @@ export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
 				{isHome ? <ProfileSidebar /> : treeContent}
 			</aside>
 
-			{/* Mobile layers stay outside the transformed tree drawer. */}
-			{isHome ? (
-				<div className="mobile-profile-layer">
-					<ProfileSidebar />
-				</div>
-			) : (
-				<div className={`mobile-sidebar${mobileOpen ? " is-open" : ""}`}>
-					<div className="mobile-sidebar-overlay" onClick={onCloseMobile} />
-					<aside className="mobile-sidebar-panel">{treeContent}</aside>
-				</div>
-			)}
+			{/* The mobile file tree is available from both notes and Explorer. */}
+			<div className={`mobile-sidebar${mobileOpen ? " is-open" : ""}`}>
+				<div className="mobile-sidebar-overlay" onClick={onCloseMobile} />
+				<aside className="mobile-sidebar-panel" aria-label="移动端文件树">
+					{treeContent}
+				</aside>
+			</div>
+			{/* The navbar ProfileToggle is visible on every page, so the drawer
+			   layer must mount unconditionally on mobile; the desktop rail keeps
+			   its home-only profile card above. */}
+			<div className="mobile-profile-layer">
+				<ProfileSidebar />
+			</div>
 		</>
 	);
 }

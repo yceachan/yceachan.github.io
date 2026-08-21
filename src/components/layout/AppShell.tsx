@@ -2,8 +2,9 @@
  * AppShell — navbar + sidebar + content frame with the baseline
  * `--vp-sidebar-width` CSS-variable layout, resize handle and PWA toast.
  */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useExplorerStore } from "@/stores/explorer";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import SidebarResizeHandle from "./SidebarResizeHandle";
@@ -13,14 +14,18 @@ import { restoreSidebarWidth } from "@/lib/sidebar";
 import { profileTitle } from "@/lib/profile";
 
 export default function AppShell() {
-	const [mobileOpen, setMobileOpen] = useState(false);
+	const mobileOpen = useExplorerStore((s) => s.mobileOpen);
+	const setMobileOpen = useExplorerStore((s) => s.setMobileOpen);
+	const setProfileOpen = useExplorerStore((s) => s.setProfileOpen);
+	const toggleMobileSidebar = useExplorerStore((s) => s.toggleMobileSidebar);
 	const location = useLocation();
 
 	useEffect(() => {
 		restoreSidebarWidth();
-		// close the mobile drawer on navigation
+		// close both mobile drawers on navigation
 		setMobileOpen(false);
-	}, [location.pathname]);
+		setProfileOpen(false);
+	}, [location.pathname, setMobileOpen, setProfileOpen]);
 
 	useEffect(() => {
 		const onResize = () => {
@@ -49,7 +54,7 @@ export default function AppShell() {
 					</div>
 				</aside>
 				<div className="kb-workspace">
-					<Navbar onToggleMobileSidebar={() => setMobileOpen((v) => !v)} />
+					<Navbar onToggleMobileSidebar={() => toggleMobileSidebar()} />
 					<div className="kb-body">
 						<main className="kb-main">
 							<Outlet />

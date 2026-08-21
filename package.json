@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/copy-spa-fallback.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
     "@appica/icons-react": "^1.0.0",
     "@appica/ui-react": "^1.0.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
     "dompurify": "^3.2.4",
     "katex": "^0.17.0",
     "marked": "^18.0.0",

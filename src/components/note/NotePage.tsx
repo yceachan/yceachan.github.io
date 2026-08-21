@@ -18,29 +18,34 @@ export default function NotePage() {
 	const location = useLocation();
 	const [result, setResult] = useState<RenderResult | null>(null);
 	const [notFound, setNotFound] = useState(false);
+	const [src, setSrc] = useState("");
 
 	const path = useMemo(() => {
 		const wild = params["*"] ?? "";
 		return "/" + wild.replace(/\.html$/, "");
 	}, [params]);
 
-	const src = useMemo(() => getContent(path), [path]);
-
 	useEffect(() => {
 		let cancelled = false;
 		setResult(null);
 		setNotFound(false);
-		if (src === undefined) {
-			setNotFound(true);
-			return;
-		}
-		renderMarkdown(src).then((r) => {
-			if (!cancelled) setResult(r);
+		// Note source lives in a lazy chunk (fixed: no longer eager-inlined in
+		// the entry bundle); resolve it before rendering the markdown.
+		getContent(path).then((src) => {
+			if (cancelled) return;
+			if (src === undefined) {
+				setNotFound(true);
+				return;
+			}
+			setSrc(src);
+			renderMarkdown(src).then((r) => {
+				if (!cancelled) setResult(r);
+			});
 		});
 		return () => {
 			cancelled = true;
 		};
-	}, [src, path]);
+	}, [path]);
 
 	useEffect(() => {
 		// scroll to top on note navigation (baseline VitePress behavior)

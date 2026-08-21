@@ -4,6 +4,7 @@
  * never changes visual language when a directory becomes a document.
  */
 import { ChevronRight, Home } from "@appica/icons-react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useExplorerStore } from "@/stores/explorer";
 
@@ -16,7 +17,7 @@ type Crumb = {
 	path: string;
 };
 
-type VisibleCrumb = Crumb | { kind: "ellipsis" };
+type VisibleCrumb = Crumb | { kind: "ellipsis"; items: Crumb[] };
 
 function decodeSegment(value: string): string {
 	try {
@@ -45,6 +46,32 @@ export default function ExplorerBreadcrumb({
 			? explorerPath
 			: decodeURIComponent(location.pathname.replace(/\.html$/, "")),
 	);
+	const [ellipsisOpen, setEllipsisOpen] = useState(false);
+	const ellipsisRef = useRef<HTMLSpanElement>(null);
+
+	useEffect(() => {
+		setEllipsisOpen(false);
+	}, [fullPath]);
+
+	useEffect(() => {
+		if (!ellipsisOpen) return;
+
+		const closeOnOutsidePointer = (event: PointerEvent) => {
+			if (!ellipsisRef.current?.contains(event.target as Node)) {
+				setEllipsisOpen(false);
+			}
+		};
+		const closeOnEscape = (event: KeyboardEvent) => {
+			if (event.key === "Escape") setEllipsisOpen(false);
+		};
+
+		document.addEventListener("pointerdown", closeOnOutsidePointer);
+		document.addEventListener("keydown", closeOnEscape);
+		return () => {
+			document.removeEventListener("pointerdown", closeOnOutsidePointer);
+			document.removeEventListener("keydown", closeOnEscape);
+		};
+	}, [ellipsisOpen]);
 
 	// The explorer owns its home trail. The doc-context instance is suppressed
 	// on the home route so the home page never receives a duplicate breadcrumb.
@@ -63,12 +90,14 @@ export default function ExplorerBreadcrumb({
 			path: `/${all.slice(0, index + 1).join("/")}`,
 		}));
 
+	const hiddenSegments = segments.slice(0, -2);
 	const visible: VisibleCrumb[] =
 		segments.length <= 3
 			? segments
-			: [{ kind: "ellipsis" }, ...segments.slice(-2)];
+			: [{ kind: "ellipsis", items: hiddenSegments }, ...segments.slice(-2)];
 
 	const go = (path: string) => {
+		setEllipsisOpen(false);
 		if (context === "explorer") setCurrentPath(path);
 		navigate(path === "/" ? "/" : `/?path=${encodeURIComponent(path)}`);
 	};
@@ -87,7 +116,7 @@ export default function ExplorerBreadcrumb({
 			<ChevronRight
 				className="crumb-chevron"
 				size={14}
-				strokeWidth={1.5}
+				strokeWidth={2.25}
 				aria-hidden="true"
 			/>
 
@@ -97,12 +126,35 @@ export default function ExplorerBreadcrumb({
 				visible.map((crumb, index) => {
 					if ("kind" in crumb) {
 						return (
-							<span
-								key="ellipsis"
-								className="crumb-item ellipsis"
-								title={fullPath}
-							>
-								…
+							<span key="ellipsis" className="crumb-ellipsis" ref={ellipsisRef}>
+								<button
+									type="button"
+									className="crumb-item ellipsis"
+									title="选择父级目录"
+									aria-label="选择父级目录"
+									aria-haspopup="menu"
+									aria-expanded={ellipsisOpen}
+									onClick={() => setEllipsisOpen((open) => !open)}
+								>
+									…
+								</button>
+								{ellipsisOpen && (
+									<div className="crumb-ellipsis-menu" role="menu" aria-label="父级目录">
+										{crumb.items.map((item) => (
+											<button
+												key={item.path}
+												type="button"
+												className="crumb-menu-item"
+												role="menuitem"
+												title={item.path}
+												onClick={() => go(item.path)}
+											>
+												<span>{item.label}</span>
+												<small>{item.path}</small>
+											</button>
+										))}
+									</div>
+								)}
 							</span>
 						);
 					}
@@ -113,7 +165,7 @@ export default function ExplorerBreadcrumb({
 							<ChevronRight
 								className="crumb-chevron"
 								size={14}
-								strokeWidth={1.5}
+								strokeWidth={2.25}
 								aria-hidden="true"
 							/>
 							{isCurrent ? (
