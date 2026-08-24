@@ -38,7 +38,7 @@ jobs:
           cache: npm
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Install dependencies
         run: npm ci # 相当于 npm install，但更严格依赖 lock 文件
@@ -47,7 +47,7 @@ jobs:
         run: npm run build # tsc -b && vite build，输出到 dist/（含 PWA sw.js）
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist # 👈 Vite 构建输出目录
 
@@ -62,4 +62,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

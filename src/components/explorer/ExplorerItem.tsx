@@ -21,12 +21,14 @@ export default function ExplorerItem({
 	onSelect: (node: DocNode) => void;
 }) {
 	const isDir = node.type === "dir";
+	const showMarkdownExtension = !isDir && !node.name.toLowerCase().endsWith(".md");
+	const displayName = `${node.name}${showMarkdownExtension ? ".md" : ""}`;
 	return (
 		<button
 			type="button"
 			className={`explorer-item${mode === "icon" ? " is-icon" : ""}`}
-			title={node.name}
-			aria-label={`${isDir ? "打开目录" : "打开文档"}: ${node.name}`}
+			title={displayName}
+			aria-label={`${isDir ? "打开目录" : "打开文档"}: ${displayName}`}
 			onClick={() => onSelect(node)}
 		>
 			<span className="explorer-icon" aria-hidden="true">
@@ -37,7 +39,12 @@ export default function ExplorerItem({
 				)}
 			</span>
 			<div className="name-container">
-				<span className="name">{node.name}</span>
+				<span className="name">
+					{node.name}
+					{showMarkdownExtension && (
+						<span className="file-extension">.md</span>
+					)}
+				</span>
 				{mode === "list" && node.mtime > 0 && (
 					<span className="date">{formatDate(node.mtime)}</span>
 				)}

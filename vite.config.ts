@@ -33,8 +33,8 @@ export default defineConfig({
 				short_name: "EA.KB.IO",
 				description:
 					"Eachan's personal knowledge base for embedded systems, Linux, protocols, and engineering practice.",
-				theme_color: "#f7f8fa",
-				background_color: "#f7f8fa",
+				theme_color: "#fdfdf7",
+				background_color: "#fdfdf7",
 				display: "standalone",
 				scope: "/",
 				start_url: "/",

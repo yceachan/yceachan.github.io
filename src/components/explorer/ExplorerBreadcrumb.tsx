@@ -3,7 +3,7 @@
  * The home link and spacing stay identical in both contexts so navigation
  * never changes visual language when a directory becomes a document.
  */
-import { ChevronRight, Home } from "@appica/icons-react";
+import { ChevronRight } from "@appica/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useExplorerStore } from "@/stores/explorer";
@@ -108,9 +108,9 @@ export default function ExplorerBreadcrumb({
 				type="button"
 				className="crumb-item crumb-home"
 				title="回到首页"
+				aria-label="回到首页"
 				onClick={() => go("/")}
 			>
-				<Home size={15} strokeWidth={1.75} />
 				<span>~</span>
 			</button>
 			<ChevronRight
