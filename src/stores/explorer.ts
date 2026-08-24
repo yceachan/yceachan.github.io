@@ -6,6 +6,7 @@ import { create } from "zustand";
 
 export type SortKey = "name" | "date";
 export type SortOrder = "asc" | "desc";
+export type MobileDrawer = "sidebar" | "profile" | null;
 
 export const SORT_STORAGE_KEY = "explorer:sort";
 
@@ -28,21 +29,19 @@ interface ExplorerState {
 	currentPath: string;
 	sortKey: SortKey;
 	sortOrder: SortOrder;
-	profileOpen: boolean;
-	mobileOpen: boolean;
+	mobileDrawer: MobileDrawer;
 	setCurrentPath: (path: string) => void;
 	setSort: (sortKey: SortKey, sortOrder: SortOrder) => void;
-	setProfileOpen: (open: boolean) => void;
-	setMobileOpen: (open: boolean) => void;
-	toggleMobileSidebar: () => void;
+	setMobileDrawer: (drawer: MobileDrawer) => void;
+	toggleMobileDrawer: (drawer: Exclude<MobileDrawer, null>) => void;
+	closeMobileDrawer: () => void;
 }
 
 export const useExplorerStore = create<ExplorerState>((set) => ({
 	currentPath: "/",
 	sortKey: "name",
 	sortOrder: "asc",
-	profileOpen: false,
-	mobileOpen: false,
+	mobileDrawer: null,
 	...(typeof window !== "undefined" ? loadSort() : {}),
 	setCurrentPath: (currentPath) => set({ currentPath }),
 	setSort: (sortKey, sortOrder) => {
@@ -51,16 +50,8 @@ export const useExplorerStore = create<ExplorerState>((set) => ({
 			window.localStorage.setItem(SORT_STORAGE_KEY, `${sortKey}:${sortOrder}`);
 		}
 	},
-	// The two mobile drawers never stack: opening one closes the other, so
-	// a later open always covers the previous one instead of leaving the
-	// profile overlay blacking out the tree underneath.
-	setProfileOpen: (profileOpen) =>
-		set((s) => ({ profileOpen, mobileOpen: profileOpen ? false : s.mobileOpen })),
-	setMobileOpen: (mobileOpen) =>
-		set((s) => ({ mobileOpen, profileOpen: mobileOpen ? false : s.profileOpen })),
-	toggleMobileSidebar: () =>
-		set((s) => ({
-			mobileOpen: !s.mobileOpen,
-			profileOpen: s.mobileOpen ? s.profileOpen : false,
-		})),
+	setMobileDrawer: (mobileDrawer) => set({ mobileDrawer }),
+	toggleMobileDrawer: (drawer) =>
+		set((s) => ({ mobileDrawer: s.mobileDrawer === drawer ? null : drawer })),
+	closeMobileDrawer: () => set({ mobileDrawer: null }),
 }));

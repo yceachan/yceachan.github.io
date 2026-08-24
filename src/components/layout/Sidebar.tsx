@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronRight, FileText, Folder } from "@appica/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { docTree, findNodeByPath, nameCmp } from "@/lib/tree";
+import { useExplorerStore } from "@/stores/explorer";
 import type { DocNode } from "@/vite-plugin/docMeta";
 import Copyright from "./Copyright";
 import ProfileSidebar from "./ProfileSidebar";
@@ -104,6 +105,7 @@ function TreeItem({
 }
 
 export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
+	const mobileDrawer = useExplorerStore((s) => s.mobileDrawer);
 	const location = useLocation();
 	const navigate = useNavigate();
 	const isHome = location.pathname === "/" || location.pathname === "/index";
@@ -158,16 +160,34 @@ export default function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
 			</aside>
 
 			{/* The mobile file tree is available from both notes and Explorer. */}
-			<div className={`mobile-sidebar${mobileOpen ? " is-open" : ""}`}>
-				<div className="mobile-sidebar-overlay" onClick={onCloseMobile} />
-				<aside className="mobile-sidebar-panel" aria-label="移动端文件树">
+			<div
+				className={`mobile-sidebar${mobileOpen ? " is-open" : ""}`}
+				aria-hidden={!mobileOpen}
+				inert={!mobileOpen}
+			>
+				<button
+					type="button"
+					className="mobile-sidebar-overlay"
+					aria-label="关闭导航菜单"
+					onClick={onCloseMobile}
+				/>
+				<aside
+					id="mobile-sidebar-panel"
+					className="mobile-sidebar-panel"
+					aria-label="移动端文件树"
+					aria-hidden={!mobileOpen}
+				>
 					{treeContent}
 				</aside>
 			</div>
 			{/* The navbar ProfileToggle is visible on every page, so the drawer
 			   layer must mount unconditionally on mobile; the desktop rail keeps
 			   its home-only profile card above. */}
-			<div className="mobile-profile-layer">
+			<div
+				className="mobile-profile-layer"
+				aria-hidden={mobileDrawer !== "profile"}
+				inert={mobileDrawer !== "profile"}
+			>
 				<ProfileSidebar />
 			</div>
 		</>

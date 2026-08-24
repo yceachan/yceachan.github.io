@@ -3,8 +3,14 @@
  * Desktop only (≥960px); also shown on the explorer home page so the
  * profile sidebar is drag-resizable there too.
  */
-import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import {
+	useEffect,
+	useRef,
+	useState,
+	type KeyboardEvent as ReactKeyboardEvent,
+	type MouseEvent as ReactMouseEvent,
+} from "react";
+import { ChevronLeft, ChevronRight } from "@appica/icons-react";
 import {
 	SIDEBAR_COLLAPSE_KEY,
 	SIDEBAR_STORAGE_KEY,
@@ -14,93 +20,130 @@ import {
 	applySidebarWidth,
 	getSidebarWidth,
 	isSidebarCollapsedStored,
+	restoreSidebarWidth,
 } from "@/lib/sidebar";
 
+const KEYBOARD_STEP = 16;
+
+function clampWidth(width: number): number {
+	return Math.min(Math.max(width, MIN_SIDEBAR_WIDTH), MAX_SIDEBAR_WIDTH);
+}
+
 export default function SidebarResizeHandle() {
-	const location = useLocation();
-	const [isCollapsed, setIsCollapsed] = useState(false);
+	const [isCollapsed, setIsCollapsed] = useState(isSidebarCollapsedStored);
 	const [isResizing, setIsResizing] = useState(false);
 	const [handleLeft, setHandleLeft] = useState(DEFAULT_SIDEBAR_WIDTH);
-	const [showHandle, setShowHandle] = useState(false);
+	const [isDesktop, setIsDesktop] = useState(false);
 	const lastWidthRef = useRef(DEFAULT_SIDEBAR_WIDTH);
 	const isResizingRef = useRef(false);
 
-	const updateHandlePos = () => {
-		if (isResizingRef.current) return;
-		if (isCollapsed) {
-			setHandleLeft(0);
-			return;
+	useEffect(() => {
+		const saved = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
+		const parsed = saved ? parseInt(saved, 10) : DEFAULT_SIDEBAR_WIDTH;
+		if (Number.isFinite(parsed) && parsed >= MIN_SIDEBAR_WIDTH) {
+			lastWidthRef.current = Math.min(parsed, MAX_SIDEBAR_WIDTH);
 		}
-		setHandleLeft(getSidebarWidth());
-	};
+		restoreSidebarWidth();
+
+		const media = window.matchMedia("(min-width: 960px)");
+		const syncDesktop = () => setIsDesktop(media.matches);
+		syncDesktop();
+		media.addEventListener("change", syncDesktop);
+		return () => media.removeEventListener("change", syncDesktop);
+	}, []);
 
 	useEffect(() => {
-		const checkVisibility = () => {
-			const isDesktop = window.matchMedia("(min-width: 960px)").matches;
-			const visible = isDesktop;
-			setShowHandle(visible);
-			if (visible) {
-				window.setTimeout(updateHandlePos, 100);
-			}
-		};
+		if (!isDesktop || isResizingRef.current) return;
+		setHandleLeft(isCollapsed ? 0 : getSidebarWidth());
+	}, [isCollapsed, isDesktop]);
 
-		// restore saved state
-		const collapsed = isSidebarCollapsedStored();
-		setIsCollapsed(collapsed);
-		if (collapsed) {
-			applySidebarWidth(0);
-			document.body.classList.add("vp-sidebar-collapsed");
-		} else {
-			const saved = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
-			const width = saved ? parseInt(saved, 10) : DEFAULT_SIDEBAR_WIDTH;
-			lastWidthRef.current = width;
-			applySidebarWidth(width);
-		}
-
-		checkVisibility();
-		window.addEventListener("resize", updateHandlePos);
-		return () => window.removeEventListener("resize", updateHandlePos);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [location.pathname]);
-
-	const toggleSidebar = () => {
-		const next = !isCollapsed;
-		setIsCollapsed(next);
-		window.localStorage.setItem(SIDEBAR_COLLAPSE_KEY, String(next));
-		if (next) {
-			lastWidthRef.current = getSidebarWidth();
-			applySidebarWidth(0);
-			document.body.classList.add("vp-sidebar-collapsed");
-		} else {
-			applySidebarWidth(lastWidthRef.current);
-			document.body.classList.remove("vp-sidebar-collapsed");
-		}
-		window.setTimeout(updateHandlePos, 300);
+	const setExpandedWidth = (width: number) => {
+		const nextWidth = clampWidth(width);
+		lastWidthRef.current = nextWidth;
+		applySidebarWidth(nextWidth);
+		setHandleLeft(nextWidth);
+		window.localStorage.setItem(SIDEBAR_STORAGE_KEY, String(nextWidth));
 	};
 
-	const initDrag = (e: React.MouseEvent) => {
+	const expandSidebar = (width = lastWidthRef.current) => {
+		setIsCollapsed(false);
+		window.localStorage.setItem(SIDEBAR_COLLAPSE_KEY, "false");
+		document.body.classList.remove("kb-sidebar-collapsed");
+		setExpandedWidth(width);
+	};
+
+	const toggleSidebar = () => {
+		if (isCollapsed) {
+			expandSidebar();
+			return;
+		}
+
+		lastWidthRef.current = Math.max(getSidebarWidth(), MIN_SIDEBAR_WIDTH);
+		setIsCollapsed(true);
+		window.localStorage.setItem(SIDEBAR_COLLAPSE_KEY, "true");
+		applySidebarWidth(0);
+		document.body.classList.add("kb-sidebar-collapsed");
+		setHandleLeft(0);
+	};
+
+	const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+		// The collapse button is a nested control. Let it keep its own keyboard
+		// behavior instead of treating its arrow keys as resize commands.
+		if (event.target !== event.currentTarget) return;
+
+		if (isCollapsed) {
+			if (event.key === "ArrowRight") {
+				event.preventDefault();
+				expandSidebar();
+			}
+			return;
+		}
+
+		const currentWidth = getSidebarWidth();
+		let nextWidth: number | null = null;
+		switch (event.key) {
+			case "ArrowLeft":
+				nextWidth = currentWidth - KEYBOARD_STEP;
+				break;
+			case "ArrowRight":
+				nextWidth = currentWidth + KEYBOARD_STEP;
+				break;
+			case "Home":
+				nextWidth = MIN_SIDEBAR_WIDTH;
+				break;
+			case "End":
+				nextWidth = MAX_SIDEBAR_WIDTH;
+				break;
+			default:
+				return;
+		}
+
+		event.preventDefault();
+		setExpandedWidth(nextWidth);
+	};
+
+	const initDrag = (e: ReactMouseEvent<HTMLDivElement>) => {
 		if (isCollapsed) return;
 		e.preventDefault();
 		const startX = e.clientX;
 		const startWidth = getSidebarWidth();
 		isResizingRef.current = true;
 		setIsResizing(true);
-		document.body.classList.add("vp-resizing");
+		document.body.classList.add("kb-is-resizing");
 		document.body.style.cursor = "col-resize";
 		document.body.style.userSelect = "none";
 
-		const onMouseMove = (moveEvent: MouseEvent) => {
-			let newWidth = startWidth + (moveEvent.clientX - startX);
-			if (newWidth < MIN_SIDEBAR_WIDTH) newWidth = MIN_SIDEBAR_WIDTH;
-			if (newWidth > MAX_SIDEBAR_WIDTH) newWidth = MAX_SIDEBAR_WIDTH;
+			const onMouseMove = (moveEvent: WindowEventMap["mousemove"]) => {
+			const newWidth = clampWidth(startWidth + (moveEvent.clientX - startX));
 			applySidebarWidth(newWidth);
+			lastWidthRef.current = newWidth;
 			setHandleLeft(newWidth);
 		};
 
 		const onMouseUp = () => {
 			isResizingRef.current = false;
 			setIsResizing(false);
-			document.body.classList.remove("vp-resizing");
+			document.body.classList.remove("kb-is-resizing");
 			document.body.style.cursor = "";
 			document.body.style.userSelect = "";
 			window.localStorage.setItem(
@@ -115,24 +158,39 @@ export default function SidebarResizeHandle() {
 		window.addEventListener("mouseup", onMouseUp);
 	};
 
-	if (!showHandle) return null;
+	if (!isDesktop) return null;
 
 	return (
 		<div
+			role="separator"
+			aria-label="调整侧栏宽度"
+			aria-orientation="vertical"
+			tabIndex={0}
+			aria-valuemin={isCollapsed ? 0 : MIN_SIDEBAR_WIDTH}
+			aria-valuemax={MAX_SIDEBAR_WIDTH}
+			aria-valuenow={isCollapsed ? 0 : handleLeft}
+			aria-valuetext={isCollapsed ? "侧栏已收起" : `${handleLeft}px`}
 			className={`sidebar-resize-handle${isResizing ? " is-resizing" : ""}${isCollapsed ? " is-collapsed" : ""}`}
 			style={{ left: handleLeft }}
 			onMouseDown={initDrag}
-			title="拖拽调整宽度"
+			onKeyDown={handleKeyDown}
+			title="拖拽或使用方向键调整宽度"
 		>
 			<div className="resize-line"></div>
-			<div
+			<button
+				type="button"
 				className="collapse-btn"
 				onMouseDown={(e) => e.stopPropagation()}
 				onClick={toggleSidebar}
+				aria-label={isCollapsed ? "展开侧边栏" : "收起侧边栏"}
 				title={isCollapsed ? "展开侧边栏" : "收起侧边栏"}
 			>
-				<span className="icon">{isCollapsed ? "›" : "‹"}</span>
-			</div>
+				{isCollapsed ? (
+					<ChevronRight size={15} strokeWidth={1.8} aria-hidden="true" />
+				) : (
+					<ChevronLeft size={15} strokeWidth={1.8} aria-hidden="true" />
+				)}
+			</button>
 		</div>
 	);
 }

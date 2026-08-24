@@ -8,26 +8,31 @@
  */
 import { useEffect, useRef } from "react";
 import mediumZoom from "medium-zoom";
-import mermaid from "mermaid";
 import type { RenderResult } from "@/lib/markdown";
 
-mermaid.initialize({
-	startOnLoad: false,
-	securityLevel: "strict",
-	theme: "default",
-});
+let mermaidPromise: Promise<typeof import("mermaid")["default"]> | null = null;
 
-interface MarkdownProps {
-	result: RenderResult;
-	onHeadings?: (headings: RenderResult["headings"]) => void;
+function getMermaid() {
+	if (!mermaidPromise) {
+		mermaidPromise = import("mermaid").then(({ default: mermaid }) => {
+			mermaid.initialize({
+				startOnLoad: false,
+				securityLevel: "strict",
+				theme: "default",
+			});
+			return mermaid;
+		});
+	}
+	return mermaidPromise;
 }
 
-export default function Markdown({ result, onHeadings }: MarkdownProps) {
+export default function Markdown({ result }: { result: RenderResult }) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const el = containerRef.current;
 		if (!el) return;
+		let cancelled = false;
 		// pi-lens-ignore: dangerously-set-inner-html
 		el.innerHTML = result.html;
 
@@ -35,7 +40,10 @@ export default function Markdown({ result, onHeadings }: MarkdownProps) {
 		if (nodes.length > 0) {
 			(async () => {
 				try {
+					const mermaid = await getMermaid();
+					if (cancelled) return;
 					await mermaid.run({ nodes });
+					if (cancelled) return;
 					for (const node of nodes) {
 						const svg = node.querySelector("svg");
 						if (!svg) continue;
@@ -49,6 +57,7 @@ export default function Markdown({ result, onHeadings }: MarkdownProps) {
 						svg.style.height = "auto";
 					}
 				} catch {
+					if (cancelled) return;
 					for (const node of nodes) {
 						node.classList.add("mermaid-error");
 						node.textContent = "Diagram unavailable";
@@ -56,6 +65,9 @@ export default function Markdown({ result, onHeadings }: MarkdownProps) {
 				}
 			})();
 		}
+		return () => {
+			cancelled = true;
+		};
 	}, [result]);
 
 	// medium-zoom on article images (baseline: `.vp-doc img`), re-init per
@@ -64,16 +76,12 @@ export default function Markdown({ result, onHeadings }: MarkdownProps) {
 		const el = containerRef.current;
 		if (!el) return;
 		const zoom = mediumZoom(el.querySelectorAll("img"), {
-			background: "var(--vp-c-bg)",
+			background: "var(--kb-surface)",
 		});
 		return () => {
 			zoom.detach();
 		};
 	}, [result]);
-
-	useEffect(() => {
-		onHeadings?.(result.headings);
-	}, [result, onHeadings]);
 
 	return <div ref={containerRef} className="vp-doc" />;
 }

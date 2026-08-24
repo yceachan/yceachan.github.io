@@ -3,6 +3,7 @@
  * Persists to `explorer:sort` via the store.
  */
 import { useExplorerStore } from "@/stores/explorer";
+import { SortAscending, SortDescending } from "@appica/icons-react";
 
 export default function SortControl() {
 	const sortKey = useExplorerStore((s) => s.sortKey);
@@ -22,12 +23,17 @@ export default function SortControl() {
 				<option value="date">日期</option>
 			</select>
 			<button
+				type="button"
 				className="sort-order"
 				title={sortOrder === "asc" ? "降序" : "升序"}
 				aria-label={sortOrder === "asc" ? "切换为降序" : "切换为升序"}
 				onClick={() => setSort(sortKey, sortOrder === "asc" ? "desc" : "asc")}
 			>
-				{sortOrder === "asc" ? "↑" : "↓"}
+				{sortOrder === "asc" ? (
+					<SortAscending size={16} strokeWidth={1.7} aria-hidden="true" />
+				) : (
+					<SortDescending size={16} strokeWidth={1.7} aria-hidden="true" />
+				)}
 			</button>
 		</div>
 	);

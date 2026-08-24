@@ -1,5 +1,5 @@
 /**
- * SearchBox — navbar search with `K` shortcut, dropdown results
+ * SearchBox - navbar search with `K` shortcut, dropdown results
  * (baseline VitePress local-search interaction).
  */
 import { Search } from "@appica/icons-react";
@@ -79,10 +79,14 @@ export default function SearchBox({
 	return (
 		<div className="search-box" ref={boxRef}>
 			<button
+				type="button"
 				className="search-trigger"
 				onClick={() => onOpenChange(!open)}
 				aria-label="搜索"
-				title="搜索 (Ctrl+K)"
+				aria-expanded={open}
+				aria-controls="kb-search-panel"
+				aria-keyshortcuts="Control+K Meta+K"
+				title="搜索 (Ctrl/Cmd+K)"
 			>
 				<Search size={16} strokeWidth={1.75} aria-hidden="true" />
 				<span className="search-trigger-text">Search</span>
@@ -90,17 +94,29 @@ export default function SearchBox({
 			</button>
 
 			{open && (
-				<div className="search-panel">
+				<div
+					id="kb-search-panel"
+					className="search-panel"
+					role="dialog"
+					aria-label="搜索笔记"
+				>
 					<input
 						ref={inputRef}
 						className="search-input"
-						placeholder="搜索笔记…"
+						aria-label="搜索笔记"
+						placeholder="搜索标题、路径或正文"
+						autoComplete="off"
 						value={query}
 						onChange={(e) => onQueryChange(e.target.value)}
 					/>
-					<div className="search-results">
+					<div className="search-results" aria-live="polite">
 						{query.trim() === "" && (
-							<div className="search-empty">输入关键词开始搜索</div>
+							<div className="search-empty">
+								<span className="search-empty-text">输入关键词开始搜索</span>
+								<small className="search-empty-hint">
+									支持标题、路径和正文，按 Esc 关闭
+								</small>
+							</div>
 						)}
 						{query.trim() !== "" && results.length === 0 && !searching && (
 							<div className="search-empty">未找到匹配的笔记</div>
@@ -108,6 +124,7 @@ export default function SearchBox({
 						{searching && <div className="search-empty">正在加载索引…</div>}
 						{results.map((r) => (
 							<button
+								type="button"
 								key={r.path}
 								className="search-result"
 								onClick={() => go(r.path)}

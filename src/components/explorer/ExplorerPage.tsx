@@ -20,12 +20,6 @@ export default function ExplorerPage() {
 		setCurrentPath(p || "/");
 	}, [searchParams, setCurrentPath]);
 
-	// baseline adds html.is-explorer while mounted
-	useEffect(() => {
-		document.documentElement.classList.add("is-explorer");
-		return () => document.documentElement.classList.remove("is-explorer");
-	}, []);
-
 	return (
 		<div className="explorer-page">
 			<div className="explorer-right">

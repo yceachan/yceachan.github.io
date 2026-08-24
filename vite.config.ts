@@ -18,7 +18,7 @@ export default defineConfig({
 		docMetaPlugin(),
 		VitePWA({
 			registerType: "prompt",
-			includeAssets: ["profile-photo.svg", "profile-photo.jpg"],
+			includeAssets: ["profile-photo.svg", "profile-photo.jpg", "og.png"],
 			devOptions: {
 				enabled: true,
 				type: "module",
@@ -29,11 +29,12 @@ export default defineConfig({
 				suppressWarnings: true,
 			},
 			manifest: {
-				name: "yceachan's Knowledge Base",
-				short_name: "yceachan's Knowledge Base",
-				description: "Personal Knowledge Base — React SPA + Appica UI",
-				theme_color: "#ffffff",
-				background_color: "#ffffff",
+				name: "EA.KB.IO - Eachan's Knowledge Base",
+				short_name: "EA.KB.IO",
+				description:
+					"Eachan's personal knowledge base for embedded systems, Linux, protocols, and engineering practice.",
+				theme_color: "#f7f8fa",
+				background_color: "#f7f8fa",
 				display: "standalone",
 				scope: "/",
 				start_url: "/",

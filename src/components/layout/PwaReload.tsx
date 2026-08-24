@@ -3,6 +3,7 @@
  * Uses vite-plugin-pwa's React register hook with the baseline prompt flow.
  */
 import { useEffect, useState } from "react";
+import { CircleCheck, Rocket } from "@appica/icons-react";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
 export default function PwaReload() {
@@ -11,7 +12,6 @@ export default function PwaReload() {
 	const [dismissed, setDismissed] = useState(false);
 
 	const { updateServiceWorker } = useRegisterSW({
-		onRegisteredSW() {},
 		onOfflineReady() {
 			setOfflineReady(true);
 			setDismissed(false);
@@ -42,7 +42,13 @@ export default function PwaReload() {
 		<div className="pwa-overlay" role="status">
 			<div className="pwa-toast">
 				<div className="pwa-toast-body">
-					<span className="pwa-toast-icon">{needRefresh ? "🚀" : "✅"}</span>
+					<span className="pwa-toast-icon" aria-hidden="true">
+						{needRefresh ? (
+							<Rocket size={22} strokeWidth={1.7} />
+						) : (
+							<CircleCheck size={22} strokeWidth={1.7} />
+						)}
+					</span>
 					<div>
 						<div className="pwa-toast-title">
 							{needRefresh ? "发现新版本" : "已准备就绪"}
@@ -57,6 +63,7 @@ export default function PwaReload() {
 				<div className="pwa-toast-actions">
 					{needRefresh && (
 						<button
+							type="button"
 							className="pwa-btn primary"
 							onClick={() => {
 								setDismissed(true);
@@ -67,6 +74,7 @@ export default function PwaReload() {
 						</button>
 					)}
 					<button
+						type="button"
 						className="pwa-btn"
 						onClick={() => {
 							setDismissed(true);

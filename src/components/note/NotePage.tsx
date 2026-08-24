@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { getContent } from "@/lib/content";
 import { renderMarkdown, type RenderResult } from "@/lib/markdown";
+import { profileTitle } from "@/lib/profile";
 import ExplorerBreadcrumb from "../explorer/ExplorerBreadcrumb";
 import FrontmatterBlock from "./FrontmatterBlock";
 import Markdown from "./Markdown";
@@ -46,6 +47,18 @@ export default function NotePage() {
 			cancelled = true;
 		};
 	}, [path]);
+
+	useEffect(() => {
+		document.title = profileTitle();
+	}, [path]);
+
+	useEffect(() => {
+		if (notFound) {
+			document.title = `页面不存在 | ${profileTitle()}`;
+		} else if (result?.title) {
+			document.title = `${result.title} | ${profileTitle()}`;
+		}
+	}, [notFound, result?.title]);
 
 	useEffect(() => {
 		// scroll to top on note navigation (baseline VitePress behavior)

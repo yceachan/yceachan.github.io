@@ -21,5 +21,5 @@ export interface Profile {
 export const profile = (profileJson ?? {}) as Profile;
 
 export function profileTitle(): string {
-	return `${profile.name || "KB"}'s Knowledge Base`;
+	return "EA.KB.IO";
 }

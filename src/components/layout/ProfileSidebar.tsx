@@ -33,8 +33,9 @@ const toMailto = (email: string) =>
 	email.startsWith("mailto:") ? email : `mailto:${email}`;
 
 export default function ProfileSidebar() {
-	const profileOpen = useExplorerStore((s) => s.profileOpen);
-	const setProfileOpen = useExplorerStore((s) => s.setProfileOpen);
+	const mobileDrawer = useExplorerStore((s) => s.mobileDrawer);
+	const closeMobileDrawer = useExplorerStore((s) => s.closeMobileDrawer);
+	const profileOpen = mobileDrawer === "profile";
 
 	const photo = profile.photo || profile.jpg;
 
@@ -81,14 +82,21 @@ export default function ProfileSidebar() {
 		return links;
 	}, []);
 
-	const close = () => setProfileOpen(false);
-
 	return (
 		<div className={`profile-sidebar${profileOpen ? " is-open" : ""}`}>
-			{profileOpen && <div className="profile-overlay" onClick={close} />}
+			{profileOpen && (
+				<button
+					type="button"
+					className="profile-overlay"
+					aria-label="关闭个人资料"
+					onClick={closeMobileDrawer}
+				/>
+			)}
 			<div className="profile-content">
 				<div className="profile-header">
-					{photo && <img src={photo} alt="Avatar" className="avatar" />}
+					{photo && (
+						<img src={photo} alt={profile.name || "头像"} className="avatar" />
+					)}
 					<h2 className="profile-name">{profile.name}</h2>
 					<p className="profile-bio">{profile.bio}</p>
 				</div>

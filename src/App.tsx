@@ -3,40 +3,51 @@
  *   `/`               Explorer home (?path= drives the directory)
  *   `/:path*`         note pages and the rendered 404 state
  */
-import { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import AppShell from "@/components/layout/AppShell";
 import ExplorerPage from "@/components/explorer/ExplorerPage";
-import NotePage from "@/components/note/NotePage";
 import { profileTitle } from "@/lib/profile";
 
-export default function App() {
+const NotePage = lazy(() => import("@/components/note/NotePage"));
+
+function DocumentTitle() {
+	const { pathname } = useLocation();
+
 	useEffect(() => {
-		// Keep the browser tab label owned by the app, rather than inheriting a
-		// stale title from the legacy VitePress shell or a cached PWA document.
-		const title = profileTitle();
-		const enforceTitle = () => {
-			if (document.title !== title) document.title = title;
-		};
-		enforceTitle();
+		if (pathname === "/" || pathname === "/index") {
+			document.title = profileTitle();
+		}
+	}, [pathname]);
 
-		const titleElement = document.querySelector("title");
-		if (!titleElement) return;
-		const observer = new MutationObserver(enforceTitle);
-		observer.observe(titleElement, {
-			childList: true,
-			characterData: true,
-			subtree: true,
-		});
-		return () => observer.disconnect();
-	}, []);
+	return null;
+}
 
+function NoteRoute() {
+	return (
+		<Suspense
+			fallback={
+				<div className="route-loading" role="status" aria-live="polite">
+					<div className="route-loading-line route-loading-title" />
+					<div className="route-loading-line" />
+					<div className="route-loading-line route-loading-short" />
+					<span className="sr-only">正在加载笔记</span>
+				</div>
+			}
+		>
+			<NotePage />
+		</Suspense>
+	);
+}
+
+export default function App() {
 	return (
 		<BrowserRouter>
+			<DocumentTitle />
 			<Routes>
 				<Route element={<AppShell />}>
 					<Route path="/" element={<ExplorerPage />} />
-					<Route path="/*" element={<NotePage />} />
+					<Route path="/*" element={<NoteRoute />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

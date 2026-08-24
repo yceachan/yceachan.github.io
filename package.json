@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "yceachan's Knowledge Base — React SPA + Appica UI + marked",
+  "description": "yceachan's personal knowledge base built with React, Vite, Appica UI, and Markdown",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -1,5 +1,5 @@
 /**
- * Navbar — site title, Back/Home actions, search (K shortcut), dark-mode
+ * Navbar - site title, Back/Home actions, search (K shortcut), dark-mode
  * toggle, GitHub link, mobile hamburger. Baseline NavLeftActions + VitePress
  * navbar behaviors.
  */
@@ -22,6 +22,7 @@ export default function Navbar({ onToggleMobileSidebar }: NavbarProps) {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const setCurrentPath = useExplorerStore((s) => s.setCurrentPath);
+	const mobileDrawer = useExplorerStore((s) => s.mobileDrawer);
 	const [searchOpen, setSearchOpen] = useState(false);
 	const [query, setQuery] = useState("");
 
@@ -53,8 +54,11 @@ export default function Navbar({ onToggleMobileSidebar }: NavbarProps) {
 					<ProfileToggle />
 
 					<button
+						type="button"
 						className="nav-hamburger"
 						aria-label="打开导航菜单"
+						aria-expanded={mobileDrawer === "sidebar"}
+						aria-controls="mobile-sidebar-panel"
 						onClick={onToggleMobileSidebar}
 					>
 						<Menu size={19} strokeWidth={1.75} aria-hidden="true" />
@@ -63,6 +67,7 @@ export default function Navbar({ onToggleMobileSidebar }: NavbarProps) {
 					{/* Mobile-only Home: nav-left-actions (Back/Home) is hidden under
 					   959px, so the explorer root needs a one-tap escape hatch. */}
 					<button
+						type="button"
 						className="nav-icon-btn nav-home-mobile"
 						aria-label="回到首页"
 						title="回到首页"
