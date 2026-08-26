@@ -1,0 +1,1 @@
+这些documents是Agent蒸馏过，用给开发者建立认知的，并非权威文档。Agent要研究Pi 拓展机制，遵行SYSTEM PROMPT 指引。
