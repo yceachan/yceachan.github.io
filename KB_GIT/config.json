@@ -41,6 +41,12 @@
       "scan": ".",
       "sync": "lang",
       "branch": "main"
+    },
+    {
+      "repo": "pi-harness.iWonder",
+      "scan": ".",
+      "sync": "Harness.IWonder/Pi-Agent",
+      "branch": "main"
     }
   ]
 }
