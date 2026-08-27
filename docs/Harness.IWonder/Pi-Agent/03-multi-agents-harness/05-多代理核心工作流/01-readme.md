@@ -3,7 +3,7 @@ title: 子代理、团队与工作流
 tags: [Subagent, Agent-Team, Workflow, DAG, 并行]
 note_types : document
 created: 2026-08-27
-updated: 2026-08-27
+updated: 2026-08-28
 
 ---
 
@@ -45,7 +45,8 @@ Lead Agent ──┼─ Planner ───┼─→ Lead convergence
 - Subagent 拥有独立 Context；
 - 委派通过完整 Task Contract；
 - Subagent 通常不直接彼此通信；
-- 结果通过 Artifact 与结构化报告返回；
+- 结果通过 Verified Context Capsule 与结构化报告返回；
+- 下游通过 Handoff ACK 声明确认与缺口；
 - 适合单次有限任务。
 
 ### 2.3 生命周期
@@ -71,7 +72,10 @@ dispose runtime
 - Start/Status/Control/Collect；
 - Structured Terminal Report；
 - Budget 与 Scope Policy；
-- Lead Milestone Notification。
+- Lead Milestone Notification；
+- Context Capsule Verification；
+- Handoff ACK 与 Context Gap Gate；
+- Completion Latch。
 
 ## 3. Agent Team 模式
 
@@ -162,6 +166,10 @@ Stage 5: verification and integration
 - 批量修复与逐单元验证；
 - 可重复发布流程。
 
+### 4.4 Failure Salvage
+
+Workflow 的顶层失败必须保留 Completed Artifacts、Verified Artifacts、Interrupted Runs、Missing Deliverables、Integration State 与 Recovery Actions；单一 `failed` 状态不能抹平局部成果。
+
 ## 5. 模式选择
 
 ### 5.1 Subagent 选择条件
@@ -186,16 +194,24 @@ Stage 5: verification and integration
 - 验证方式确定；
 - 希望减少模型调度自由度。
 
+> [!revision]
+> **2026-08-28 · 经验修订**
+>
+> 基于 [失败轨迹](../00-Artifact/20260828-2-多代理协作能力研究札记——一次失败经历的复盘.md) 与 [经验验证](../09-经验验证层/01-失败轨迹与知识修订.md)，原并行价值公式补入 Context Reacquisition、Artifact Conversion、重复验证与集成成本，通信工具不再被视为完整 Harness。
+
 ## 6. Parallelism Gate
 
 ```text
 Parallelism Value
   = Independent Tasks
   × Work per Task
-  × Context Isolation Benefit
+  + Independent Perspective Value
+  - Context Reacquisition Cost
+  - Artifact Conversion Cost
   - Coordination Cost
+  - Duplicate Verification Cost
   - File Conflict Risk
-  - Verification Cost
+  - Integration Cost
 ```
 
 Gate 输出：
@@ -239,7 +255,9 @@ interface ParallelismDecision {
 - Role Runtime；
 - Task Contract；
 - Run Lifecycle；
-- Evidence 与 Artifact；
+- Evidence、Artifact 与 Verified Context Capsule；
+- Handoff ACK 与 Context Gap；
+- Completion Latch；
 - Scope 与 Budget Policy；
 - Verification；
 - Audit Event。
@@ -293,5 +311,8 @@ Phase 6
 - 不让 Agent Team 替代确定性 Workflow。
 - 不因可并行而默认并行。
 - 不在 Message 中搬运大型 Artifact。
+- 不把 IPC、RPC 或 Intercom 误认为完整 Harness。
+- 不在下游未 ACK 上游 Artifact 时假定上下文已经复用。
+- 不让 Workflow Failure 丢弃可恢复成果。
 - 不在共享工作区无所有权并行修改。
 - 共享基础原语，分离产品语义。
