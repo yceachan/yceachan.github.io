@@ -949,6 +949,7 @@ body.kb-sidebar-collapsed .kb-sidebar {
   min-width: 0;
   flex: 1 1 auto;
   flex-direction: column;
+  container: explorer-workspace / inline-size;
 }
 
 .explorer-topbar {
@@ -1084,12 +1085,14 @@ body.kb-sidebar-collapsed .kb-sidebar {
 }
 
 .explorer-item.is-icon {
-  min-height: 176px;
-  height: 176px;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-  padding: 16px 14px 14px;
+  container: explorer-tile / inline-size;
+  position: relative;
+  display: block;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  padding: clamp(8px, 2.5cqw, 16px) clamp(6px, 2cqw, 14px)
+    clamp(8px, 2cqw, 14px);
   overflow: hidden;
   border: 1px solid var(--kb-line);
   border-radius: var(--kb-radius);
@@ -1106,35 +1109,45 @@ body.kb-sidebar-collapsed .kb-sidebar {
 }
 
 .explorer-item.is-icon .explorer-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 100%;
+  min-width: 0;
   min-height: 0;
-  flex: 1 1 auto;
   align-items: center;
+  justify-content: center;
   color: var(--kb-accent);
-  transform: translateY(12px);
+  transform: translate(-50%, -50%);
+}
+
+.explorer-item.is-icon .explorer-icon svg {
+  width: clamp(32px, 24cqw, 60px);
+  height: clamp(32px, 24cqw, 60px);
 }
 
 .explorer-item.is-icon .name-container {
+  position: absolute;
+  right: clamp(6px, 2cqw, 14px);
+  bottom: clamp(8px, 2cqw, 14px);
+  left: clamp(6px, 2cqw, 14px);
   display: block;
-  width: 100%;
-  flex: 0 0 auto;
-  padding-top: 12px;
+  width: auto;
+  padding-top: 0;
   text-align: center;
 }
 
 .explorer-item.is-icon .name {
-  display: -webkit-box;
+  display: block;
   width: 100%;
   overflow: hidden;
   font-family: var(--kb-font-sans);
-  font-size: 13px;
+  font-size: clamp(11px, 8cqw, 15px);
   font-weight: var(--kb-weight-regular);
   line-height: 1.45;
   text-align: center;
   text-overflow: ellipsis;
-  white-space: normal;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  white-space: nowrap;
 }
 
 /* Breadcrumb */
@@ -2444,30 +2457,6 @@ button.crumb-item {
     gap: 8px;
   }
 
-  .explorer-item.is-icon {
-    min-height: clamp(108px, 26vw, 132px);
-    height: clamp(108px, 26vw, 132px);
-    padding: 10px 7px 9px;
-  }
-
-  .explorer-item.is-icon .explorer-icon svg {
-    width: 42px;
-    height: 42px;
-  }
-
-  .explorer-item.is-icon .explorer-icon {
-    transform: translateY(6px);
-  }
-
-  .explorer-item.is-icon .name-container {
-    padding-top: 6px;
-  }
-
-  .explorer-item.is-icon .name {
-    font-size: 11px;
-    line-height: 1.3;
-  }
-
   .explorer-list:not(.is-root-grid) .explorer-item {
     min-height: 44px;
   }
@@ -2507,6 +2496,14 @@ button.crumb-item {
   .nav-title-mobile {
     max-width: 280px;
     font-size: 15px;
+  }
+
+  .explorer-list.is-root-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .explorer-item.is-icon .name {
+    font-size: clamp(12px, 8cqw, 15px);
   }
 
   .note-main {
