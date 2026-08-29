@@ -979,7 +979,8 @@ body.kb-sidebar-collapsed .kb-sidebar {
 
 .explorer-list.is-root-grid {
   display: grid;
-  max-width: 1240px;
+  width: 100%;
+  max-width: none;
   grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
   align-content: start;
   gap: 12px;
@@ -2440,17 +2441,31 @@ button.crumb-item {
 
   .explorer-list.is-root-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
   }
 
   .explorer-item.is-icon {
-    min-height: 150px;
-    height: 150px;
-    padding: 13px 9px 12px;
+    min-height: clamp(108px, 26vw, 132px);
+    height: clamp(108px, 26vw, 132px);
+    padding: 10px 7px 9px;
+  }
+
+  .explorer-item.is-icon .explorer-icon svg {
+    width: 42px;
+    height: 42px;
+  }
+
+  .explorer-item.is-icon .explorer-icon {
+    transform: translateY(6px);
+  }
+
+  .explorer-item.is-icon .name-container {
+    padding-top: 6px;
   }
 
   .explorer-item.is-icon .name {
-    font-size: 12px;
+    font-size: 11px;
+    line-height: 1.3;
   }
 
   .explorer-list:not(.is-root-grid) .explorer-item {
@@ -2494,15 +2509,6 @@ button.crumb-item {
     font-size: 15px;
   }
 
-  .explorer-list.is-root-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .explorer-item.is-icon {
-    min-height: 164px;
-    height: 164px;
-  }
-
   .note-main {
     padding-right: 32px;
     padding-left: 32px;
@@ -2513,15 +2519,6 @@ button.crumb-item {
   .nav-title-mobile {
     max-width: 32vw;
     font-size: 15px;
-  }
-
-  .explorer-list.is-root-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .explorer-item.is-icon {
-    min-height: 146px;
-    height: 146px;
   }
 
   .breadcrumb {
