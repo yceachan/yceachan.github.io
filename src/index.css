@@ -1122,15 +1122,15 @@ body.kb-sidebar-collapsed .kb-sidebar {
 }
 
 .explorer-item.is-icon .explorer-icon svg {
-  width: clamp(32px, 24cqw, 60px);
-  height: clamp(32px, 24cqw, 60px);
+  width: clamp(40px, 40cqw, 88px);
+  height: clamp(40px, 40cqw, 88px);
 }
 
 .explorer-item.is-icon .name-container {
   position: absolute;
-  right: clamp(6px, 2cqw, 14px);
-  bottom: clamp(8px, 2cqw, 14px);
-  left: clamp(6px, 2cqw, 14px);
+  right: clamp(10px, 4cqw, 14px);
+  bottom: clamp(10px, 4cqw, 14px);
+  left: clamp(10px, 4cqw, 14px);
   display: block;
   width: auto;
   padding-top: 0;
@@ -1142,7 +1142,7 @@ body.kb-sidebar-collapsed .kb-sidebar {
   width: 100%;
   overflow: hidden;
   font-family: var(--kb-font-sans);
-  font-size: clamp(11px, 8cqw, 15px);
+  font-size: clamp(12px, 10cqw, 16px);
   font-weight: var(--kb-weight-regular);
   line-height: 1.45;
   text-align: center;
@@ -2500,10 +2500,6 @@ button.crumb-item {
 
   .explorer-list.is-root-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .explorer-item.is-icon .name {
-    font-size: clamp(12px, 8cqw, 15px);
   }
 
   .note-main {
